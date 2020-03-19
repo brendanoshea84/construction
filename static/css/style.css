@@ -1,0 +1,57 @@
+/* login / New member page */
+
+body {
+    background-color: rgb(237, 252, 250, 0.4);
+}
+
+.intro_message {
+    font-style: italic;
+    text-align: center;
+}
+
+.new_member,
+.login_side {
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(85%);
+    height: 500px;
+    width: 100%;
+    border: white solid 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.new_member {
+    background-image: url(/static/imagines/group.jpg);
+}
+
+.login_side {
+    background-image: url(/static/imagines/working.jpg);
+}
+
+.login_side:hover,
+.new_member:hover {
+    filter: grayscale(0);
+}
+
+.btn_login,
+.btn_new_member {
+    width: 200px;
+}
+
+.hide {
+    display: none;
+}
+
+.clean_background {
+    background-color: rgb(0, 123, 255, 0.3);
+    border: black solid 1px;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+.text_colour_white {
+    color: white;
+}
