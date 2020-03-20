@@ -12,7 +12,7 @@ mongo = PyMongo(app)
 
 
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 @app.route('/intro', methods=['POST', 'GET'])
 def new_member():
     if request.method == 'POST':
