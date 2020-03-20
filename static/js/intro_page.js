@@ -5,6 +5,7 @@ let btn_new_member = document.getElementById("btn_new_member");
 btn_new_member.addEventListener("click", function() {
     new_member_form.classList.remove('hide');
     btn_new_member.classList.add('hide')
+    console.log("clicked")
 
     if (btn_login.classList.contains('hide')) {
         btn_login.classList.remove('hide');
