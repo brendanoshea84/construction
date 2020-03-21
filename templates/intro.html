@@ -19,13 +19,13 @@
             <form action="" method="POST" id="new_member_form" class="hide clean_background">
                 <div class="form-group ">
                     <label for="new_member_first" class="text_colour_white">Whats Your first Name?</label>
-                    <input type="text" class="form-control" name="new_member_first" id="new_member_first" placeholder="First Name">
+                    <input type="text" class="form-control" name="new_member_first" id="new_member_first" placeholder="First Name" required>
                 </div>
                 <div class="form-group">
                     <label for="new_password" class="text_colour_white">Whats the Welcome Password?</label>
-                    <input type="password" class="form-control" name="new_password" id="new_password" placeholder="Password">
+                    <input type="password" class="form-control" name="new_password" id="new_password" placeholder="Password" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" name="new_member_btn" class="btn btn-primary">Submit</button>
             </form>
 
         </div>
@@ -36,20 +36,20 @@
         <div class="center_over_pic">
 
             <button type="button" class="btn  btn-primary btn_login" id="btn_login"><h4>Login</h4></button>
-            <!-- 
-            <form id="login_form" class="hide clean_background">
+
+            <form action="" method="POST" id="login_form" class="hide clean_background">
                 <div class="form-group ">
                     <label for="login" class="text_colour_white">Enter your username or employee number</label>
-                    <input type="text" class="form-control" name="login" id="login" placeholder="first name.last name or 100">
+                    <input type="text" class="form-control" name="login" id="login" placeholder="first name.last name or 100" required>
 
                 </div>
                 <div class="form-group">
                     <label for="password_user" class="text_colour_white">Password</label>
-                    <input type="password" class="form-control" name="password_user" id="password_user" placeholder="Password">
+                    <input type="password" class="form-control" name="password_user" id="password_user" placeholder="Password" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
-            </form> -->
+            </form>
         </div>
     </div>
 </div>
