@@ -16,7 +16,7 @@ mongo = PyMongo(app)
 # Login using your own password
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/intro', methods=['POST', 'GET'])
-def new_member():   
+def sign_in():   
     # Sign in for new members with a pre password
     if request.method == 'POST':
         try_pass = request.form.get('new_password')
@@ -28,11 +28,12 @@ def new_member():
             # If sussecful- Page to input new member info
             print("testing wel_pass == try_pass")
             return redirect(url_for('new_member_info'))
-        
+        else:
+            print("error at new member")
+            return redirect(url_for('error_new'))
+    return render_template('intro.html', employees=mongo.db.employees.find(), welcomes=mongo.db.welcome_password.find())       
 
-   
-
-
+def login():  
     # Login using your own password
     if request.method == 'POST':
         # User can use they name or employee number
@@ -48,8 +49,10 @@ def new_member():
                 print(session)
                 print('session')
                 return redirect(url_for('base'))
-            return 'Error' 
-            print ("error stage 1") 
+            else:
+                print("error at login")
+                return redirect(url_for('error_existing'))
+                
               
    
     return render_template('intro.html', employees=mongo.db.employees.find(), welcomes=mongo.db.welcome_password.find())       
@@ -66,7 +69,15 @@ def base():
     print ("working at base")
     return render_template("base.html")
 
+@app.route('/error_new')
+def error_new():
+    
+    return render_template("error_new.html")
 
+@app.route('/error_existing')
+def error_existing():
+    
+    return render_template("error_existing.html")
 
 
 
