@@ -17,11 +17,9 @@ mongo = PyMongo(app)
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/intro', methods=['POST', 'GET'])
 def intro(): 
-    # Sign in for new members with a pre password
     if request.method == 'POST': 
-
+    # Sign in for new members with a pre password
         if 'new_member_btn' in request.form:
-
             print("testing")
             try_pass = request.form.get('new_password')
             w_password = mongo.db.welcome_password.find_one()
@@ -35,16 +33,11 @@ def intro():
             else:
                 mb.showinfo("Incorrect Password", "Your welcome password is incorrect, please contact your supervisor! Welcome Password for CODE INSTITUTE: "+ wel_pass)
                 print("welcome password ")
-                return redirect(url_for('error_new'))
-
-
         else:
-       
     # Login using your own password
         # User can use they name or employee number
             employees = mongo.db.employees
             login_user =  employees.find_one({'employee_username' : request.form.get('login')}) or employees.find_one({'employee_number' : request.form.get('login')})
-            
             login_pass = request.form.get('password_user')
 
             if login_user:
@@ -53,7 +46,7 @@ def intro():
                     session['login_user'] = request.form['login']
                     print(session)
                     print('session')
-                    return redirect(url_for('base'))
+                    return redirect(url_for('main'))
                 else:
                     print("error at login")
                     return redirect(url_for('error_existing'))
@@ -63,7 +56,10 @@ def intro():
     return render_template('intro.html', employees=mongo.db.employees.find(), welcomes=mongo.db.welcome_password.find())       
 
 
-
+@app.route('/main')
+def main(login_user):
+    print ("going to main")
+    return render_template("main.html", employees=mongo.db.employees.find())
 
 
 
@@ -74,10 +70,7 @@ def base():
     print ("working at base")
     return render_template("base.html")
 
-@app.route('/error_new')
-def error_new():
-    
-    return render_template("error_new.html")
+
 
 @app.route('/error_existing')
 def error_existing():
