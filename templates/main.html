@@ -1,3 +1,9 @@
-<h1>main page</h1>
-
-{% for user in users %} {{user.first_name}} {% endfor %}
+<h1>main page welcomes {{ testing.employee_first_name }} {{ testing.employee_last_name }}</h1>
+<h2>
+    {{ testing }}
+    <br>{{ testing.employee_number }} <br>{{ testing.employee_first_name }}
+    <br>
+    <br> {{ login_user }}
+    <br>
+    <h1></h1>{{ testing.employee_first_name }}.{{ testing.employee_last_name }}</h1>
+</h2>

@@ -21,6 +21,11 @@ def intro():
     # Sign in for new members with a pre password
         if 'new_member_btn' in request.form:
             print("testing")
+
+            global new_first_name
+            new_first_name = request.form.get('new_member_first')
+
+
             try_pass = request.form.get('new_password')
             w_password = mongo.db.welcome_password.find_one()
             for key, val in w_password.items():
@@ -36,6 +41,7 @@ def intro():
         else:
     # Login using your own password
         # User can use they name or employee number
+            global login_user
             employees = mongo.db.employees
             login_user =  employees.find_one({'employee_username' : request.form.get('login')}) or employees.find_one({'employee_number' : request.form.get('login')})
             login_pass = request.form.get('password_user')
@@ -56,10 +62,11 @@ def intro():
     return render_template('intro.html', employees=mongo.db.employees.find(), welcomes=mongo.db.welcome_password.find())       
 
 
-@app.route('/main')
-def main(login_user):
+@app.route('/main', methods=['GET'])
+def main():
     print ("going to main")
-    return render_template("main.html", employees=mongo.db.employees.find())
+    print(login_user)
+    return render_template("main.html", testing=login_user)
 
 
 
@@ -82,9 +89,9 @@ def error_existing():
 
 @app.route('/new_member_info', methods=['POST', 'GET'])   
 def new_member_info():
-    if request.method == 'POST':
-        print ("working at new_member_info")
-    return render_template("new_member_info.html")    
+    new_employee = mongo.db.employees
+    new_employee.insert_one(request.form.to_dict())
+    return render_template("new_member_info.html", new_first_name = new_first_name)    
 
 if __name__ == '__main__':
     app.secret_key='1234'
