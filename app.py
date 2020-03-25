@@ -88,9 +88,17 @@ def error_existing():
 
 @app.route('/new_member_info', methods=['POST', 'GET'])   
 def new_member_info():
-    new_employee = mongo.db.employees
-    new_employee.insert_one(request.form.to_dict())
-    return render_template("new_member_info.html", new_first_name = new_first_name)    
+
+    test=mongo.db.employees
+    
+    testing = test.find({'employee_first_name' : ''})
+    testing123 = list(testing)
+    print(testing123)
+
+    
+
+    
+    return render_template("new_member_info.html", new_first_name = new_first_name, employees=mongo.db.employees.find())    
 
 if __name__ == '__main__':
     app.secret_key='1234'
