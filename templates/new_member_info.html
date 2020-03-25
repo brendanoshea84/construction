@@ -2,44 +2,39 @@
 
 <h1>{{ new_first_name }}</h1>
 
-<form>
+<form id="new_emploee" method="POST">
     <div class="form-group">
         <label for="first_name">First Name</label>
-        <input type="text" class="form-control" id="first_name" aria-describedby="first_name" placeholder={{ new_first_name }}>
+        <input type="text" class="form-control" id="employee_first_name" name="employee_first_name" aria-describedby="first_name" placeholder={{ new_first_name }}>
 
     </div>
     <div class="form-group">
         <label for="last_name">Last Name</label>
-        <input type="text" class="form-control" id="last_name" placeholder="Last Name" required>
-    </div>
-
-    <div class="form-group">
-        <label for="personal_number">Personal Number</label>
-        <input type="number" class="form-control" id="personal_number" placeholder="Personal Number" required>
+        <input type="text" class="form-control" id="employee_last_name" name="employee_last_name" placeholder="Last Name" required>
     </div>
 
     <div class="form-group">
         <label for="personal_number">Date of Birth</label>
-        <input type="date" class="form-control" id="dob" placeholder="11/01/1991">
+        <input type="date" class="form-control" id="employee_DOB" name="employee_DOB" placeholder="11/01/1991">
     </div>
 
     <div class="form-group">
         <label for="mob_number">Mob Number</label>
-        <input type="number" class="form-control" id="mob_number" placeholder="Mob Number" required>
+        <input type="number" class="form-control" id="employee_mob" name="employee_mob" placeholder="Mob Number" required>
     </div>
 
     <div class="form-group">
         <label for="mob_number">Home Number</label>
-        <input type="number" class="form-control" id="home_number" placeholder="Home Number">
+        <input type="number" class="form-control" id="employee_home_number" name="employee_home_number" placeholder="Home Number">
     </div>
     <div class="form-group">
         <label for="address">Address</label>
-        <input type="text" class="form-control" id="address" placeholder="11 first St, Frolunda" required>
+        <input type="text" class="form-control" id="employee_address" name="employee_address" placeholder="11 first St, Frolunda" required>
     </div>
 
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Password">
+        <input type="password" class="form-control" id="employ_password" name="employ_password" placeholder="Password">
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
