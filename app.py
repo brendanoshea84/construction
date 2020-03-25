@@ -88,14 +88,30 @@ def error_existing():
 
 @app.route('/new_member_info', methods=['POST', 'GET'])   
 def new_member_info():
+# Creating username number and username for new employee
+    # New User employee number
+    new_employee = mongo.db.employees
+    # Find highest employee number
+    employ_number = new_employee.distinct('employee_number')
+    new_number = max(employ_number) 
+    employee_number = int(new_number) +1
 
-    test=mongo.db.employees
-    
-    testing = test.find({'employee_first_name' : ''})
-    testing123 = list(testing)
-    print(testing123)
-
-    
+# When form is sent
+    if request.method == 'POST': 
+        post_data = request.form.to_dict()
+        # Create username
+        employee_first_name = request.form['employee_first_name'].lower()
+        employee_last_name = request.form['employee_last_name'].lower()
+        employee_username = (employee_first_name + '.' + employee_last_name)
+        
+        post_data['employee_username'] = employee_username
+        post_data['employee_number'] = employee_number
+        post_data['employee_first_name'] = employee_first_name
+        post_data['employee_last_name'] = employee_last_name
+        new_employee.insert_one(post_data)
+        
+        
+        
 
     
     return render_template("new_member_info.html", new_first_name = new_first_name, employees=mongo.db.employees.find())    
