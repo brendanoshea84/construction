@@ -79,27 +79,27 @@ def add_personal_info():
 
 # When form is sent
     if request.method == 'POST': 
-        if 'personal_info_btn' in request.form:
-        
-            post_data = request.form.to_dict()
+        post_data = request.form.to_dict()
 
         # Create username
         # Insure input from form is lowercase
-            employee_first_name = request.form['employee_first_name'].lower()
-            employee_last_name = request.form['employee_last_name'].lower()
-            employee_username = (employee_first_name + '.' + employee_last_name)
+        employee_first_name = request.form['employee_first_name'].lower()
+        employee_last_name = request.form['employee_last_name'].lower()
+        employee_username = (employee_first_name + '.' + employee_last_name)
         
-            post_data['employee_username'] = employee_username
-            post_data['employee_number'] = employee_number
-            post_data['employee_first_name'] = employee_first_name
-            post_data['employee_last_name'] = employee_last_name
-            print("tesing sending")
+        post_data['employee_username'] = employee_username      
+        post_data['employee_number'] = employee_number
+        post_data['employee_first_name'] = employee_first_name
+        post_data['employee_last_name'] = employee_last_name
+
+        print("tesing sending")
              
-            # Get the id of the new insert to collections 
-            new_id = new_employee.insert_one(post_data)
-            global new_doc_id
-            new_doc_id = new_id.inserted_id
+        # Get the id of the new insert to collections 
+        new_id = new_employee.insert_one(post_data)
+        global new_doc_id
+        new_doc_id = new_id.inserted_id
         return redirect(url_for('emergcy'))
+
     return render_template("/employeeinfo/personal_info.html", employees=mongo.db.employees.find(), new_first_name=new_first_name)     
 
 
