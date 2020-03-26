@@ -1,0 +1,41 @@
+{% extends 'new_member_info.html' %} {% block personal_info %}
+<form id="personal_form" method="POST">
+    <div class="form-group row">
+        <label for="first_name" class="col-sm-2 inline_form">First Name</label>
+        <input type="text" class="form-control col-sm-10" id="employee_first_name" name="employee_first_name" aria-describedby="first_name" placeholder={{ new_first_name }} value={{ new_first_name }}>
+
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="last_name" class="col-sm-2 inline_form">Last Name</label>
+        <input type="text" class="form-control col-sm-10" id="employee_last_name" name="employee_last_name" placeholder="Last Name" required>
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="employee_DOB" class="col-sm-2 inline_form">Date of Birth</label>
+        <input type="date" class="form-control col-sm-10" id="employee_DOB" name="employee_DOB" placeholder="11/01/1991">
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="mob_number" class="col-sm-2 inline_form">Mob Number</label>
+        <input type="number" class="form-control col-sm-10" id="employee_mob" name="employee_mob" placeholder="Mob Number" required>
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="mob_number" class="col-sm-2 inline_form">Home Number</label>
+        <input type="number" class="form-control col-sm-10" id="employee_home_number" name="employee_home_number" placeholder="Home Number">
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="address" class="col-sm-2 inline_form">Address</label>
+        <input type="text" class="form-control col-sm-10" id="employee_address" name="employee_address" placeholder="11 first St, Frolunda" required>
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="password" class="col-sm-2 inline_form">Password</label>
+        <input type="password" class="form-control col-sm-10" id="employ_password" name="employ_password" placeholder="Password">
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary col-sm-2 float-right" name="personal_info_btn">Save and Next</button>
+</form>
+{% endblock %}

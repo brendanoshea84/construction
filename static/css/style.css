@@ -55,3 +55,52 @@ body {
 .text_colour_white {
     color: white;
 }
+
+
+/* Detail forms */
+
+nav>.nav.nav-tabs {
+    border: none;
+    color: #fff;
+    background: #272e38;
+    border-radius: 0;
+}
+
+nav>.nav.nav-tabs.active {
+    background: rgb(0, 123, 255, 0.3);
+}
+
+nav>div a.nav-item.nav-link,
+nav>div a.nav-item.nav-link.active {
+    border: none;
+    padding: 18px 25px;
+    color: #fff;
+    background: rgb(0, 123, 255, 0.3);
+    border-radius: 0;
+}
+
+.tab-content {
+    background: #fdfdfd;
+    line-height: 25px;
+    border: 1px solid #ddd;
+    border-top: 5px solid #e74c3c;
+    border-bottom: 5px solid #e74c3c;
+    padding: 30px 25px;
+}
+
+nav>div a.nav-item.nav-link:hover,
+nav>div a.nav-item.nav-link:focus {
+    border: none;
+    background: rgb(0, 123, 255);
+    color: #fff;
+    border-radius: 0;
+    transition: background 0.20s linear;
+}
+
+.form-group {
+    margin: 0
+}
+
+.inline_form {
+    top: 5px
+}

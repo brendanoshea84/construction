@@ -63,4 +63,5 @@
     {% for employee in employees %} {{employee.employee_number}} {{employee.employee_first_name}} {{employee.employee_last_name}}{% endfor %} {% for welcome in welcomes %}{{welcome.welcome_password}}{% endfor %}
 </div>
 
+<script src="{{url_for('static', filename='js/intro_page.js')}}" type="text/javascript"></script>
 {% endblock %}
