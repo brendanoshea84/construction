@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, request, url_for, session, flash
+from flask import Flask, render_template, redirect, request, url_for, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId 
 
@@ -14,57 +14,66 @@ mongo = PyMongo(app)
 # Welcome Page
 # Sign in for new members with a pre password
 # Login using your own password
-@app.route('/', methods=['POST', 'GET'])
-@app.route('/intro', methods=['POST', 'GET'])
-def intro(): 
-    if request.method == 'POST': 
-    # Sign in for new members with a pre password
-        if 'new_password' in request.form:
-            print("testing")
-            global new_first_name
-            new_first_name = request.form.get('new_member_first')
-            try_pass = request.form.get('new_password')
-            w_password = mongo.db.welcome_password.find_one()
 
-            for key, val in w_password.items():
-                if 'welcome_password' in key:
-                    wel_pass = val
-            if wel_pass == try_pass:
-                # If sussecful- Page to input new member info
-                print("testing wel_pass == try_pass")
-                return redirect(url_for('add_personal_info'))
-            else:
-                # Fix here
-                # flash("testing")
-                print("welcome password wrong")
-
-        else:
-    # Login using your own password
-        # User can use they name or employee number
-            global login_user
-            employees = mongo.db.employees
-            login_user =  employees.find_one({'employee_username' : request.form.get('login')})
-            login_pass = request.form.get('password_user')
-
-            if login_user:
-                if login_pass == login_user['employ_password']:
-                    print("testing login area")
-
-# Fix here
-                    # session['login_user'] = login_user[''_id]
-                    
-                    print(session)
-                    print('session')
-                    return redirect(url_for('main'))
-                else:
-
-                    # Fix here
-                    # Add error msg
-                    print("error at login")
-                    
+@app.route('/intro', methods=['POST', 'GET'])     
+def intro():  
+                  
     return render_template('intro.html', employees=mongo.db.employees.find(), welcomes=mongo.db.welcome_password.find())       
 
+@app.route('/', methods=['POST', 'GET'])
+@app.route('/sign_in', methods=['POST', 'GET'])
+def sign_in():
+    print("before post")
+    if request.method == 'POST':
+    # Login using your own password
+        # User can use they name or employee number
+        print("after post")
+        global login_user
+        employees = mongo.db.employees
+        login_user =  employees.find_one({'employee_username' : request.form.get('login')})
+        login_pass = request.form.get('password_user')
 
+        if login_user:
+            if login_pass == login_user['employ_password']:
+                print("testing login area")
+
+                # Fix here
+                # session['login_user'] = login_user[''_id]
+                    
+                print(session)
+                print('session')
+                return redirect(url_for('main'))
+            else:
+                    # Fix here
+                    # Add error msg
+                print("error at login")
+    return render_template('intro.html', employees=mongo.db.employees.find(), welcomes=mongo.db.welcome_password.find())       
+            
+
+@app.route('/sign_up', methods=['POST', 'GET'])
+def sign_up():
+    if request.method == 'POST': 
+    # Sign in for new members with a pre password
+        
+        print("testing")
+        global new_first_name
+        new_first_name = request.form.get('new_member_first')
+        try_pass = request.form.get('new_password')
+        w_password = mongo.db.welcome_password.find_one()
+
+        for key, val in w_password.items():
+            if 'welcome_password' in key:
+                wel_pass = val
+        if wel_pass == try_pass:
+            # If sussecful- Page to input new member info
+            print("testing wel_pass == try_pass")
+            return redirect(url_for('add_personal_info'))
+        else:
+            # Fix here
+            # flash("testing")
+            print("welcome password wrong")
+        
+    return render_template('intro.html', employees=mongo.db.employees.find(), welcomes=mongo.db.welcome_password.find())       
 
 
 

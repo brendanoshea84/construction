@@ -12,44 +12,7 @@
 <br>
 
 <div class="row">
-    <div class="container col-md-6 col-xs-12 new_member" id="new_member">
-        <div class="center_over_pic">
-            <button type="button" class="btn btn-primary btn_new_member" id="btn_new_member"><h4>New Member</h4></button>
-            <form method="POST" id="new_member_form" class="hide clean_background">
-                <div class="form-group ">
-                    <label for="new_member_first" class="text_colour_white">Whats Your first Name?</label>
-                    <input type="text" class="form-control" name="new_member_first" id="new_member_first" placeholder="First Name" required>
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="new_password" class="text_colour_white">Whats the Welcome Password?</label>
-                    <input type="password" class="form-control" name="new_password" id="new_password" placeholder="Password" required>
-                </div>
-                <br>
-                <button type="submit" name="new_member_btn" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-    </div>
-
-
-    <div class="container col-md-6 col-xs-12 login_side">
-        <div class="center_over_pic">
-            <button type="button" class="btn  btn-primary btn_login" id="btn_login"><h4>Login</h4></button>
-            <form method="POST" id="login_form" name="login_form" class="hide clean_background">
-                <div class="form-group ">
-                    <label for="login" class="text_colour_white">Enter your username or employee number</label>
-                    <input type="text" class="form-control" name="login" id="login" placeholder="first name.last name or 100" required>
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="password_user" class="text_colour_white">Password</label>
-                    <input type="password" class="form-control" name="password_user" id="password_user" placeholder="Password" required>
-                </div>
-                <br>
-                <button type="submit" name="login_btn" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
-    </div>
+    {% include 'sign_up.html' %} {% include 'sign_in.html' %}
 </div>
 <br>
 <div class="row">
