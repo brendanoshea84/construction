@@ -1,8 +1,7 @@
 import os
-from flask import Flask, render_template, redirect, request, url_for, session
+from flask import Flask, render_template, redirect, request, url_for, session, flash
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId 
-from tkinter import messagebox as mb
 
 app = Flask(__name__)
 app.secret_key='1234'
@@ -10,6 +9,7 @@ app.config["MONGO_DBNAME"] = "milestone3"
 app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 
 mongo = PyMongo(app)
+
 
 # Welcome Page
 # Sign in for new members with a pre password
@@ -19,7 +19,7 @@ mongo = PyMongo(app)
 def intro(): 
     if request.method == 'POST': 
     # Sign in for new members with a pre password
-        if 'new_member_btn' in request.form:
+        if 'new_password' in request.form:
             print("testing")
             global new_first_name
             new_first_name = request.form.get('new_member_first')
@@ -34,33 +34,70 @@ def intro():
                 print("testing wel_pass == try_pass")
                 return redirect(url_for('add_personal_info'))
             else:
-                mb.showinfo("Incorrect Password", "Your welcome password is incorrect, please contact your supervisor! Welcome Password for CODE INSTITUTE: "+ wel_pass)
-                print("welcome password ")
+                # Fix here
+                # flash("testing")
+                print("welcome password wrong")
+
         else:
     # Login using your own password
         # User can use they name or employee number
             global login_user
             employees = mongo.db.employees
-            login_user =  employees.find_one({'employee_username' : request.form.get('login')}) or employees.find_one({'employee_number' : request.form.get('login')})
-            
+            login_user =  employees.find_one({'employee_username' : request.form.get('login')})
             login_pass = request.form.get('password_user')
 
             if login_user:
                 if login_pass == login_user['employ_password']:
                     print("testing login area")
-                    session['login_user'] = request.form['login']
+
+# Fix here
+                    # session['login_user'] = login_user[''_id]
+                    
                     print(session)
                     print('session')
                     return redirect(url_for('main'))
                 else:
+
+                    # Fix here
+                    # Add error msg
                     print("error at login")
-                    return redirect(url_for('error_existing'))
+                    
     return render_template('intro.html', employees=mongo.db.employees.find(), welcomes=mongo.db.welcome_password.find())       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @app.route('/new_member_info', methods=['POST', 'GET'])   
 def new_member_info():
-        
+    print('SOMEW')    
     return render_template("/employeeinfo/personal_info.html", employees=mongo.db.employees.find())    
 
 
@@ -83,14 +120,10 @@ def add_personal_info():
 
         # Create username
         # Insure input from form is lowercase
-        employee_first_name = request.form['employee_first_name'].lower()
-        employee_last_name = request.form['employee_last_name'].lower()
-        employee_username = (employee_first_name + '.' + employee_last_name)
-        
-        post_data['employee_username'] = employee_username      
-        post_data['employee_number'] = employee_number
-        post_data['employee_first_name'] = employee_first_name
-        post_data['employee_last_name'] = employee_last_name
+       
+        post_data['employee_first_name'] = request.form['employee_first_name'].lower()
+        post_data['employee_last_name'] = request.form['employee_last_name'].lower()
+        post_data['employee_username'] = post_data['employee_first_name'] + '.' + post_data['employee_last_name']
 
         print("tesing sending")
              
@@ -100,6 +133,7 @@ def add_personal_info():
         new_doc_id = new_id.inserted_id
         return redirect(url_for('emergcy'))
 
+    print('HERE IS SOMETHING')
     return render_template("/employeeinfo/personal_info.html", employees=mongo.db.employees.find(), new_first_name=new_first_name)     
 
 
@@ -155,10 +189,7 @@ def error_existing():
 
 
 # Log out
-@app.route("/logout")  
-def logout(): 
-    session.pop("user", None) 
-    return redirect(url_for("/intro"))
+ 
 
 if __name__ == '__main__':
     
