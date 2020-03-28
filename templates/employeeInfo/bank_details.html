@@ -1,4 +1,12 @@
-{% extends 'new_member_info.html' %} {% block personal_info %}
+{% extends 'new_member_info.html' %} {% block jumbotron %}
+<div class="container">
+    <h1 class="display-9">Welcome to Develop.This {{ new_first_name }}!</h1>
+    <br>
+    <h3 class="lead">Your username is {{ username }}.</h3>
+</div>
+</p>
+
+{% endblock %} {% block personal_info %}
 
 <form id="bank_form" method="POST">
     <div class="form-group row">
@@ -15,4 +23,10 @@
     <br>
     <button type="submit" class="btn btn-primary col-sm-2 float-right">Submit</button>
 </form>
+<br>
+<br>
+<br>
+<div class="row testing">
+    <h3>Your username is <b>{{ username }}</b></h3>
+</div>
 {% endblock %}

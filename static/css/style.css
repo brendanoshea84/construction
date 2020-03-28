@@ -10,17 +10,22 @@ body {
 }
 
 .new_member,
-.login_side {
+.login_side,
+.jumbo_image {
     background-size: cover;
-    background-position: center;
-    filter: grayscale(85%);
-    height: 500px;
     width: 100%;
     border: white solid 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+}
+
+.new_member,
+.login_side {
+    height: 500px;
+    filter: grayscale(85%);
+    background-position: center;
 }
 
 .new_member {
@@ -103,4 +108,19 @@ nav>div a.nav-item.nav-link:focus {
 
 .inline_form {
     top: 5px
+}
+
+
+/* Jumbotron */
+
+.jumbo_image {
+    background-image: url(/static/imagines/jumbo.jpg);
+    height: 15%;
+    color: white;
+}
+
+.testing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

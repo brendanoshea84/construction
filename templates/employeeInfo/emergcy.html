@@ -1,16 +1,30 @@
-{% extends 'new_member_info.html' %} {% block personal_info %}
+{% extends 'new_member_info.html' %} {% block jumbotron %}
+<div class="container">
+    <h1 class="display-9">Welcome to Develop.This {{ new_first_name }}!</h1>
+    <br>
+    <h3 class="lead">Your username is {{ username }}.</h3>
+</div>
+
+{% endblock %} {% block personal_info %}
 <form id="emergcy_form" method="POST">
     <div class="form-group row">
         <label for="first_name" class="col-sm-2 inline_form">Next of kin</label>
-        <input type="text" class="form-control col-sm-10" id="employee_next_of_kin" name="employee_next_of_keen" aria-describedby="employee_next_of_keen" placeholder="Who should we call in emergcy?">
+        <input type="text" class="form-control col-sm-10" id="next_of_kin" name="next_of_kin" aria-describedby="next_of_kin" placeholder="Who should we call in emergcy?">
 
     </div>
     <br>
     <div class="form-group row">
-        <label for="employee_next_of_keen_mob" class="col-sm-2 inline_form">Best way of contact?</label>
-        <input type="number" class="form-control col-sm-10" id="employee_next_of_keen_mob" name="employee_next_of_keen_mob" placeholder="Whats their phone number">
+        <label for="next_of_kin_mob" class="col-sm-2 inline_form">Best way of contact?</label>
+        <input type="number" class="form-control col-sm-10" id="next_of_kin_mob" name="next_of_kin_mob" placeholder="Whats their phone number">
     </div>
     <br>
     <button type="submit" class="btn btn-primary col-sm-2 float-right">Submit</button>
+
 </form>
+<br>
+<br>
+<br>
+<div class="row testing">
+    <h3>Your username is <b>{{ username }}</b></h3>
+</div>
 {% endblock %}
