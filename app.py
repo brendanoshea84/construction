@@ -27,12 +27,12 @@ def sign_in():
         print("after post")
         employees = mongo.db.employees
         login_user =  employees.find_one({'username' : request.form.get('login')})
+        print(login_user)
         
-        print("before test")
         if login_user:
             if bcrypt.hashpw(request.form.get('password_user').encode('utf-8'), login_user['password']) ==  login_user['password']:
                 print("testing login area")
-                session['username'] = request.form['username']
+                # session['username'] = request.form['username']
                 
                 return redirect(url_for('main'))
             else:
