@@ -24,21 +24,22 @@ def intro():
 def sign_in():
     if request.method == 'POST':
     # Login using your own password
-        print("after post")
         employees = mongo.db.employees
         login_user =  employees.find_one({'username' : request.form.get('login')})
-        print(login_user)
         
         if login_user:
             if bcrypt.hashpw(request.form.get('password_user').encode('utf-8'), login_user['password']) ==  login_user['password']:
                 print("testing login area")
-                # session['username'] = request.form['username']
-                
+                session = login_user
+                print(session)
+                print("testing problem area 35")
                 return redirect(url_for('main'))
             else:
                 # Fix here
                 # Add error msg
-                print("error at login")
+                print("error at login 40")
+        else:
+            print("no user 42")        
     return render_template('intro.html', employee = mongo.db.employees)       
             
 @app.route('/sign_up', methods=['POST', 'GET'])
@@ -96,20 +97,38 @@ def add_personal_info():
             if double_test:
                 # If two usernames are the same, go to a page with suggestions
                 return redirect(url_for('username_wrong'))
-                post_data['username'] = request.form['first_name'].lower() + '.' + request.form['last_name'].lower() + year
+            else:
+                # If double test name is free, make this the session
+                post_data['username'] = double_used_username
+                
+                post_data['first_name'] = request.form['first_name'].lower()
+                post_data['last_name'] = request.form['last_name'].lower() 
+                post_data['password'] = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
+                new_id = new_employee.insert_one(post_data)
+                new_doc_id = new_id.inserted_id
+
+                session = new_employee.find_one({'username' : double_used_username})
+                print("session loggin double")
+                print(session)
+                print("from 113")
+
         else:
             post_data['username'] = temp_username
+        # If test name is free, make this the session
+            
+            post_data['first_name'] = request.form['first_name'].lower()
+            post_data['last_name'] = request.form['last_name'].lower() 
+            post_data['password'] = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
+            new_id = new_employee.insert_one(post_data)
+            new_doc_id = new_id.inserted_id
 
-        post_data['first_name'] = request.form['first_name'].lower()
-        post_data['last_name'] = request.form['last_name'].lower() 
-        post_data['password'] = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
-        
-        # Get the id of the new insert to collections 
-        new_id = new_employee.insert_one(post_data)
-        global new_doc_id
+            session = new_employee.find_one({'username' : temp_username})
+            print(session)
+            print("session 126")
 
-        # insert to collections
-        new_doc_id = new_id.inserted_id
+
+
+      
         return redirect(url_for('emergcy'))
     return render_template("/employeeinfo/personal_info.html", new_first_name=new_first_name)     
 
@@ -151,7 +170,7 @@ def emergcy():
 def personal_info():
     return render_template("")
 
-@app.route('/main', methods=['GET'])
+@app.route('/main', methods=['POST', 'GET'])
 def main():
     print ("going to main")
     
