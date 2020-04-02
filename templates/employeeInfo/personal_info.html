@@ -1,4 +1,4 @@
-{% extends 'new_member_info.html' %} {% block jumbotron %}
+{% extends '/employeeinfo/new_member_info.html' %} {% block jumbotron %}
 <div class="container">
     <h1 class="display-9">Welcome to Develop.This {{ new_first_name }}!</h1>
     <br>
@@ -25,12 +25,12 @@
     <br>
     <div class="form-group row">
         <label for="mob_number" class="col-sm-2 inline_form">Mob Number</label>
-        <input type="number" class="form-control col-sm-10" id="mob" name="mob" placeholder="Mob Number..." required>
+        <input type="tel" class="form-control col-sm-10" id="mob" name="mob" pattern="[0-9]{4}-[0-9]{6}" placeholder="Mob Number..." required>
     </div>
     <br>
     <div class="form-group row">
         <label for="home_number" class="col-sm-2 inline_form">Home Number</label>
-        <input type="number" class="form-control col-sm-10" id="home_number" name="home_number" placeholder="Home Number if available...">
+        <input type="tel" class="form-control col-sm-10" id="home_number" name="home_number" pattern="[0-9]{4}-[0-9]{6}" placeholder="Home Number if available...">
     </div>
     <br>
     <div class="form-group row">

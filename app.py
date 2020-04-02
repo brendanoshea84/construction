@@ -1,5 +1,4 @@
-import os
-import bcrypt
+import os, bcrypt
 from flask import Flask, render_template, redirect, request, url_for, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId 
@@ -139,7 +138,7 @@ def bank_details():
         'bank_name': request.form.get('bank_name'),
         'bank_number': request.form.get('bank_number')
         }}, upsert= True)
-        return redirect(url_for('main'))
+        return redirect(url_for('projects'))
     return render_template("/employeeinfo/bank_details.html", new_doc_id=new_doc_id, username =username, new_first_name=new_first_name)
 
 @app.route('/emergcy/', methods=['POST', 'GET'])
@@ -170,9 +169,38 @@ def personal_info():
 def main():
     print ("going to main")
     print(session)
-
-    
     return render_template("main.html", session=session)
+
+
+@app.route('/add_projects', methods=['POST', 'GET'])
+def add_project():
+    global projects
+    projects = mongo.db.projects
+
+    if request.method == 'POST': 
+        post_data = request.form.to_dict()
+        # Insure the price is an int not a string
+        post_data['price'] = int(request.form['price'])
+        # Set extra info for the project
+        post_data['active'] = True
+
+        new_project_number = projects.distinct('project_number')
+        project_no = max(new_project_number) 
+        project_number = int(project_no) +1
+        post_data['project_number'] = project_number
+
+        print("testing 189")
+        
+        print (project_number)
+
+        projects.insert_one(post_data)
+
+    return render_template("/main_extras/projects_new.html", session=session)
+
+@app.route('/projects', methods=['POST', 'GET'])
+def projects():
+    return render_template("/main_extras/projects.html", session=session)
+
 
 @app.route('/base', methods=['POST', 'GET'])
 def base():
@@ -181,7 +209,7 @@ def base():
 
 @app.route('/error_existing')
 def error_existing():
-    return render_template("error_existing.html")
+    return render_template("/errors/error_existing.html")
 
 
 

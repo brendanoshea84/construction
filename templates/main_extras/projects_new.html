@@ -1,0 +1,50 @@
+{% extends 'main.html' %}{% block main %}
+
+
+
+<div class="container-fluid">
+    <form id="personal_form" method="POST">
+        <div class="form-group row">
+            <label for="clients_name" class="col-sm-2 inline_form">Clients Name</label>
+            <input type="text" class="form-control col-sm-10" id="name" name="name" aria-describedby="first_name" placeholder="New Customer ...">
+
+        </div>
+        <br>
+        <div class="form-group row">
+            <label for="contact" class="col-sm-2 inline_form">Contact Details</label>
+            <input type="tel" class="form-control col-sm-10" id="phone" name="phone" pattern="[0-9]{4}-[0-9]{6}" placeholder="Clients phone number..." required>
+        </div>
+        <br>
+        <div class="form-group row">
+            <label for="address" class="col-sm-2 inline_form">Address of Project</label>
+            <input type="text" class="form-control col-sm-10" id="address" name="address" placeholder="Address of Project ...">
+        </div>
+        <hr>
+
+        <div class="form-group row">
+            <label for="brief" class="col-sm-2 inline_form">Brief Discription</label>
+            <input type="text" class="form-control col-sm-10" id="brief" name="brief" maxlength="100" placeholder="An introduction to the project ..." required>
+        </div>
+        <br>
+        <div class="form-group row">
+            <label for="discription" class="col-sm-2 inline_form">Clear Discription</label>
+            <textarea type="text" class="form-control col-sm-10" id="discription" name="discription" rows="4" placeholder="A more detail view of the project ..."></textarea>
+        </div>
+        <hr>
+
+        <label class="col-sm-2 inline_form" for="exampleSelect1">Price Type</label>
+        <select class="col-sm-2 inline_form" id="price_type">
+        <option name="cost_per_hour">Project per hour</option>
+        <option name="fixed_price_quote">Fixed Price</option>
+        </select>
+        <div class="form-group row">
+            <label class="col-sm-2 inline_form"></label>
+            <input type="number" class="form-control col-sm-10" id="price" name="price" placeholder="Price per hour or fixed price ..."></textarea>
+        </div>
+
+        <br>
+        <button type="submit" class="btn btn-primary col-sm-2 float-right">Save New Project</button>
+    </form>
+</div>
+
+{% endblock %}
