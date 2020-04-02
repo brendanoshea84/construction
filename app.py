@@ -10,6 +10,12 @@ app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 
 mongo = PyMongo(app)
 
+# Global variables used through out the project
+
+
+
+
+
 # Welcome Page
 # Sign in for new members with a pre password
 # Login using your own password
