@@ -1,1 +1,15 @@
 <h1>main page welcomes </h1>
+
+<h1>Testing admin</h1>
+
+{% if session['admin'] %}
+
+
+<button> Add Project </button> {% else %}
+
+<h1>Not admin</h1>
+
+{% endif %}
+<h4>check change</h4>
+
+<h5>{{ session }}</h5>

@@ -22,17 +22,21 @@ def intro():
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/sign_in', methods=['POST', 'GET'])
 def sign_in():
+    # set employees to global variable
+    global employees
+    employees = mongo.db.employees
+    print(employees)
+
     if request.method == 'POST':
     # Login using your own password
-        employees = mongo.db.employees
         login_user =  employees.find_one({'username' : request.form.get('login')})
         
         if login_user:
             if bcrypt.hashpw(request.form.get('password_user').encode('utf-8'), login_user['password']) ==  login_user['password']:
-                print("testing login area")
+                global session
                 session = login_user
                 print(session)
-                print("testing problem area 35")
+                print("testing problem area 38")
                 return redirect(url_for('main'))
             else:
                 # Fix here
@@ -40,7 +44,7 @@ def sign_in():
                 print("error at login 40")
         else:
             print("no user 42")        
-    return render_template('intro.html', employee = mongo.db.employees)       
+    return render_template('intro.html')       
             
 @app.route('/sign_up', methods=['POST', 'GET'])
 def sign_up():
@@ -56,12 +60,12 @@ def sign_up():
                 wel_pass = val
         if wel_pass == try_pass:
             # If sussecful- Page to input new member info
-            print("testing wel_pass == try_pass")
+            print("success with password at sign_up: line 59")
             return redirect(url_for('add_personal_info'))
         else:
             # Fix here
             # flash("testing")
-            print("welcome password wrong")
+            print("welcome password wrong line 64")
     return render_template('intro.html')       
 
 
@@ -73,7 +77,14 @@ def new_member_info():
 @app.route('/add_personal_info', methods=['POST', 'GET'])
 def add_personal_info():
     # Creating username number and username for new employee
-    new_employee = mongo.db.employees
+    
+    def add_to_database():
+        post_data['first_name'] = request.form['first_name'].lower()
+        post_data['last_name'] = request.form['last_name'].lower() 
+        post_data['password'] = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
+        new_id = employees.insert_one(post_data)
+        global new_doc_id
+        new_doc_id = new_id.inserted_id
    
 # When form is sent
     if request.method == 'POST': 
@@ -83,52 +94,38 @@ def add_personal_info():
         temp_username = request.form['first_name'].lower() + '.' + request.form['last_name'].lower()
         
         # Check to see if username has been used
-        temp_user = new_employee.find_one({'username' : temp_username})
+        temp_user = employees.find_one({'username' : temp_username})
 
         if temp_user:
             # Create another username if username is been used before using dob
-            print("already in database")
+            print("already in database line 97")
             tempdate = request.form['dob']
             testdate = tempdate.split('-')
             year = testdate[0]
-            double_used_username = request.form['first_name'].lower() + '.' + request.form['last_name'].lower() + year
-            double_test = new_employee.find_one({'username' : double_used_username})
+            double_used_username = temp_username + year
+            double_test = employees.find_one({'username' : double_used_username})
 
             if double_test:
                 # If two usernames are the same, go to a page with suggestions
+                print("double test fail line 106")
                 return redirect(url_for('username_wrong'))
             else:
                 # If double test name is free, make this the session
                 post_data['username'] = double_used_username
-                
-                post_data['first_name'] = request.form['first_name'].lower()
-                post_data['last_name'] = request.form['last_name'].lower() 
-                post_data['password'] = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
-                new_id = new_employee.insert_one(post_data)
-                new_doc_id = new_id.inserted_id
-
-                session = new_employee.find_one({'username' : double_used_username})
-                print("session loggin double")
+                add_to_database()
+                session = double_test
+                print("session loggin double 113")
                 print(session)
-                print("from 113")
+                print("from 115")
 
         else:
             post_data['username'] = temp_username
         # If test name is free, make this the session
-            
-            post_data['first_name'] = request.form['first_name'].lower()
-            post_data['last_name'] = request.form['last_name'].lower() 
-            post_data['password'] = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
-            new_id = new_employee.insert_one(post_data)
-            new_doc_id = new_id.inserted_id
-
-            session = new_employee.find_one({'username' : temp_username})
+            add_to_database()
+            session = temp_user
             print(session)
-            print("session 126")
+            print("session 123")
 
-
-
-      
         return redirect(url_for('emergcy'))
     return render_template("/employeeinfo/personal_info.html", new_first_name=new_first_name)     
 
@@ -137,26 +134,25 @@ def add_personal_info():
 def bank_details():
     if request.method == 'POST':
         # Update to made _id 
-        this_user.update_one({'_id': new_doc_id},
+        employees.update_one({'_id': new_doc_id},
         {'$set': {
         'bank_name': request.form.get('bank_name'),
         'bank_number': request.form.get('bank_number')
         }}, upsert= True)
         return redirect(url_for('main'))
-    return render_template("/employeeinfo/bank_details.html", this_user=this_user, new_doc_id=new_doc_id, username =username, new_first_name=new_first_name)
+    return render_template("/employeeinfo/bank_details.html", new_doc_id=new_doc_id, username =username, new_first_name=new_first_name)
 
 @app.route('/emergcy/', methods=['POST', 'GET'])
 def emergcy():
-    global this_user
     global username
-    this_user = mongo.db.employees
-    username = this_user.find_one({'_id': new_doc_id})
+    username = employees.find_one({'_id': new_doc_id})
     for key, val in username.items():
         if 'username' in key:
             username = val
     print(username)
+    print('username: line 150')
     if request.method == 'POST':
-        this_user.update_one({'_id': new_doc_id},
+        employees.update_one({'_id': new_doc_id},
         {'$set': {
         'next_of_kin': request.form.get('next_of_kin'),
         'next_of_kin_mob': request.form.get('next_of_kin_mob')
@@ -173,8 +169,10 @@ def personal_info():
 @app.route('/main', methods=['POST', 'GET'])
 def main():
     print ("going to main")
+    print(session)
+
     
-    return render_template("main.html")
+    return render_template("main.html", session=session)
 
 @app.route('/base', methods=['POST', 'GET'])
 def base():
