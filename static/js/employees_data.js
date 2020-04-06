@@ -4,7 +4,7 @@ let personal_tab = document.getElementById("personal_tab");
 let emergcy_tab = document.getElementById("emergcy_tab");
 let bank_tab = document.getElementById("bank_tab");
 
-$(document).ready(function() {
+window.onload = (function() {
     if (window.location.href.indexOf("personal_info") > -1) {
         personal_tab.classList.add('active')
         emergcy_tab.classList.remove('active')

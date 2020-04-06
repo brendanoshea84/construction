@@ -1,6 +1,101 @@
 {% extends 'main.html' %}{% block main %}
+<h1>Current Projects</h1>
+<div class="container-fluid">
+    <div class="row testingABC">
+        {% for project in projects %} {% if project.active==true %}
+        <div class="testCOL col-7">
+            <div class="row">
+                <br>
+                <div class="col-5">
+                    <h5>Job Number: </h5>
+                </div>
+                <div class="col-7">
+                    <h5> {{project.project_number}} </h5>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-5">
+                    <h5>Clients Name: </h5>
+                </div>
+                <div class="col-7">
+                    <h5> {{project.name}} </h5>
+                </div>
+                <div class="col-5">
+                    <h5>Address </h5>
+                </div>
+                <div class="col-7">
+                    <h5> {{project.address}} </h5>
+                </div>
+                <div class="col-5">
+                    <h5>Brief Discription: </h5>
+                </div>
+                <div class="col-7">
+                    <h5> {{project.brief}} </h5>
+                </div>
+                <div class="col-5">
+                    <h5>Active: </h5>
+                </div>
+                <div class="col-7">
+                    <h5> {{project.active}} </h5>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <a href="{{url_for('get_projects', project_id=project._id)}}">More Info</a>
+            </div>
+        </div>
+    </div>
 
-<h1>Projects page</h1>
+    {% else %}
+    <h2>Closed Projects</h2>
 
+    <div class="row testingABC">
 
-{% endblock %}
+        <div class="testCOL col-7">
+            <div class="row">
+                <br>
+                <div class="col-5">
+                    <h5>Job Number: </h5>
+                </div>
+                <div class="col-7">
+                    <h5> {{project.project_number}} </h5>
+                </div>
+            </div>
+            <hr>
+            <div class="row ">
+                <div class="col-5">
+                    <h5>Clients Name: </h5>
+                </div>
+                <div class="col-7">
+                    <h5> {{project.name}} </h5>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-5">
+                    <h5>Address </h5>
+                </div>
+                <div class="col-7">
+                    <h5> {{project.address}} </h5>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-5">
+                    <h5>Brief Discription: </h5>
+                </div>
+                <div class="col-7">
+                    <h5> {{project.brief}} </h5>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-5">
+                    <h5>Active: </h5>
+                </div>
+                <div class="col-7">
+                    <h5> {{project.active}} </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %} {% endfor %} {% endblock %} {% block main_ext %} {% endblock %}

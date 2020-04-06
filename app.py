@@ -1,4 +1,4 @@
-import os, bcrypt
+import os, bcrypt, calendar
 from flask import Flask, render_template, redirect, request, url_for, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId 
@@ -9,12 +9,6 @@ app.config["MONGO_DBNAME"] = "milestone3"
 app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 
 mongo = PyMongo(app)
-
-# Global variables used through out the project
-
-
-
-
 
 # Welcome Page
 # Sign in for new members with a pre password
@@ -30,7 +24,6 @@ def sign_in():
     # set employees to global variable
     global employees
     employees = mongo.db.employees
-    print(employees)
 
     if request.method == 'POST':
     # Login using your own password
@@ -72,7 +65,6 @@ def sign_up():
             # flash("testing")
             print("welcome password wrong line 64")
     return render_template('intro.html')       
-
 
 @app.route('/new_member_info', methods=['POST', 'GET'])   
 def new_member_info():
@@ -134,7 +126,6 @@ def add_personal_info():
         return redirect(url_for('emergcy'))
     return render_template("/employeeinfo/personal_info.html", new_first_name=new_first_name)     
 
-
 @app.route('/bank_details', methods=['POST', 'GET'])
 def bank_details():
     if request.method == 'POST':
@@ -165,11 +156,16 @@ def emergcy():
         return redirect(url_for('bank_details'))
     return render_template("/employeeinfo/emergcy.html", new_doc_id=new_doc_id, username =username, new_first_name=new_first_name)    
 
-
-
 @app.route('/personal_info', methods=['POST', 'GET'])
 def personal_info():
     return render_template("")
+
+
+
+
+
+
+
 
 @app.route('/main', methods=['POST', 'GET'])
 def main():
@@ -205,12 +201,30 @@ def add_project():
 
 @app.route('/projects', methods=['POST', 'GET'])
 def projects():
-    return render_template("/main_extras/projects.html", session=session)
+    
+    return render_template("/main_extras/projects.html", session=session, projects = mongo.db.projects.find() )
 
+@app.route('/get_projects/<project_id>', methods=['POST', 'GET'])
+def get_projects(project_id):
+    get_project = mongo.db.projects.find_one({"_id":ObjectId(project_id)})
+    return render_template("/main_extras/get_projects.html", session=session, projectstest=get_project,  projects = mongo.db.projects.find())
+
+
+@app.route('/main', methods=['POST', 'GET'])
+def Schudle():
+    print ("going to Schudle")
+    return render_template("main.html", session=session)
+    
+@app.route('/time_log', methods=['POST', 'GET'])
+def time_log():
+    print ("going to time_log")
+    return render_template("/main_extras/timelogs.html", session=session)
+    
+    
 
 @app.route('/base', methods=['POST', 'GET'])
-def base():
-    print ("working at base")
+def messages():
+    print ("working at messages")
     return render_template("base.html")
 
 @app.route('/error_existing')
