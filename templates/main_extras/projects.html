@@ -42,16 +42,18 @@
             </div>
             <hr>
             <div class="row">
-                <a href="{{url_for('get_projects', project_id=project._id)}}">More Info</a>
+                <a href="{{url_for('get_projects', project_id=project._id)}}" class="button">More Info</a> {% if session.admin == true %}
+                <button>Edit</button> {% endif %}
             </div>
         </div>
+        {% endif %} {% endfor %}
     </div>
 
-    {% else %}
+    {% if session.admin == true %}
     <h2>Closed Projects</h2>
 
     <div class="row testingABC">
-
+        {% for close in closes %} {% if close.active==false %}
         <div class="testCOL col-7">
             <div class="row">
                 <br>
@@ -59,7 +61,7 @@
                     <h5>Job Number: </h5>
                 </div>
                 <div class="col-7">
-                    <h5> {{project.project_number}} </h5>
+                    <h5> {{close.project_number}} </h5>
                 </div>
             </div>
             <hr>
@@ -68,7 +70,7 @@
                     <h5>Clients Name: </h5>
                 </div>
                 <div class="col-7">
-                    <h5> {{project.name}} </h5>
+                    <h5> {{close.name}} </h5>
                 </div>
             </div>
             <div class="row ">
@@ -76,7 +78,7 @@
                     <h5>Address </h5>
                 </div>
                 <div class="col-7">
-                    <h5> {{project.address}} </h5>
+                    <h5> {{close.address}} </h5>
                 </div>
             </div>
             <div class="row ">
@@ -84,7 +86,7 @@
                     <h5>Brief Discription: </h5>
                 </div>
                 <div class="col-7">
-                    <h5> {{project.brief}} </h5>
+                    <h5> {{close.brief}} </h5>
                 </div>
             </div>
             <div class="row ">
@@ -92,10 +94,16 @@
                     <h5>Active: </h5>
                 </div>
                 <div class="col-7">
-                    <h5> {{project.active}} </h5>
+                    <h5> {{close.active}} </h5>
                 </div>
             </div>
+            <div class="row">
+                <button href="{{url_for('get_projects', project_id=close._id)}}">More Info</button> {% if session.admin == true %}
+                <button>Edit</button> {% endif %}
+            </div>
         </div>
+        {% endif %} {% endfor %} {% endif %}
     </div>
 </div>
-{% endif %} {% endfor %} {% endblock %} {% block main_ext %} {% endblock %}
+<h3>WTF!!!</h3>
+{% block main_ext %} {% endblock %} {% endblock %}

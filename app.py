@@ -199,10 +199,27 @@ def add_project():
 
     return render_template("/main_extras/projects_new.html", session=session)
 
+
+
+
+
+
 @app.route('/projects', methods=['POST', 'GET'])
 def projects():
     
-    return render_template("/main_extras/projects.html", session=session, projects = mongo.db.projects.find() )
+    return render_template("/main_extras/projects.html", session=session, projects = mongo.db.projects.find(), closes = mongo.db.projects.find())
+
+
+
+
+
+
+
+
+
+
+
+
 
 @app.route('/get_projects/<project_id>', methods=['POST', 'GET'])
 def get_projects(project_id):
