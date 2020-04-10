@@ -228,7 +228,7 @@ def update_projects(project_id):
         'price':request.form.get('price')
     }) 
     print("line 230 after")
-    return redirect(url_for('main'))
+    return redirect(url_for('projects'))
         
 
 
