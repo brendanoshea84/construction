@@ -19,7 +19,7 @@ def intro():
     return render_template('intro.html', employee = mongo.db.employees)      
 
 @app.route('/', methods=['POST', 'GET'])
-@app.route('/sign_in', methods=['POST', 'GET'])
+@app.route('/sign_in', methods=['POST','GET'])
 def sign_in():
     # set employees to global variable
     global employees
@@ -197,26 +197,38 @@ def add_project():
 
         projects.insert_one(post_data)
 
-    return render_template("/main_extras/projects_new.html", session=session)
-
-
-
-
-
+    return render_template("/main_extras/projects_new.html", session=session, projects=projects)
 
 @app.route('/projects', methods=['POST', 'GET'])
 def projects():
+
     
     return render_template("/main_extras/projects.html", session=session, projects = mongo.db.projects.find(), closes = mongo.db.projects.find())
 
+@app.route('/edit_projects/<project_id>', methods=['POST', 'GET'])
+def edit_projects(project_id):
+    edit_projects = mongo.db.projects.find_one({"_id":ObjectId(project_id)})
+    project123 = mongo.db.projects
 
-
-
-
-
-
-
-
+    print("211 working")
+    print(project_id)
+    if request.method == 'POST':
+        print("post btn working")
+        project123.update({"_id":ObjectId(project_id)},
+        {
+        'active':request.form.get('active'),
+        'name':request.form.get('name'),
+        'phone':request.form.get('phone'),
+        'address':request.form.get('address'),
+        'brief':request.form.get('brief'),
+        'discription':request.form.get('discription'),
+        'price_type':request.form.get('price_type'),
+        'price':request.form.get('price')
+        })
+        print("224 working")
+        return redirect(url_for('projects'))
+    print("230 working")    
+    return render_template("/main_extras/edit_projects.html", session=session, edit_projects = edit_projects,project = mongo.db.projects.find())
 
 
 
@@ -225,6 +237,15 @@ def projects():
 def get_projects(project_id):
     get_project = mongo.db.projects.find_one({"_id":ObjectId(project_id)})
     return render_template("/main_extras/get_projects.html", session=session, projectstest=get_project,  projects = mongo.db.projects.find())
+
+
+@app.route('/delete_projects/<project_id>', methods=['POST', 'GET'])
+def delete_projects(project_id):
+    delete_project = mongo.db.projects.remove({"_id":ObjectId(project_id)})
+    return redirect(url_for('projects'))
+
+
+
 
 
 @app.route('/main', methods=['POST', 'GET'])

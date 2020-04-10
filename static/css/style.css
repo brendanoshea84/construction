@@ -4,70 +4,6 @@ body {
     background-color: rgb(237, 252, 250, 0.4);
 }
 
-.intro_message {
-    font-style: italic;
-    text-align: center;
-}
-
-.new_member,
-.login_side,
-.jumbo_image {
-    background-size: cover;
-    width: 100%;
-    border: white solid 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.new_member,
-.login_side {
-    height: 500px;
-    filter: grayscale(85%);
-    background-position: center;
-}
-
-.new_member {
-    background-image: url(/static/imagines/group.jpg);
-}
-
-.login_side {
-    background-image: url(/static/imagines/working.jpg);
-}
-
-.login_side:hover,
-.new_member:hover {
-    filter: grayscale(0);
-}
-
-.btn_login,
-.btn_new_member {
-    width: 200px;
-    height: 100px !important;
-}
-
-.hide {
-    display: none;
-}
-
-.clean_background {
-    background-color: rgb(0, 123, 255, 0.7);
-    border: black solid 1px;
-    border-radius: 3px;
-    padding: 10px;
-}
-
-.text_colour_white {
-    color: white;
-    font-size: 2em;
-}
-
-::placeholder {
-    color: rgb(255, 255, 255, 0.8) !important;
-    font-size: 1.5em;
-}
-
 
 /* Detail forms */
 
@@ -122,8 +58,10 @@ nav>div a.nav-item.nav-link:focus {
 
 .jumbo_image {
     background-image: url(/static/imagines/jumbo.jpg);
+    background-position: top;
     height: 15%;
     color: white;
+    text-shadow: 1px 1px grey;
 }
 
 .testing {
@@ -132,13 +70,21 @@ nav>div a.nav-item.nav-link:focus {
     align-items: center;
 }
 
+.title_jumbo {
+    font-size: 5vh;
+}
+
+.text_jumbo {
+    font-size: 3vh;
+}
+
 
 /* The side navigation menu */
 
 .sidebar {
     margin: 0;
     padding: 0;
-    width: 200px;
+    width: 15vw;
     background-color: #f1f1f1;
     position: fixed;
     height: 100%;
@@ -182,7 +128,7 @@ div.content {
 
 /* On screens that are less than 700px wide, make the sidebar into a topbar */
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 992px) {
     .sidebar {
         width: 100%;
         height: auto;
@@ -197,16 +143,6 @@ div.content {
 }
 
 
-/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
-
-@media screen and (max-width: 400px) {
-    .sidebar a {
-        text-align: center;
-        float: none;
-    }
-}
-
-
 /* project pages */
 
 .testingABC {
@@ -217,11 +153,20 @@ div.content {
     padding: 15px;
 }
 
-.testCOL {
+"" .testCOL {
     height: 100%;
+    width: 400px;
     display: inline-block;
     margin: 10px;
     white-space: nowrap;
     background-color: #f1f1f1;
     padding: 15px;
+}
+
+.box {
+    margin: 10px;
+}
+
+.row_no_margin {
+    margin: 0;
 }

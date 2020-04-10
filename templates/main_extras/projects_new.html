@@ -1,5 +1,6 @@
+{% extends 'main.html' %}{% block main %}
 <div class="container-fluid">
-    <form id="personal_form" method="POST">
+    <form id="client_form" method="POST">
         <div class="form-group row">
             <label for="clients_name" class="col-sm-2 inline_form">Clients Name</label>
             <input type="text" class="form-control col-sm-10" id="name" name="name" aria-describedby="first_name" placeholder="New Customer ...">
@@ -28,10 +29,10 @@
         </div>
         <hr>
 
-        <label class="col-sm-2 inline_form" for="exampleSelect1">Price Type</label>
-        <select class="col-sm-2 inline_form" id="price_type">
-        <option name="cost_per_hour">Project per hour</option>
-        <option name="fixed_price_quote">Fixed Price</option>
+        <label class="col-sm-2 inline_form">Price Type</label>
+        <select class="col-sm-2 inline_form" id="price_type" name="price_type">
+        <option value="project per hour">Project per hour</option>
+        <option value="fixed Price">Fixed Price</option>
         </select>
         <div class="form-group row">
             <label class="col-sm-2 inline_form"></label>
@@ -39,6 +40,10 @@
         </div>
 
         <br>
-        <button type="submit" class="btn btn-primary col-sm-2 float-right">Save New Project</button>
+        <a href="{{url_for('projects')}}">
+            <button type="submit" class="btn btn-primary col-sm-2 float-right" href="{{url_for('projects')}}">Save New Project</button>
+        </a>
     </form>
 </div>
+
+{% endblock %}
