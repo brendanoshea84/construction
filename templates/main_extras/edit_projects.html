@@ -1,6 +1,6 @@
 {% extends 'main.html' %}{% block main %}
 
-<form id="clients_form" method="POST" action="{{ url_for('edit_projects', project_id=project._id) }}">
+<form method="POST" action="{{ url_for('update_projects', project_id=project._id) }}">
     <br>
     <div class="form-group row ">
 

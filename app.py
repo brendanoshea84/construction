@@ -202,20 +202,22 @@ def add_project():
 @app.route('/projects', methods=['POST', 'GET'])
 def projects():
 
-    
     return render_template("/main_extras/projects.html", session=session, projects = mongo.db.projects.find(), closes = mongo.db.projects.find())
 
-@app.route('/edit_projects/<project_id>', methods=['POST', 'GET'])
+@app.route('/edit_projects/<project_id>')
 def edit_projects(project_id):
     edit_projects = mongo.db.projects.find_one({"_id":ObjectId(project_id)})
-    project123 = mongo.db.projects
+    print("line 210 edit")
+    return render_template("/main_extras/edit_projects.html", session=session, edit_projects = edit_projects,project = mongo.db.projects.find())
 
-    print("211 working")
-    print(project_id)
-    if request.method == 'POST':
-        print("post btn working")
-        project123.update({"_id":ObjectId(project_id)},
-        {
+
+
+@app.route('/update_projects/<project_id>', methods=['POST'])
+def update_projects(project_id):
+    print("line 217 before")
+    project123 = mongo.db.projects
+    project123.update({"_id":ObjectId(project_id)},
+    {
         'active':request.form.get('active'),
         'name':request.form.get('name'),
         'phone':request.form.get('phone'),
@@ -224,11 +226,32 @@ def edit_projects(project_id):
         'discription':request.form.get('discription'),
         'price_type':request.form.get('price_type'),
         'price':request.form.get('price')
-        })
-        print("224 working")
-        return redirect(url_for('projects'))
-    print("230 working")    
-    return render_template("/main_extras/edit_projects.html", session=session, edit_projects = edit_projects,project = mongo.db.projects.find())
+    }) 
+    print("line 230 after")
+    return redirect(url_for('main'))
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
