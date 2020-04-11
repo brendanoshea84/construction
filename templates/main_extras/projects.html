@@ -9,7 +9,7 @@
 
 <div>
     <div class="row testingABC">
-        {% for project in projects %} {% if project.active==true %}
+        {% for project in projects %} {% if project.active== 'on' %}
         <div class="testCOL">
             <div class="row">
                 <br>
@@ -61,7 +61,7 @@
     <h2>Closed Projects</h2>
 
     <div class="row testingABC">
-        {% for close in closes %} {% if close.active==false %}
+        {% for close in closes %} {% if close.active!= 'on' %}
         <div class="testCOL">
             <div class="row">
                 <br>

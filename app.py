@@ -184,7 +184,7 @@ def add_project():
         # Insure the price is an int not a string
         post_data['price'] = int(request.form['price'])
         # Set extra info for the project
-        post_data['active'] = True
+        post_data['active'] = 'on'
 
         new_project_number = projects.distinct('project_number')
         project_no = max(new_project_number) 
@@ -204,32 +204,48 @@ def projects():
 
     return render_template("/main_extras/projects.html", session=session, projects = mongo.db.projects.find(), closes = mongo.db.projects.find())
 
-@app.route('/edit_projects/<project_id>')
+@app.route('/edit_projects/<project_id>', methods=['POST', 'GET'])
 def edit_projects(project_id):
+    print("edit 209")
     edit_projects = mongo.db.projects.find_one({"_id":ObjectId(project_id)})
-    print("line 210 edit")
+
+    if request.method == "POST":
+        print("post happened")
+        update_project = mongo.db.projects.update_one({"_id":ObjectId(project_id)},
+        {'$set': {
+            
+            'name':request.form.get('name'),
+            'phone':request.form.get('phone'),
+            'address':request.form.get('address'),
+            'brief':request.form.get('brief'),
+            'discription':request.form.get('discription'),
+            'price':request.form.get('price'),
+            'price_type':request.form.get('price_type'),
+            'active':request.form.get('active')
+
+        }}, upsert= True)
+        print("try after")
+        return redirect(url_for('projects'))
     return render_template("/main_extras/edit_projects.html", session=session, edit_projects = edit_projects,project = mongo.db.projects.find())
 
 
-
-@app.route('/update_projects/<project_id>', methods=['POST'])
+@app.route('/update_projects/<project_id>', methods=['POST', 'GET'])
 def update_projects(project_id):
-    print("line 217 before")
-    project123 = mongo.db.projects
-    project123.update({"_id":ObjectId(project_id)},
-    {
-        'active':request.form.get('active'),
-        'name':request.form.get('name'),
-        'phone':request.form.get('phone'),
-        'address':request.form.get('address'),
-        'brief':request.form.get('brief'),
-        'discription':request.form.get('discription'),
-        'price_type':request.form.get('price_type'),
-        'price':request.form.get('price')
-    }) 
-    print("line 230 after")
-    return render_template("index.html")
-        
+    # update_project = mongo.db.projects.update_one({"_id":ObjectId(project_id)},
+    # {
+    #     'active':request.form.get('active'),
+    #     'name':request.form.get('name'),
+    #     'phone':request.form.get('phone'),
+    #     'address':request.form.get('address'),
+    #     'brief':request.form.get('brief'),
+    #     'discription':request.form.get('discription'),
+    #     'price_type':request.form.get('price_type'),
+    #     'price':request.form.get('price')
+    # }) 
+    # print("try after")
+    # return redirect(url_for('projects'))
+    return ""
+       
 
 
 
