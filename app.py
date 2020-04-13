@@ -1,4 +1,4 @@
-import os, bcrypt, calendar
+import os, bcrypt, calendar, datetime, itertools
 from flask import Flask, render_template, redirect, request, url_for, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId 
@@ -67,8 +67,7 @@ def sign_up():
     return render_template('intro.html')       
 
 @app.route('/new_member_info', methods=['POST', 'GET'])   
-def new_member_info():
-       
+def new_member_info():  
     return render_template("/employeeinfo/personal_info.html")    
 
 @app.route('/add_personal_info', methods=['POST', 'GET'])
@@ -160,13 +159,6 @@ def emergcy():
 def personal_info():
     return render_template("")
 
-
-
-
-
-
-
-
 @app.route('/main', methods=['POST', 'GET'])
 def main():
     print ("going to main")
@@ -201,7 +193,6 @@ def add_project():
 
 @app.route('/projects', methods=['POST', 'GET'])
 def projects():
-
     return render_template("/main_extras/projects.html", session=session, projects = mongo.db.projects.find(), closes = mongo.db.projects.find())
 
 @app.route('/edit_projects/<project_id>', methods=['POST', 'GET'])
@@ -228,55 +219,10 @@ def edit_projects(project_id):
         return redirect(url_for('projects'))
     return render_template("/main_extras/edit_projects.html", session=session, edit_projects = edit_projects,project = mongo.db.projects.find())
 
-
-@app.route('/update_projects/<project_id>', methods=['POST', 'GET'])
-def update_projects(project_id):
-    # update_project = mongo.db.projects.update_one({"_id":ObjectId(project_id)},
-    # {
-    #     'active':request.form.get('active'),
-    #     'name':request.form.get('name'),
-    #     'phone':request.form.get('phone'),
-    #     'address':request.form.get('address'),
-    #     'brief':request.form.get('brief'),
-    #     'discription':request.form.get('discription'),
-    #     'price_type':request.form.get('price_type'),
-    #     'price':request.form.get('price')
-    # }) 
-    # print("try after")
-    # return redirect(url_for('projects'))
-    return ""
-       
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @app.route('/get_projects/<project_id>', methods=['POST', 'GET'])
 def get_projects(project_id):
     get_project = mongo.db.projects.find_one({"_id":ObjectId(project_id)})
-    return render_template("/main_extras/get_projects.html", session=session, projectstest=get_project,  projects = mongo.db.projects.find())
-
+    return render_template("/main_extras/get_projects.html", session=session, project=get_project,  projects = mongo.db.projects.find())
 
 @app.route('/delete_projects/<project_id>', methods=['POST', 'GET'])
 def delete_projects(project_id):
@@ -284,19 +230,51 @@ def delete_projects(project_id):
     return redirect(url_for('projects'))
 
 
-
-
-
-@app.route('/main', methods=['POST', 'GET'])
-def Schudle():
-    print ("going to Schudle")
-    return render_template("main.html", session=session)
+@app.route('/employees', methods=['POST', 'GET'])
+def employees():
+    print ("going to employees")
+    return render_template("/main_extras/employees.html", session=session, employees = mongo.db.employees.find())
     
+
+
+
+
+
 @app.route('/time_log', methods=['POST', 'GET'])
 def time_log():
     print ("going to time_log")
-    return render_template("/main_extras/timelogs.html", session=session)
+    x = datetime.datetime.now()
+    weekdays = x.strftime("%W")
+    day = x.strftime("%A")
+
+    week_day=datetime.datetime.now().isocalendar()[2]
+
+    # Calculates Starting date (Sunday) for this case by subtracting current date with time delta of the day of the week
+    start_date=datetime.datetime.now() - datetime.timedelta(days=week_day)
+
+    # Prints the list of dates in a current week
+    a =[str((start_date + datetime.timedelta(days=i+1)).date().strftime('%m-%d')) for i in range(7)]
+    b =[str((start_date + datetime.timedelta(days=i+1)).date().strftime('%A')) for i in range(7)]
+    c =[str((start_date + datetime.timedelta(days=i+1)).date().strftime('%A')) for i in range(7)]
+
+    dates = list(a)
+    day_names = list(b)
+    time_stamp = list(c)
+
+    d = "2020-W" + weekdays
+
+    r = datetime.datetime.strptime(d + '-1', "%Y-W%W-%w").strftime('%m-%d')
+    testingABC = mongo.db.time_logs.find()
+
     
+    return render_template("/main_extras/timelogs.html", session=session, time=x, weekdays=weekdays, day=day, dates=dates, r=r, day_names=day_names, testing = itertools.zip_longest(dates, day_names, testingABC),projects = mongo.db.projects.find(), testingABC=testingABC )
+    
+
+
+
+
+
+
     
 
 @app.route('/base', methods=['POST', 'GET'])

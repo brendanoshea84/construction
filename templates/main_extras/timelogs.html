@@ -1,35 +1,49 @@
 {% extends 'main.html' %}{% block main %}
 
-
-<h3>Calendar</h3>
+<h3>Time log</h3>
+date: {{ time }}
+<br> week number: {{ weekdays }}
+<br> day: {{ day }}
 <br>
+
+<br>
+
 <div class="row">
-    <div class="input-field col s12" id="matfix">
-        <i class="material-icons prefix">today</i>
-        <input id="due_date" name="due_date" type="text" class="datepicker">
-        <label for="icon_prefix">Due Date</label>
+
+    <br>{% for www, aaa, bbb in testing %}
+    <div class="col">
+
+        <div class="row">{{ aaa }}</div>
+        {% if www == bbb.date %}
+        <div class="row">{{ www }}</div>
+        <div class="row">{{ bbb.date }}</div>
+        {% else %}
+        <div class="row">{{ www }}</div>
+
+        {% endif %}
     </div>
+    {% endfor %}
 </div>
-<h3>date checker</h3>
+
 <br>
-<h3>Project number and address</h3>
-<br>
-<h3>Notes on what has been done</h3>
+
+<br><br>
+
 <br>
 
 
-<!-- <script type="text/javascript">
-    document.getElementById("matfix").addEventListener("click", function(e) {
-        e.stopPropagation();
-    });
-    $('.datepicker').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15, // Creates a dropdown of 15 years to control year,
-        today: 'Today',
-        clear: 'Clear',
-        close: 'Ok',
-        closeOnSelect: false // Close upon selecting a date,
-    });
-</script> -->
 
-{% endblock %}
+
+
+<h3>testing projects</h3>
+{% for project in projects %} {{project.project_number}} {% endfor %}
+
+<h3>test</h3>
+{% for fuck in testingABC %} {{ fuck.project_number}} {{ fuck.hours}} {{fuck.date}} {% endfor %}
+
+
+
+<h3>test</h3>
+<br> {{ r }} {{ day_names }}
+<br>
+<br> {{ datestest }} {% endblock %}

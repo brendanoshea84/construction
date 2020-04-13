@@ -59,9 +59,13 @@ nav>div a.nav-item.nav-link:focus {
 .jumbo_image {
     background-image: url(/static/imagines/jumbo.jpg);
     background-position: top;
+    position: sticky !important;
     height: 15%;
     color: white;
     text-shadow: 1px 1px grey;
+    margin: 0;
+    z-index: 20;
+    top: 0;
 }
 
 .testing {
@@ -153,14 +157,17 @@ div.content {
     padding: 15px;
 }
 
-"" .testCOL {
+.testCOL {
     height: 100%;
-    width: 400px;
+    width: 100%;
     display: inline-block;
     margin: 10px;
-    white-space: nowrap;
     background-color: #f1f1f1;
     padding: 15px;
+}
+
+.col_size {
+    max-width: 400px;
 }
 
 .box {
