@@ -38,6 +38,24 @@
         </div>
     </div>
 
+    {% if session.admin == true %}
+    <hr>
+    <div class="row">
+        <div class="col-3">
+            <h5>Cost Type: </h5>
+        </div>
+        <div class="col-7">
+            <h5> {{project.price_type}} </h5>
+        </div>
+        <div class="col-3">
+            <h5>Price: </h5>
+        </div>
+        <div class="col-7">
+            <h5> {{project.price}} </h5>
+        </div>
+    </div>
+    {% endif %}
+
 
 
 

@@ -12,9 +12,10 @@
 <body>
     <div class="jumbotron jumbo_image">
         <div class="container">
-            <h1 class="display-9">Welcome to Develop.This {{ new_first_name }}!</h1>
+            <h1 class="display-9">Develop This!</h1>
             <br>
-            <h3 class="lead">Your username is {{ username }}.</h3>
+            <h3 class="lead">Welcome {{ session.first_name }}</h3>
+
         </div>
     </div>
 
@@ -36,7 +37,7 @@
         <div class="col-xs-12 col-lg-10">
 
             <div>
-                {% block main %} {% endblock %}
+                <br> {% block main %} {% endblock %}
             </div>
             <div>
                 {% block main_ext %} {% endblock %}

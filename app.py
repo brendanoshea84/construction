@@ -73,7 +73,6 @@ def new_member_info():
 @app.route('/add_personal_info', methods=['POST', 'GET'])
 def add_personal_info():
     # Creating username number and username for new employee
-    
     def add_to_database():
         post_data['first_name'] = request.form['first_name'].lower()
         post_data['last_name'] = request.form['last_name'].lower() 
@@ -81,6 +80,7 @@ def add_personal_info():
         new_id = employees.insert_one(post_data)
         global new_doc_id
         new_doc_id = new_id.inserted_id
+        session = new_id
    
 # When form is sent
     if request.method == 'POST': 
@@ -118,10 +118,7 @@ def add_personal_info():
             post_data['username'] = temp_username
         # If test name is free, make this the session
             add_to_database()
-            session = temp_user
-            print(session)
-            print("session 123")
-
+            
         return redirect(url_for('emergcy'))
     return render_template("/employeeinfo/personal_info.html", new_first_name=new_first_name)     
 
@@ -141,6 +138,10 @@ def bank_details():
 def emergcy():
     global username
     username = employees.find_one({'_id': new_doc_id})
+    global session
+    session = username
+    print("testing sessions ")
+    print(session)
     for key, val in username.items():
         if 'username' in key:
             username = val
@@ -238,6 +239,21 @@ def employees():
 
 
 
+@app.route('/get_employee/<employee_id>', methods=['POST', 'GET'])
+def get_employee(employee_id):
+    get_employee = mongo.db.emploees.find_one({"_id":ObjectId(employee_id)})
+    print ("going to employees")
+    return render_template("/main_extras/get_employee.html", session=session, employees = mongo.db.employees.find())
+    
+
+
+
+
+
+
+
+
+
 
 
 @app.route('/time_log', methods=['POST', 'GET'])
@@ -266,8 +282,10 @@ def time_log():
     r = datetime.datetime.strptime(d + '-1', "%Y-W%W-%w").strftime('%m-%d')
     testingABC = mongo.db.time_logs.find()
 
+    qqq = mongo.db.time_logs.find()
+
     
-    return render_template("/main_extras/timelogs.html", session=session, time=x, weekdays=weekdays, day=day, dates=dates, r=r, day_names=day_names, testing = itertools.zip_longest(dates, day_names, testingABC),projects = mongo.db.projects.find(), testingABC=testingABC )
+    return render_template("/main_extras/timelogs.html", session=session, time=x, weekdays=weekdays, day=day, dates=dates, r=r, day_names=day_names,projects = mongo.db.projects.find(), testingABC= testingABC, testing = itertools.zip_longest(dates, day_names, testingABC), qqq=qqq )
     
 
 

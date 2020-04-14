@@ -177,3 +177,23 @@ div.content {
 .row_no_margin {
     margin: 0;
 }
+
+.btn_employees {
+    width: 10vw;
+    min-width: 100px;
+    height: 5vh;
+    border-radius: 5px;
+    margin: 10px;
+    float: right;
+    margin: auto;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.row_full {
+    width: 100%;
+    text-align: center;
+    display: flex;
+}
