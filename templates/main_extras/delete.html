@@ -1,0 +1,17 @@
+{% extends 'main.html' %}{% block main %}
+
+<h1>Warning</h1>
+<br>
+<h3>You are about to remove <b><u>{{employee.first_name}} {{employee.last_name}}</u></b> From the database</h3>
+<br>
+<br>
+<div class="row">
+    <div class="col-2">
+        <a href="{{url_for('employees')}}" class="btn btn-primary btn-sm btn_employees float-left">Back to Employees</a>
+    </div>
+    <div class="col-2">
+        <a href="{{url_for('remove_employee', delete_id=employee._id)}}" class="btn btn-warning btn-sm btn_employees float-left">Remove Employee</a>
+    </div>
+</div>
+
+{% endblock %}

@@ -5,45 +5,47 @@ date: {{ time }}
 <br> week number: {{ weekdays }}
 <br> day: {{ day }}
 <br>
-
 <br>
 <br>
-<div class="row">
-
-    <div class="col">
-        <div class="row">
-        </div>
-    </div>
-
-</div>
 
 <!-- Example Method -->
 <h4>Testing two for loops here</h4>
-<div class="row">
-    {% for dat, day_names, abc in testing %}
-    <div class="col">
-        <div class="row">{{ dat }}</div>
-        <div class="row">{{ day_names }}</div>
-        <div class="row">{{ abc.date }}</div>
+<div class="container-fluid">
+    <div class="row">
+        <form action="" method="POST">
+            <button class="col" type="submit" name="lastweek"><i class="fa fa-angle-double-left "></i>Last Week</button>
+            <div class="col-8"></div>
+            <button class="col right" type="submit" name="nextweek">Next week
+            <i class="fa fa-angle-double-right "></i></button>
+        </form>
+    </div>
+</div>
 
-        <div class="row">
-            <h4>New</h4>
-            <h3>{% for test in qqq %} {{ test.date }} {% endfor %}</h3>
+<br>
+<div class="container-fluid">
+    <div class="row row_for_col">
+        {% for dat, day_names, abc in testing %}
+        <div class="col-cust mx-auto">
+            <div class="row row_no_margin">
+                <div class="container header_dates">{{ dat }}</div>
+            </div>
+
+            <div class="row row_no_margin">
+                <div class="container header_dates">{{ day_names }}</div>
+            </div>
+            <br>
+            <div class="row row_no_margin">
+                <div class="container">
+                    <h4>{% for test in qqq %} {% if dat == test.date %} {{ test.hours }} {% endif %} {% endfor %} </h4>
+                </div>
+            </div>
         </div>
 
+        {% endfor %}
     </div>
-
-    {% endfor %}
 </div>
 <br>
 <br>
-
-
-
-
-
-
-
 
 <br>
 

@@ -75,3 +75,7 @@ input[type=password] {
 .title {
     padding-left: 5%;
 }
+
+.no_margin {
+    margin: 0;
+}

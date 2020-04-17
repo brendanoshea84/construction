@@ -2,7 +2,7 @@
 <div class="row row_no_margin">
     <h1>Current Projects</h1>
     {% if session['admin'] %}
-    <button type="submit" class="btn btn-primary col-sm-2 btn_employees" href="{{url_for('add_project')}}">New Project</button>
+    <a class="btn btn-primary col-sm-2 btn_employees" href="{{url_for('add_project')}}">New Project</a>
 
     <br> {% endif %}
 </div>
@@ -49,9 +49,9 @@
             </div>
             <hr>
             <div class="row">
-                <a href="{{url_for('get_projects', project_id=project._id)}}" class="btn btn-primary btn-sm btn_employees">More Info</a> {% if session.admin == true %}
+                <a href="{{url_for('get_projects', project_id=project._id)}}" class="btn btn-primary col-sm-2 btn_employees">More Info</a> {% if session.admin == true %}
 
-                <a href="{{url_for('edit_projects', project_id=project._id)}}" class="btn btn-secondary btn-sm btn_employees ">Edit Project</a> {% endif %}
+                <a href="{{url_for('edit_projects', project_id=project._id)}}" class="btn btn-secondary col-sm-2 btn_employees">Edit Project</a> {% endif %}
             </div>
         </div>
         {% endif %} {% endfor %}
@@ -105,11 +105,18 @@
                     <h5> {{close.active}} </h5>
                 </div>
             </div>
+            <hr>
             <div class="row">
-                <a href="{{url_for('get_projects', project_id=close._id)}}" class="btn btn-primary btn-sm btn_employees">More Info</a> {% if session.admin == true %}
+                <div class="col-sm-12 col-md-4 three_btn">
+                    <a href="{{url_for('get_projects', project_id=close._id)}}" class="btn btn-primary btn_three">More Info</a> {% if session.admin == true %}
+                </div>
+                <div class="col-sm-12 col-md-4 three_btn">
+                    <a href="{{url_for('edit_projects', project_id=close._id)}}" class="btn btn-secondary btn_three">Edit</a>
+                </div>
 
-                <a href="{{url_for('edit_projects', project_id=close._id)}}" class="btn btn-secondary btn-sm btn_employees ">Edit Project</a>
-                <a href="{{url_for('delete_projects', project_id=close._id)}}" class="btn btn-warning btn-sm btn_employees ">Delete Project</a>{% endif %}
+                <div class="col-sm-12 col-md-4 three_btn">
+                    <a href="{{url_for('delete_projects', project_id=close._id)}}" class="btn btn-warning btn_three">Delete </a>{% endif %}
+                </div>
             </div>
 
         </div>

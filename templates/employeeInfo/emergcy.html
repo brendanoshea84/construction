@@ -1,14 +1,14 @@
 {% extends '/employeeinfo/new_member_info.html' %} {% block jumbotron %}
 <div class="container">
-    <h1 class="display-9">Welcome to Develop.This {{ new_first_name }}!</h1>
+    <p class="title_jumbo">Welcome to Develop.This {{ new_first_name }}!</p>
     <br>
-    <h4>Your username is {{ username }}.</h4>
+    <p class="text_jumbo">Your username is {{ username }}.</p>
 </div>
 
 {% endblock %} {% block personal_info %}
 <form id="emergcy_form" method="POST">
     <div class="form-group row">
-        <label for="first_name" class="col-sm-2 inline_form">Next of kin</label>
+        <label for="next_of_kin" class="col-sm-2 inline_form">Next of kin</label>
         <input type="text" class="form-control col-sm-10" id="next_of_kin" name="next_of_kin" aria-describedby="next_of_kin" placeholder="Who should we call in emergcy?">
 
     </div>

@@ -1,40 +1,85 @@
-<form id="personal_form" method="POST">
-    <div class="form-group row">
-        <label for="first_name" class="col-sm-2 inline_form">First Name</label>
-        <input type="text" class="form-control col-sm-10" id="first_name" name="first_name" aria-describedby="first_name" placeholder={{ new_first_name }} value={{ new_first_name }}>
+{% extends 'main.html' %}{% block main %}
+<h2>Employee Information</h2>
+<hr>
+<br>
+<div class="row">
+    <br>
+    <div class="col-md-3 col-5">
+        <h5>Name: </h5>
+    </div>
+    <div class="col-md-9 col-7">
+        <h5> {{employee.first_name}} {{employee.last_name}}</h5>
+    </div>
+    <div class="col-md-3 col-5">
+        <h5>Username : </h5>
+    </div>
+    <div class="col-md-9 col-7">
+        <h5> {{employee.username}} </h5>
+    </div>
 
+    <br>
+    <br>
+
+    <div class="col-md-3 col-5">
+        <h5>Phone Number : </h5>
+    </div>
+    <div class="col-md-9 col-7">
+        <h5> {{employee.mob}} </h5>
+    </div>
+
+    <div class="col-md-3 col-5">
+        <h5> Home Number : </h5>
+    </div>
+    <div class="col-md-9 col-7">
+        <h5> {{employee.home_number}} </h5>
+    </div>
+
+
+    <div class="col-md-3 col-5">
+        <h5>Address : </h5>
+    </div>
+    <div class="col-md-9 col-7">
+        <h5> {{employee.adress}} </h5>
+    </div>
+
+    <div class="col-md-3 col-5">
+        <h5>Date of Birth : </h5>
+    </div>
+    <div class="col-md-9 col-7">
+        <h5> {{employee.dob}} </h5>
     </div>
     <br>
-    <div class="form-group row">
-        <label for="last_name" class="col-sm-2 inline_form">Last Name</label>
-        <input type="text" class="form-control col-sm-10" id="last_name" name="last_name" placeholder="Last Name..." required>
+    <br>
+
+    <div class="col-md-3 col-5">
+        <h5> Next of kin : </h5>
+    </div>
+    <div class="col-md-9 col-7">
+        <h5> {{employee.next_of_kin}} </h5>
+    </div>
+    <div class="col-md-3 col-5">
+        <h5> Next of kin Mob: </h5>
+    </div>
+    <div class="col-md-9 col-7">
+        <h5> {{employee.next_of_kin_mob}} </h5>
     </div>
     <br>
-    <div class="form-group row">
-        <label for="dob" class="col-sm-2 inline_form">Date of Birth</label>
-        <input type="date" class="form-control col-sm-10" id="dob" name="dob" placeholder="Your date of birth...">
+    <br>
+    <div class="col-md-3 col-5">
+        <h5> Bank Name : </h5>
+    </div>
+    <div class="col-md-9 col-7">
+        <h5> {{employee.bank_name}} </h5>
+    </div>
+    <div class="col-md-3 col-5">
+        <h5> Bank Number : </h5>
+    </div>
+    <div class="col-md-9 col-7">
+        <h5> {{employee.bank_number}} </h5>
     </div>
     <br>
-    <div class="form-group row">
-        <label for="mob_number" class="col-sm-2 inline_form">Mob Number</label>
-        <input type="tel" class="form-control col-sm-10" id="mob" name="mob" placeholder="Mob Number..." required>
+    <br>
+    <div class="col-4">
+        <a href="{{url_for('employees')}}" class="btn btn-primary btn-lg btn_employees float-left">Back</a>
     </div>
-    <br>
-    <div class="form-group row">
-        <label for="home_number" class="col-sm-2 inline_form">Home Number</label>
-        <input type="tel" class="form-control col-sm-10" id="home_number" name="home_number" placeholder="Home Number if available...">
-    </div>
-    <br>
-    <div class="form-group row">
-        <label for="address" class="col-sm-2 inline_form">Address</label>
-        <input type="text" class="form-control col-sm-10" id="address" name="address" placeholder="Your postal address..." required>
-    </div>
-    <br>
-    <div class="form-group row">
-        <label for="password" class="col-sm-2 inline_form">Password</label>
-        <input type="password" class="form-control col-sm-10" id="password" name="password" placeholder="Enter your own password...">
-    </div>
-    <br>
-    <button type="submit" class="btn btn-primary col-sm-4 float-right ">Save and Next</button>
-    <br>
-</form>
+    <hr> {% endblock %}

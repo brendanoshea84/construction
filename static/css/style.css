@@ -132,10 +132,10 @@ div.content {
 
 /* On screens that are less than 700px wide, make the sidebar into a topbar */
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 767px) {
     .sidebar {
         width: 100%;
-        height: auto;
+        height: 100%;
         position: relative;
     }
     .sidebar a {
@@ -143,6 +143,12 @@ div.content {
     }
     div.content {
         margin-left: 0;
+    }
+    .active {
+        width: 100%;
+    }
+    .main_page {
+        margin: 5%;
     }
 }
 
@@ -179,13 +185,21 @@ div.content {
 }
 
 .btn_employees {
-    width: 10vw;
+    width: 100%;
     min-width: 100px;
     height: 5vh;
     border-radius: 5px;
     margin: 10px;
     float: right;
     margin: auto;
+    text-align: center;
+}
+
+.btn_three {
+    width: 100%;
+    border-radius: 5px;
+    height: 5vh;
+    text-align: center;
 }
 
 .bold {
@@ -196,4 +210,33 @@ div.content {
     width: 100%;
     text-align: center;
     display: flex;
+}
+
+.three_btn {
+    padding: 10px;
+}
+
+.center {
+    margin-left: 10vw;
+}
+
+.col-cust {
+    position: relative;
+    min-height: 1px;
+    width: 14%;
+    border: solid 1px black;
+    display: block;
+    text-align: center;
+}
+
+.row_for_col {
+    text-align: center;
+}
+
+.header_dates {
+    background-color: #f1f1f1;
+}
+
+.right {
+    text-align: center;
 }
