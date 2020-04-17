@@ -283,6 +283,7 @@ def edit_employee(employee_id):
 
 
 
+
 @app.route('/time_log', methods=['POST', 'GET'])
 def time_log():
     print ("going to time_log")
@@ -291,15 +292,17 @@ def time_log():
     day = x.strftime("%A")
 
     week_day=datetime.datetime.now().isocalendar()[2]
-    
-    week_change = 0
+     
+    week_change = session.get('week_change', 0)
     
     if 'lastweek' in request.form:
-        week_change += 1 
+        week_change += 1
+        session['week_change'] = week_change
         print("last week changed")
         print(week_change)
     elif 'nextweek' in request.form:
         week_change -= 1
+        session['week_change'] = week_change
         print("next week changed") 
         print(week_change)  
     else:
