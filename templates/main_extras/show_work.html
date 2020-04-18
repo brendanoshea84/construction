@@ -4,9 +4,11 @@
     <div class="form-group row">
         <label for="project_number" class="col-sm-2 inline_form">Project Number</label>
         <select class="form-control col-10" name="project_number" id="project_number">
+            
             {% for pro in projects %}
             {% if pro.active == "on" %}
               <option>
+                {{worked.project_number}}
                   
                    {{pro.project_number}}</option>
                    {% endif %}
@@ -14,7 +16,7 @@
             </select>
 
         <label for="last_name" class="col-sm-2 inline_form">Date</label>
-        <input type="date" class="form-control col-sm-2" id="date_timelog" name="date" placeholder="{{time}}"></input>
+        <input type="date" class="form-control col-sm-2" id="date_timelog" name="date" placeholder="20/04/2222"> {{worked.date}}</input>
 
         </input>
     </div>

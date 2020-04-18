@@ -48,12 +48,10 @@ $('.box').click(function() {
 
 
 // Add hours for week
+let hours = 0;
 
-// let hours = 0;
-
-// $(".hours").each(function() {
-//     hours += parseFloat($(this).text());
-
-// });
-// $('#hours_worked').append(hours)
-// console.log(hours)
+$(".hours").each(function() {
+    hours += parseFloat($(this).text());
+});
+$('#hours_worked').append(hours)
+console.log(hours)

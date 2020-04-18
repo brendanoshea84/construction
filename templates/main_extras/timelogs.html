@@ -39,13 +39,13 @@
                 </div>
 
                 {% for test in qqq %} {% if dat == test.date %}
-                <div class="row sum_view">{{ test.project_number }} :
-                    <div class="hours">{{ test.hours }}</div>hrs</div>
-                {% endif %} {% endfor %}
+                <a class="row sum_view" href="{{url_for('show_work', worked_id=test._id)}}">{{ test.project_number }} :
+                    <div class="hours">{{ test.hours }}</div>hrs</a>
+                </a> {% endif %} {% endfor %}
 
             </div>
             {% endfor %}
         </div>
     </div>
-    <br> {% include '/main_extras/get_date.html' %}
+    <br> {% block time_log %} {% endblock %}
     <br> {% endblock %}

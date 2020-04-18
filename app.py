@@ -17,6 +17,10 @@ mongo = PyMongo(app)
 # Sign in for new members with a pre password
 # Login using your own password
 
+global employees
+employees = mongo.db.employees
+
+
 
 @app.route('/intro', methods = ['POST', 'GET'])
 def intro():
@@ -27,8 +31,7 @@ def intro():
 @app.route('/sign_in', methods=['POST','GET'])
 def sign_in():
     # set employees to global variable
-    global employees
-    employees = mongo.db.employees
+    
 
     if request.method == 'POST':
         # Login using your own password
@@ -38,8 +41,6 @@ def sign_in():
             if bcrypt.hashpw(request.form.get('password_user').encode('utf-8'), login_user['password']) == login_user['password']:
                 global session
                 session = login_user
-                print(session)
-                print("testing problem area 38")
                 return redirect(url_for('main'))
             else:
                 # Fix here
@@ -286,6 +287,30 @@ def edit_employee(employee_id):
 
 @app.route('/time_log', methods=['POST', 'GET'])
 def time_log():
+    return render_template("/main_extras/timelogs.html" )
+
+
+
+@app.route('/time_log_enter', methods=['POST', 'GET'])
+def time_log_enter():
+    post_data = request.form.to_dict() 
+    post_data['project_number'] = int(request.form['project_number'])
+    post_data['date'] = request.form['date']
+    post_data['hours'] = int(request.form['hours'])
+    post_data['notes'] = request.form['notes']
+    post_data['employee_id'] = session['_id']
+        
+    print("line 342")
+    mongo.db.time_logs.insert_one(post_data)
+    return redirect(url_for('get_date'))
+
+
+    
+    return render_template("/main_extras/timelogs.html", session = session )
+    
+
+@app.route('/get_date', methods=['POST', 'GET'])
+def get_date():
     print ("going to time_log")
    
     date_now = datetime.datetime.now()
@@ -331,31 +356,19 @@ def time_log():
 
 
     projects = list(mongo.db.projects.find())
-    return render_template("/main_extras/timelogs.html", session = session, projects = projects, time = date_now, weekdays=weekdays, day=day, dates=dates, r=r, day_names=day_names, testingABC= testingABC, testing = itertools.zip_longest(dates, day_names, dates_org), qqq=qqq )
+    return render_template("/main_extras/get_date.html", session = session, projects = projects, time = date_now, weekdays=weekdays, day=day, dates=dates, r=r, day_names=day_names, testingABC= testingABC, testing = itertools.zip_longest(dates, day_names, dates_org), qqq=qqq )
+
+@app.route('/show_work/<worked_id>', methods=['POST', 'GET'])
+def show_work(worked_id):
+    show_work = mongo.db.time_logs.find_one({"_id":ObjectId(worked_id)})
+    projects = list(mongo.db.projects.find())
 
 
-@app.route('/time_log_enter', methods=['POST', 'GET'])
-def time_log_enter():
-    post_data = request.form.to_dict() 
-    post_data['project_number'] = int(request.form['project_number'])
-    post_data['date'] = request.form['date']
-    post_data['hours'] = int(request.form['hours'])
-    post_data['notes'] = request.form['notes']
-    post_data['employee_id'] = session['_id']
-        
-    print("line 342")
-    mongo.db.time_logs.insert_one(post_data)
-    return redirect(url_for('time_log'))
 
 
-    
-    return render_template("/main_extras/timelogs.html", session = session )
-    
 
-@app.route('/get_date', methods=['POST', 'GET'])
-def get_date():
-    
-    return render_template("/main_extras/get_date.html", session = session )
+
+    return render_template("/main_extras/show_work.html", session = session, worked = show_work, projects = projects )
 
 
 
