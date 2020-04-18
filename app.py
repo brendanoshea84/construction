@@ -330,9 +330,8 @@ def time_log():
     print(session['_id'])
 
 
-
     projects = list(mongo.db.projects.find())
-    return render_template("/main_extras/timelogs.html", session = session, projects = projects, time = date_now, weekdays=weekdays, day=day, dates=dates, r=r, day_names=day_names, testingABC= testingABC, testing = itertools.zip_longest(dates, day_names, testingABC, dates_org), qqq=qqq )
+    return render_template("/main_extras/timelogs.html", session = session, projects = projects, time = date_now, weekdays=weekdays, day=day, dates=dates, r=r, day_names=day_names, testingABC= testingABC, testing = itertools.zip_longest(dates, day_names, dates_org), qqq=qqq )
 
 
 @app.route('/time_log_enter', methods=['POST', 'GET'])

@@ -1,5 +1,6 @@
 {% extends 'main.html' %}{% block main %}
 
+
 <h3>Time log</h3>
 <h4 id="hours_worked">Hours worked this Week : </h4>
 <br>
@@ -17,9 +18,9 @@
 
 <br>
 
-<div class="container">
+<div class="container-fluid">
     <div class="row check">
-        {% for dat, day_names, abc, dates_org in testing %} {% if time == dat %}
+        {% for dat, day_names, dates_org in testing %} {% if time == dat %}
         <div class="box highlight" value={{ dat }}>
             {% else %}
             <div class="box" value={{ dat }}>
@@ -41,10 +42,10 @@
                 <div class="row sum_view">{{ test.project_number }} :
                     <div class="hours">{{ test.hours }}</div>hrs</div>
                 {% endif %} {% endfor %}
-            </div>
 
+            </div>
             {% endfor %}
         </div>
     </div>
-    <br>
-    <br> {% block time %} {% endblock %}{% endblock %}
+    <br> {% include '/main_extras/get_date.html' %}
+    <br> {% endblock %}

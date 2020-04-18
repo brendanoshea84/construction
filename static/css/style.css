@@ -208,10 +208,9 @@ div.content {
     border: solid black 1px;
     display: inline-block;
     height: 150px;
-    width: 120px;
+    width: 200px;
     float: none;
     vertical-align: top;
-    overflow-y: scroll;
 }
 
 .padding {
@@ -222,6 +221,7 @@ div.content {
     white-space: nowrap;
     overflow-x: scroll;
     display: block;
+    width: 100%;
 }
 
 .testingABC {
