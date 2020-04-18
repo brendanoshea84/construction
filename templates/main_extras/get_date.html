@@ -1,0 +1,35 @@
+{% extends '/main_extras/timelogs.html' %}{% block time %}
+
+<form id="personal_form" method="POST" action="{{ url_for('time_log_enter') }}">
+    <div class="form-group row">
+        <label for="project_number" class="col-sm-2 inline_form">Project Number</label>
+        <select class="form-control col-2" name="project_number" id="project_number">
+            {% for pro in projects %}
+              <option> {{pro.project_number}}</option>
+            {% endfor %}  
+            </select>
+
+        <label for="last_name" class="col-sm-2 inline_form">Date</label>
+        <input type="date" class="form-control col-sm-2" id="date_timelog" name="date" placeholder="{{time}}"></input>
+
+        </input>
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="dob" class="col-sm-2 inline_form">Hours Worked</label>
+        <input type="number" class="form-control col-sm-2" id="hours" name="hours" max="24">
+    </div>
+    <br>
+    <div class="form-group row">
+        <label for="mob_number" class="col-sm-2 inline_form">Notes</label>
+        <input type="text" class="form-control col-sm-6" id="notes" name="notes" placeholder="What did you do..." required>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-4"></div>
+        <button type="submit" class="btn btn-primary col-sm-4">Save day</button>
+    </div>
+    <br>
+</form>
+
+{% endblock %}

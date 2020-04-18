@@ -287,11 +287,12 @@ def edit_employee(employee_id):
 @app.route('/time_log', methods=['POST', 'GET'])
 def time_log():
     print ("going to time_log")
-    x = datetime.datetime.now()
-    weekdays = x.strftime("%W")
-    day = x.strftime("%A")
+   
+    date_now = datetime.datetime.now()
+    weekdays = date_now.strftime("%W")
+    day = date_now.strftime("%A")
 
-    week_day=datetime.datetime.now().isocalendar()[2]
+    week_day = date_now.isocalendar()[2]
      
     week_change = session.get('week_change', 0)
     
@@ -311,23 +312,52 @@ def time_log():
     change_date = (week_change * 7)
 
     # Calculates Starting date (Monday) for this case by subtracting current date with time delta of the day of the week
-    start_date = x - datetime.timedelta(days=week_day)
+    start_date = date_now - datetime.timedelta(days=week_day)
 
     # Prints the list of dates in a current week
-    dates = list([str((start_date + datetime.timedelta(days=i+1-change_date)).date().strftime('%m-%d')) for i in range(7)])
+    dates = list([str((start_date + datetime.timedelta(days=i+1-change_date)).date().strftime('%Y-%m-%d')) for i in range(7)])
+    dates_org = list([str((start_date + datetime.timedelta(days=i+1-change_date)).date().strftime('%d-%m')) for i in range(7)])
     day_names = list([str((start_date + datetime.timedelta(days=i+1-change_date)).date().strftime('%a')) for i in range(7)])
     
+    date_now = date_now.strftime('%Y-%m-%d')
     d = "2020-W" + weekdays
 
-    r = datetime.datetime.strptime(d + '-1', "%Y-W%W-%w").strftime('%m-%d')
-    testingABC = list(mongo.db.time_logs.find())
+    r = datetime.datetime.strptime(d + '-1', "%Y-W%W-%w").strftime('%d-%m-%Y')
+    testingABC = list(mongo.db.time_logs.find({"employee_id": session['_id'] }))
 
-    qqq = list(mongo.db.time_logs.find())
-    
+    qqq = list(mongo.db.time_logs.find({"employee_id": session['_id'] }))
+
+    print(session['_id'])
+
+
+
+    projects = list(mongo.db.projects.find())
+    return render_template("/main_extras/timelogs.html", session = session, projects = projects, time = date_now, weekdays=weekdays, day=day, dates=dates, r=r, day_names=day_names, testingABC= testingABC, testing = itertools.zip_longest(dates, day_names, testingABC, dates_org), qqq=qqq )
+
+
+@app.route('/time_log_enter', methods=['POST', 'GET'])
+def time_log_enter():
+    post_data = request.form.to_dict() 
+    post_data['project_number'] = int(request.form['project_number'])
+    post_data['date'] = request.form['date']
+    post_data['hours'] = int(request.form['hours'])
+    post_data['notes'] = request.form['notes']
+    post_data['employee_id'] = session['_id']
+        
+    print("line 342")
+    mongo.db.time_logs.insert_one(post_data)
+    return redirect(url_for('time_log'))
+
 
     
-    return render_template("/main_extras/timelogs.html", session=session, time=x, weekdays=weekdays, day=day, dates=dates, r=r, day_names=day_names,projects = mongo.db.projects.find(), testingABC= testingABC, testing = itertools.zip_longest(dates, day_names, testingABC), qqq=qqq )
+    return render_template("/main_extras/timelogs.html", session = session )
     
+
+@app.route('/get_date', methods=['POST', 'GET'])
+def get_date():
+    
+    return render_template("/main_extras/get_date.html", session = session )
+
 
 
 

@@ -1,64 +1,50 @@
 {% extends 'main.html' %}{% block main %}
 
 <h3>Time log</h3>
-date: {{ time }}
-<br> week number: {{ weekdays }}
-<br> day: {{ day }}
-<br>
-<br>
+<h4 id="hours_worked">Hours worked this Week : </h4>
 <br>
 
-<!-- Example Method -->
-<h4>Testing two for loops here</h4>
-<div class="container-fluid">
-    <div class="row">
-        <form action="" method="POST">
-            <button class="col" type="submit" name="lastweek"><i class="fa fa-angle-double-left "></i>Last Week</button>
-            <div class="col-8"></div>
+<div class="container">
+    <form action="" method="POST">
+        <div class="row">
+            <button class="col" type="submit" name="lastweek"><i class="fa fa-angle-double-left "></i> Last Week</button>
+            <button class="col" type="submit" name="month"> See Month </button>
             <button class="col right" type="submit" name="nextweek">Next week
             <i class="fa fa-angle-double-right "></i></button>
-        </form>
-    </div>
-</div>
-
-<br>
-<div class="container-fluid">
-    <div class="row row_for_col">
-        {% for dat, day_names, abc in testing %}
-        <div class="col-cust mx-auto">
-            <div class="row row_no_margin">
-                <div class="container header_dates">{{ dat }}</div>
-            </div>
-
-            <div class="row row_no_margin">
-                <div class="container header_dates">{{ day_names }}</div>
-            </div>
-            <br>
-            <div class="row row_no_margin">
-                <div class="container">
-                    <h4>{% for test in qqq %} {% if dat == test.date %} {{ test.hours }} {% endif %} {% endfor %} </h4>
-                </div>
-            </div>
         </div>
-
-        {% endfor %}
-    </div>
+    </form>
 </div>
-<br>
-<br>
 
 <br>
 
-<br><br>
+<div class="container">
+    <div class="row check">
+        {% for dat, day_names, abc, dates_org in testing %} {% if time == dat %}
+        <div class="box highlight" value={{ dat }}>
+            {% else %}
+            <div class="box" value={{ dat }}>
 
-<br>
+                {% endif %}
+                <div class="row title_view">
+                    <div class="">{{ dates_org }}</div>
+                </div>
 
+                <div class="row title_view">
+                    {% if time == dat %}
+                    <p>Today</p>
+                    {% else %}
+                    <p>{{ day_names }}</p>
+                    {% endif %}
+                </div>
 
+                {% for test in qqq %} {% if dat == test.date %}
+                <div class="row sum_view">{{ test.project_number }} :
+                    <div class="hours">{{ test.hours }}</div>hrs</div>
+                {% endif %} {% endfor %}
+            </div>
 
-<h3>testing projects</h3>
-{% for project in projects %} {{project.project_number}} {% endfor %}
-
-<h3>test</h3>
-{{ r }} {{ day_names }}
-<br>
-<br> {{ datestest }} {% endblock %}
+            {% endfor %}
+        </div>
+    </div>
+    <br>
+    <br> {% block time %} {% endblock %}{% endblock %}

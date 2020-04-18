@@ -33,6 +33,27 @@ window.onload = (function() {
     }
 })
 
-function goBack() {
-    window.history.back();
-}
+//Change date from button click
+
+
+
+$('.box').click(function() {
+    $('.box').removeClass('highlight')
+    use_date = $(this).attr('value')
+    $(this).addClass('highlight')
+    $("#date_timelog").val(use_date)
+    console.log("clicked")
+
+})
+
+
+// Add hours for week
+
+let hours = 0;
+
+$(".hours").each(function() {
+    hours += parseFloat($(this).text());
+
+});
+$('#hours_worked').append(hours)
+console.log(hours)

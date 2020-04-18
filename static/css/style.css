@@ -155,33 +155,12 @@ div.content {
 
 /* project pages */
 
-.testingABC {
-    white-space: nowrap;
-    overflow-x: scroll;
-    display: block;
-    margin: 10px;
-    padding: 15px;
-}
-
-.testCOL {
-    height: 100%;
-    width: 100%;
-    display: inline-block;
-    margin: 10px;
-    background-color: #f1f1f1;
-    padding: 15px;
-}
-
 .col_size {
     max-width: 400px;
 }
 
 .box {
     margin: 10px;
-}
-
-.row_no_margin {
-    margin: 0;
 }
 
 .btn_employees {
@@ -202,10 +181,6 @@ div.content {
     text-align: center;
 }
 
-.bold {
-    font-weight: bold;
-}
-
 .row_full {
     width: 100%;
     text-align: center;
@@ -216,27 +191,63 @@ div.content {
     padding: 10px;
 }
 
-.center {
-    margin-left: 10vw;
-}
-
-.col-cust {
-    position: relative;
-    min-height: 1px;
-    width: 14%;
-    border: solid 1px black;
-    display: block;
-    text-align: center;
-}
-
 .row_for_col {
     text-align: center;
 }
 
-.header_dates {
-    background-color: #f1f1f1;
-}
-
 .right {
     text-align: center;
+}
+
+.highlight {
+    color: blue;
+    border: blue solid 1px !important;
+}
+
+.box {
+    border: solid black 1px;
+    display: inline-block;
+    height: 150px;
+    width: 120px;
+    float: none;
+    vertical-align: top;
+    overflow-y: scroll;
+}
+
+.padding {
+    padding: 3px;
+}
+
+.check {
+    white-space: nowrap;
+    overflow-x: scroll;
+    display: block;
+}
+
+.testingABC {
+    white-space: nowrap;
+    overflow-x: scroll;
+    display: flex;
+    display: block;
+    margin: 10px;
+    padding: 15px;
+}
+
+.testCOL {
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+    margin: 10px;
+    background-color: #f1f1f1;
+    padding: 15px;
+}
+
+.sum_view {
+    margin-left: 20%;
+}
+
+.title_view {
+    justify-content: center;
+    margin: 0;
+    background-color: #f1f1f1;
 }
