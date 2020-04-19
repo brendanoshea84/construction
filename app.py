@@ -17,25 +17,23 @@ mongo = PyMongo(app)
 # Sign in for new members with a pre password
 # Login using your own password
 
-global employees
+
 employees = mongo.db.employees
-
-
+global projects
+projects = mongo.db.projects
 
 @app.route('/intro', methods = ['POST', 'GET'])
 def intro():
-    return render_template ('intro.html', employee = mongo.db.employees)      
+    return render_template ('intro.html')      
 
 
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/sign_in', methods=['POST','GET'])
 def sign_in():
-    # set employees to global variable
     
-
     if request.method == 'POST':
         # Login using your own password
-        login_user = employees.find_one({'username': request.form.get('login')})
+        login_user = mongo.db.employees.find_one({'username': request.form.get('login')})
 
         if login_user:
             if bcrypt.hashpw(request.form.get('password_user').encode('utf-8'), login_user['password']) == login_user['password']:
@@ -79,6 +77,7 @@ def new_member_info():
 
 @app.route('/add_personal_info', methods=['POST', 'GET'])
 def add_personal_info():
+    employees = mongo.db.employees
     # Creating username number and username for new employee
     def add_to_database():
         post_data['first_name'] = request.form['first_name'].lower()
@@ -97,6 +96,7 @@ def add_personal_info():
         temp_username = request.form['first_name'].lower() + '.' + request.form['last_name'].lower()
         
         # Check to see if username has been used
+       
         temp_user = employees.find_one({'username' : temp_username})
 
         if temp_user:
@@ -127,23 +127,25 @@ def add_personal_info():
             add_to_database()
             
         return redirect(url_for('emergcy'))
-    return render_template("/employeeinfo/personal_info.html", new_first_name=new_first_name)     
+    return render_template("/employeeinfo/personal_info.html", new_first_name = new_first_name)     
 
 @app.route('/bank_details', methods=['POST', 'GET'])
 def bank_details():
     if request.method == 'POST':
-        # Update to made _id 
+        # Update to made _id
+        employees = mongo.db.employees 
         employees.update_one({'_id': new_doc_id},
         {'$set': {
         'bank_name': request.form.get('bank_name'),
         'bank_number': request.form.get('bank_number')
         }}, upsert= True)
         return redirect(url_for('projects'))
-    return render_template("/employeeinfo/bank_details.html", new_doc_id=new_doc_id, username =username, new_first_name=new_first_name)
+    return render_template("/employeeinfo/bank_details.html", new_doc_id = new_doc_id, username = username, new_first_name = new_first_name)
 
 @app.route('/emergcy/', methods=['POST', 'GET'])
 def emergcy():
     global username
+    employees = mongo.db.employees
     username = employees.find_one({'_id': new_doc_id})
     global session
     session = username
@@ -161,7 +163,7 @@ def emergcy():
         'next_of_kin_mob': request.form.get('next_of_kin_mob')
         }}, upsert= True)
         return redirect(url_for('bank_details'))
-    return render_template("/employeeinfo/emergcy.html", new_doc_id=new_doc_id, username =username, new_first_name=new_first_name)    
+    return render_template("/employeeinfo/emergcy.html", new_doc_id = new_doc_id, username = username, new_first_name = new_first_name)    
 
 @app.route('/personal_info', methods=['POST', 'GET'])
 def personal_info():
@@ -171,14 +173,12 @@ def personal_info():
 def main():
     print ("going to main")
     print(session)
-    return render_template("main.html", session=session)
+    return render_template("main.html", session = session)
 
 
 @app.route('/add_projects', methods=['POST', 'GET'])
 def add_project():
-    global projects
     projects = mongo.db.projects
-
     if request.method == 'POST': 
         post_data = request.form.to_dict()
         # Insure the price is an int not a string
