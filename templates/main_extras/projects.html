@@ -1,14 +1,12 @@
 {% extends 'main.html' %}{% block main %}
-<div class="row row_no_margin">
-    <h1>Current Projects</h1>
-    {% if session['admin'] %}
-    <a class="btn btn-primary col-sm-2 btn_employees" href="{{url_for('add_project')}}">New Project</a>
-
-    <br> {% endif %}
+<div class="row row_no_margin justify-content-center">
+    <h1 class="col-12">Current Projects</h1>
+    <br> {% if session['admin'] %}
+    <a class="btn btn-primary col-xs-12" href="{{url_for('add_project')}}">New Project</a> {% endif %}
 </div>
-
+<br>
 <div>
-    <div class="row testingABC">
+    <div class="row testingABC row_no_margin">
         {% for project in projects %} {% if project.active== 'on' %}
         <div class="testCOL col_size">
             <div class="row">
@@ -29,13 +27,13 @@
                     <h5> {{project.name}} </h5>
                 </div>
                 <div class="col-5">
-                    <h5>Address </h5>
+                    <h5>Address: </h5>
                 </div>
                 <div class="col-7">
                     <h5> {{project.address}} </h5>
                 </div>
                 <div class="col-5">
-                    <h5>Brief Discription: </h5>
+                    <h5>Discription: </h5>
                 </div>
                 <div class="col-7">
                     <h5> {{project.brief}} </h5>
@@ -47,14 +45,14 @@
                     <h5> {{project.active}} </h5>
                 </div>
             </div>
-            <hr>
-            <div class="row">
-                <a href="{{url_for('get_projects', project_id=project._id)}}" class="btn btn-primary col-sm-2 btn_employees">More Info</a> {% if session.admin == true %}
-
-                <a href="{{url_for('edit_projects', project_id=project._id)}}" class="btn btn-secondary col-sm-2 btn_employees">Edit Project</a> {% endif %}
-            </div>
         </div>
-        {% endif %} {% endfor %}
+
+        <div class="row">
+            <a href="{{url_for('get_projects', project_id=project._id)}}" class="btn btn-primary col-xs-3 ">More Info</a> {% if session.admin == true %}
+
+            <a href="{{url_for('edit_projects', project_id=project._id)}}" class="btn btn-secondary col-xs-3 ">Edit Project</a> {% endif %}
+        </div>
+        <hr> {% endif %} {% endfor %}
     </div>
 
     {% if session.admin == true %}

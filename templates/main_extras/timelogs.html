@@ -8,9 +8,9 @@
 <div class="container">
     <form action="" method="POST">
         <div class="row">
-            <button class="col" type="submit" name="lastweek"><i class="fa fa-angle-double-left "></i> Last Week</button>
-            <button class="col" type="submit" name="month"> See Month </button>
-            <button class="col right" type="submit" name="nextweek">Next week
+            <button class="btn btn-primary col" type="submit" name="lastweek"><i class="fa fa-angle-double-left "></i> Last Week</button>
+            <button class="btn btn-success col" type="submit" name="month"> See Month </button>
+            <button class="btn btn-primary col right" type="submit" name="nextweek">Next week
             <i class="fa fa-angle-double-right "></i></button>
         </div>
     </form>
@@ -30,7 +30,7 @@
                     <div class="">{{ dates_org }}</div>
                 </div>
 
-                <div class="row title_view">
+                <div class="row title_view ">
                     {% if time == dat %}
                     <p>Today</p>
                     {% else %}

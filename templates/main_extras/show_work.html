@@ -3,7 +3,7 @@
 <form id="personal_form" method="POST" action="{{ url_for('time_log_enter') }}">
     <div class="form-group row">
         <label for="project_number" class="col-sm-2 inline_form">Project Number</label>
-        <select class="form-control col-8" name="project_number" id="project_number">
+        <select class="form-control col-sm-2" name="project_number" id="project_number">
             
             <option>{{worked.project_number}}</option>
             {% for pro in projects %}{% if pro.active == "on" %}
@@ -11,20 +11,21 @@
             {% endif %}{% endfor %}  
             </select>
     </div>
+    <br>
     <div class="form-group row">
-        <label for="last_name" class="col-sm-2 inline_form">Date</label>
-        <input type="date" class="form-control col-sm-2" id="date_timelog" name="date"> {{worked.date}}</input>
+        <label for="date" class="col-sm-2 inline_form">Date</label>
+        <input type="date" class="form-control col-sm-2" id="date_timelog" name="date" required></input>
 
     </div>
     <br>
     <div class="form-group row">
-        <label for="dob" class="col-sm-2 inline_form">Hours Worked</label>
-        <input type="number" class="form-control col-sm-2" id="hours" name="hours" max="24">
+        <label for="hours" class="col-sm-2 inline_form">Hours Worked</label>
+        <textarea type="number" class="form-control col-sm-2" id="hours" name="hours" rows="1" required max="24">{{worked.hours}}</textarea>
     </div>
     <br>
     <div class="form-group row">
-        <label for="mob_number" class="col-sm-2 inline_form">Notes</label>
-        <input type="text" class="form-control col-sm-6" id="notes" name="notes" placeholder="What did you do..." required>
+        <label for="notes" class="col-sm-2 inline_form">Notes</label>
+        <textarea type="text" class="form-control col-sm-8" id="notes" name="notes" rows="2" required>{{worked.notes}}</textarea>
     </div>
     <br>
     <div class="row">
@@ -36,7 +37,6 @@
 
 <script type="text/javascript">
     let date_input = '{{worked.date}}';
-
     console.log(date_input)
 
     document.addEventListener('DOMContentLoaded', function() {

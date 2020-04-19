@@ -1,4 +1,8 @@
-import os, bcrypt, calendar, datetime, itertools
+import os
+import bcrypt
+import calendar
+import datetime
+import itertools
 from flask import Flask, render_template, redirect, request, url_for, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
@@ -18,22 +22,20 @@ mongo = PyMongo(app)
 # Login using your own password
 
 
-employees = mongo.db.employees
-global projects
-projects = mongo.db.projects
-
-@app.route('/intro', methods = ['POST', 'GET'])
+@app.route('/intro', methods=['POST', 'GET'])
 def intro():
-    return render_template ('intro.html')      
+    return render_template('intro.html')
 
 
 @app.route('/', methods=['POST', 'GET'])
-@app.route('/sign_in', methods=['POST','GET'])
+@app.route('/sign_in', methods=['POST', 'GET'])
 def sign_in():
-    
+    employees = mongo.db.employees
+
     if request.method == 'POST':
         # Login using your own password
-        login_user = mongo.db.employees.find_one({'username': request.form.get('login')})
+        login_user = mongo.db.employees.find_one(
+            {'username': request.form.get('login')})
 
         if login_user:
             if bcrypt.hashpw(request.form.get('password_user').encode('utf-8'), login_user['password']) == login_user['password']:
@@ -48,11 +50,11 @@ def sign_in():
             print("no user 42")
     return render_template('intro.html')
 
-    
+
 @app.route('/sign_up', methods=['POST', 'GET'])
 def sign_up():
-    if request.method == 'POST': 
-    # Sign in for new members with a pre password
+    if request.method == 'POST':
+        # Sign in for new members with a pre password
         global new_first_name
         new_first_name = request.form.get('new_member_first')
         try_pass = request.form.get('new_password')
@@ -69,35 +71,40 @@ def sign_up():
             # Fix here
             # flash("testing")
             print("welcome password wrong line 64")
-    return render_template('intro.html')       
+    return render_template('intro.html')
 
-@app.route('/new_member_info', methods=['POST', 'GET'])   
-def new_member_info():  
-    return render_template("/employeeinfo/personal_info.html")    
+
+@app.route('/new_member_info', methods=['POST', 'GET'])
+def new_member_info():
+    return render_template("/employeeinfo/personal_info.html")
+
 
 @app.route('/add_personal_info', methods=['POST', 'GET'])
 def add_personal_info():
     employees = mongo.db.employees
     # Creating username number and username for new employee
+
     def add_to_database():
         post_data['first_name'] = request.form['first_name'].lower()
-        post_data['last_name'] = request.form['last_name'].lower() 
-        post_data['password'] = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
+        post_data['last_name'] = request.form['last_name'].lower()
+        post_data['password'] = bcrypt.hashpw(
+            request.form['password'].encode('utf-8'), bcrypt.gensalt())
         new_id = employees.insert_one(post_data)
         global new_doc_id
         new_doc_id = new_id.inserted_id
         session = new_id
-   
+
 # When form is sent
-    if request.method == 'POST': 
+    if request.method == 'POST':
         post_data = request.form.to_dict()
         # Create username
-        # Insure input from form is lowercase  
-        temp_username = request.form['first_name'].lower() + '.' + request.form['last_name'].lower()
-        
+        # Insure input from form is lowercase
+        temp_username = request.form['first_name'].lower(
+        ) + '.' + request.form['last_name'].lower()
+
         # Check to see if username has been used
-       
-        temp_user = employees.find_one({'username' : temp_username})
+
+        temp_user = employees.find_one({'username': temp_username})
 
         if temp_user:
             # Create another username if username is been used before using dob
@@ -106,7 +113,8 @@ def add_personal_info():
             testdate = tempdate.split('-')
             year = testdate[0]
             double_used_username = temp_username + year
-            double_test = employees.find_one({'username' : double_used_username})
+            double_test = employees.find_one(
+                {'username': double_used_username})
 
             if double_test:
                 # If two usernames are the same, go to a page with suggestions
@@ -125,22 +133,24 @@ def add_personal_info():
             post_data['username'] = temp_username
         # If test name is free, make this the session
             add_to_database()
-            
+
         return redirect(url_for('emergcy'))
-    return render_template("/employeeinfo/personal_info.html", new_first_name = new_first_name)     
+    return render_template("/employeeinfo/personal_info.html", new_first_name=new_first_name)
+
 
 @app.route('/bank_details', methods=['POST', 'GET'])
 def bank_details():
     if request.method == 'POST':
         # Update to made _id
-        employees = mongo.db.employees 
+        employees = mongo.db.employees
         employees.update_one({'_id': new_doc_id},
-        {'$set': {
-        'bank_name': request.form.get('bank_name'),
-        'bank_number': request.form.get('bank_number')
-        }}, upsert= True)
+                             {'$set': {
+                                 'bank_name': request.form.get('bank_name'),
+                                 'bank_number': request.form.get('bank_number')
+                             }}, upsert=True)
         return redirect(url_for('projects'))
-    return render_template("/employeeinfo/bank_details.html", new_doc_id = new_doc_id, username = username, new_first_name = new_first_name)
+    return render_template("/employeeinfo/bank_details.html", new_doc_id=new_doc_id, username=username, new_first_name=new_first_name)
+
 
 @app.route('/emergcy/', methods=['POST', 'GET'])
 def emergcy():
@@ -158,28 +168,22 @@ def emergcy():
     print('username: line 150')
     if request.method == 'POST':
         employees.update_one({'_id': new_doc_id},
-        {'$set': {
-        'next_of_kin': request.form.get('next_of_kin'),
-        'next_of_kin_mob': request.form.get('next_of_kin_mob')
-        }}, upsert= True)
+                             {'$set': {
+                                 'next_of_kin': request.form.get('next_of_kin'),
+                                 'next_of_kin_mob': request.form.get('next_of_kin_mob')
+                             }}, upsert=True)
         return redirect(url_for('bank_details'))
-    return render_template("/employeeinfo/emergcy.html", new_doc_id = new_doc_id, username = username, new_first_name = new_first_name)    
+    return render_template("/employeeinfo/emergcy.html", new_doc_id=new_doc_id, username=username, new_first_name=new_first_name)
+
 
 @app.route('/personal_info', methods=['POST', 'GET'])
 def personal_info():
     return render_template("")
 
-@app.route('/main', methods=['POST', 'GET'])
-def main():
-    print ("going to main")
-    print(session)
-    return render_template("main.html", session = session)
-
-
 @app.route('/add_projects', methods=['POST', 'GET'])
 def add_project():
     projects = mongo.db.projects
-    if request.method == 'POST': 
+    if request.method == 'POST':
         post_data = request.form.to_dict()
         # Insure the price is an int not a string
         post_data['price'] = int(request.form['price'])
@@ -187,140 +191,137 @@ def add_project():
         post_data['active'] = 'on'
 
         new_project_number = projects.distinct('project_number')
-        project_no = max(new_project_number) 
-        project_number = int(project_no) +1
+        project_no = max(new_project_number)
+        project_number = int(project_no) + 1
         post_data['project_number'] = project_number
 
         print("testing 189")
-        
-        print (project_number)
+
+        print(project_number)
 
         projects.insert_one(post_data)
         return redirect(url_for('projects'))
 
-
     return render_template("/main_extras/projects_new.html", session=session, projects=projects)
+
 
 @app.route('/projects', methods=['POST', 'GET'])
 def projects():
-    return render_template("/main_extras/projects.html", session=session, projects = mongo.db.projects.find(), closes = mongo.db.projects.find())
+    return render_template("/main_extras/projects.html", session=session, projects=mongo.db.projects.find(), closes=mongo.db.projects.find())
+
 
 @app.route('/edit_projects/<project_id>', methods=['POST', 'GET'])
 def edit_projects(project_id):
     print("edit 209")
-    edit_projects = mongo.db.projects.find_one({"_id":ObjectId(project_id)})
+    edit_projects = mongo.db.projects.find_one({"_id": ObjectId(project_id)})
 
     if request.method == "POST":
         print("post happened")
-        update_project = mongo.db.projects.update_one({"_id":ObjectId(project_id)},
-        {'$set': {
-            
-            'name':request.form.get('name'),
-            'phone':request.form.get('phone'),
-            'address':request.form.get('address'),
-            'brief':request.form.get('brief'),
-            'discription':request.form.get('discription'),
-            'price':request.form.get('price'),
-            'price_type':request.form.get('price_type'),
-            'active':request.form.get('active')
+        update_project = mongo.db.projects.update_one({"_id": ObjectId(project_id)},
+                                                      {'$set': {
 
-        }}, upsert= True)
+                                                          'name': request.form.get('name'),
+                                                          'phone': request.form.get('phone'),
+                                                          'address': request.form.get('address'),
+                                                          'brief': request.form.get('brief'),
+                                                          'discription': request.form.get('discription'),
+                                                          'price': request.form.get('price'),
+                                                          'price_type': request.form.get('price_type'),
+                                                          'active': request.form.get('active')
+
+                                                      }}, upsert=True)
         print("try after")
         return redirect(url_for('projects'))
-    return render_template("/main_extras/edit_projects.html", session=session, edit_projects = edit_projects ,project = mongo.db.projects.find())
+    return render_template("/main_extras/edit_projects.html", session=session, edit_projects=edit_projects, project=mongo.db.projects.find())
+
 
 @app.route('/get_projects/<project_id>', methods=['POST', 'GET'])
 def get_projects(project_id):
-    get_project = mongo.db.projects.find_one({"_id":ObjectId(project_id)})
-    return render_template("/main_extras/get_projects.html", session=session, project = get_project)
+    get_project = mongo.db.projects.find_one({"_id": ObjectId(project_id)})
+    return render_template("/main_extras/get_projects.html", session=session, project=get_project)
+
 
 @app.route('/delete_projects/<project_id>', methods=['POST', 'GET'])
 def delete_projects(project_id):
-    delete_project = mongo.db.projects.remove({"_id":ObjectId(project_id)})
+    delete_project = mongo.db.projects.remove({"_id": ObjectId(project_id)})
     return redirect(url_for('projects'))
 
 
 @app.route('/employees', methods=['POST', 'GET'])
 def employees():
-    print ("going to employees")
-    return render_template("/main_extras/employees.html", session=session, employees = mongo.db.employees.find())
-    
+    print("going to employees")
+    return render_template("/main_extras/employees.html", session=session, employees=mongo.db.employees.find())
+
+
 @app.route('/get_employee/<employee_id>', methods=['POST', 'GET'])
 def get_employee(employee_id):
-    print ("going to employees")
-    get_employee = mongo.db.employees.find_one({"_id":ObjectId(employee_id)})
-    return render_template("/main_extras/get_employee.html", session=session, employee = get_employee)
-    
+    print("going to employees")
+    get_employee = mongo.db.employees.find_one({"_id": ObjectId(employee_id)})
+    return render_template("/main_extras/get_employee.html", session=session, employee=get_employee)
 
 
 @app.route('/edit_employee/<employee_id>', methods=['POST', 'GET'])
 def edit_employee(employee_id):
-    edit_employee = mongo.db.employees.find_one({"_id":ObjectId(employee_id)})
-    print ("going to employees")
+    edit_employee = mongo.db.employees.find_one({"_id": ObjectId(employee_id)})
+    print("going to employees")
 
     if request.method == "POST":
         print("post happened")
-        update_employee = mongo.db.employees.update_one({"_id":ObjectId(employee_id)},
-        {'$set': {
-            
-            'first_name':request.form.get('first_name'),
-            'last_name':request.form.get('last_name'),
-            'address':request.form.get('address'),
-            'dob':request.form.get('dob'),
-            'mob':request.form.get('mob'),
-            'home_number':request.form.get('home_number'),
-            'next_of_kin':request.form.get('next_of_kin'),
-            'next_of_kin_mob':request.form.get('next_of_kin_mob'),
-            'bank_name':request.form.get('bank_name'),
-            'bank_number':request.form.get('bank_number')
+        update_employee = mongo.db.employees.update_one({"_id": ObjectId(employee_id)},
+                                                        {'$set': {
+
+                                                            'first_name': request.form.get('first_name'),
+                                                            'last_name': request.form.get('last_name'),
+                                                            'address': request.form.get('address'),
+                                                            'dob': request.form.get('dob'),
+                                                            'mob': request.form.get('mob'),
+                                                            'home_number': request.form.get('home_number'),
+                                                            'next_of_kin': request.form.get('next_of_kin'),
+                                                            'next_of_kin_mob': request.form.get('next_of_kin_mob'),
+                                                            'bank_name': request.form.get('bank_name'),
+                                                            'bank_number': request.form.get('bank_number')
 
 
-        }}, upsert= True)
+                                                        }}, upsert=True)
         return redirect(url_for('employees'))
 
-    return render_template("/main_extras/edit_employee.html", session = session, edit_employee = edit_employee)
-    
-
-
-
+    return render_template("/main_extras/edit_employee.html", session=session, edit_employee=edit_employee)
 
 
 @app.route('/time_log', methods=['POST', 'GET'])
 def time_log():
-    return render_template("/main_extras/timelogs.html" )
-
+    return render_template("/main_extras/timelogs.html")
 
 
 @app.route('/time_log_enter', methods=['POST', 'GET'])
 def time_log_enter():
-    post_data = request.form.to_dict() 
+    post_data = request.form.to_dict()
     post_data['project_number'] = int(request.form['project_number'])
     post_data['date'] = request.form['date']
     post_data['hours'] = int(request.form['hours'])
     post_data['notes'] = request.form['notes']
     post_data['employee_id'] = session['_id']
-        
+
     print("line 342")
     mongo.db.time_logs.insert_one(post_data)
     return redirect(url_for('get_date'))
+    return render_template("/main_extras/timelogs.html", session=session)
 
-
-    
-    return render_template("/main_extras/timelogs.html", session = session )
-    
 
 @app.route('/get_date', methods=['POST', 'GET'])
 def get_date():
-    print ("going to time_log")
-   
+    print("going to time_log")
+    global date_now
     date_now = datetime.datetime.now()
+    global weekdays
     weekdays = date_now.strftime("%W")
+    global day
     day = date_now.strftime("%A")
 
     week_day = date_now.isocalendar()[2]
-     
+
     week_change = session.get('week_change', 0)
-    
+
     if 'lastweek' in request.form:
         week_change += 1
         session['week_change'] = week_change
@@ -329,10 +330,10 @@ def get_date():
     elif 'nextweek' in request.form:
         week_change -= 1
         session['week_change'] = week_change
-        print("next week changed") 
-        print(week_change)  
+        print("next week changed")
+        print(week_change)
     else:
-        print("not working")     
+        print("not working")
 
     change_date = (week_change * 7)
 
@@ -340,75 +341,88 @@ def get_date():
     start_date = date_now - datetime.timedelta(days=week_day)
 
     # Prints the list of dates in a current week
-    dates = list([str((start_date + datetime.timedelta(days=i+1-change_date)).date().strftime('%Y-%m-%d')) for i in range(7)])
-    dates_org = list([str((start_date + datetime.timedelta(days=i+1-change_date)).date().strftime('%d-%m')) for i in range(7)])
-    day_names = list([str((start_date + datetime.timedelta(days=i+1-change_date)).date().strftime('%a')) for i in range(7)])
-    
+    global dates
+    dates = list([str((start_date + datetime.timedelta(days=i+1 -
+                                                       change_date)).date().strftime('%Y-%m-%d')) for i in range(7)])
+    global dates_org
+    dates_org = list([str((start_date + datetime.timedelta(days=i +
+                                                           1-change_date)).date().strftime('%d-%m')) for i in range(7)])
+    global day_names
+    day_names = list([str((start_date + datetime.timedelta(days=i +
+                                                           1-change_date)).date().strftime('%a')) for i in range(7)])
+
     date_now = date_now.strftime('%Y-%m-%d')
     d = "2020-W" + weekdays
-
+    global r
     r = datetime.datetime.strptime(d + '-1', "%Y-W%W-%w").strftime('%d-%m-%Y')
-    testingABC = list(mongo.db.time_logs.find({"employee_id": session['_id'] }))
-
-    qqq = list(mongo.db.time_logs.find({"employee_id": session['_id'] }))
+    global testingABC
+    testingABC = list(mongo.db.time_logs.find({"employee_id": session['_id']}))
+    global qqq
+    qqq = list(mongo.db.time_logs.find({"employee_id": session['_id']}))
 
     print(session['_id'])
-
-
+    global projects
     projects = list(mongo.db.projects.find())
-    return render_template("/main_extras/get_date.html", session = session, projects = projects, time = date_now, weekdays=weekdays, day=day, dates=dates, r=r, day_names=day_names, testingABC= testingABC, testing = itertools.zip_longest(dates, day_names, dates_org), qqq=qqq )
+    return render_template("/main_extras/get_date.html", session=session, projects=projects, time=date_now, weekdays=weekdays,
+                           day=day, dates=dates, r=r, day_names=day_names, testingABC=testingABC,
+                           testing=itertools.zip_longest(dates, day_names, dates_org), qqq=qqq)
+
 
 @app.route('/show_work/<worked_id>', methods=['POST', 'GET'])
 def show_work(worked_id):
-    show_work = mongo.db.time_logs.find_one({"_id":ObjectId(worked_id)})
-    projects = list(mongo.db.projects.find())
 
+    show_work = mongo.db.time_logs.find_one({"_id": ObjectId(worked_id)})
 
+    if request.method == "POST":
+        print("post happened")
+        update_show_work = mongo.db.show_work.update_one({"_id": ObjectId(worked_id)},
+                                                         {'$set': {
 
+                                                             'project_number': request.form.get('project_number'),
+                                                             'date': request.form.get('date_timelog'),
+                                                             'hours': request.form.get('hours'),
+                                                             'notes': request.form.get('notes')
+                                                         }}, upsert=True)
+        return redirect(url_for('get_date'))
 
-
-
-    return render_template("/main_extras/show_work.html", session = session, worked = show_work, projects = projects )
-
-
-
-
+    return render_template("/main_extras/show_work.html", session=session, worked=show_work, projects=projects, time=date_now,
+                           weekdays=weekdays, day=day, dates=dates, r=r, day_names=day_names, testingABC=testingABC,
+                           testing=itertools.zip_longest(dates, day_names, dates_org), qqq=qqq)
 
 
 @app.route('/delete_employee/<delete_id>', methods=['POST', 'GET'])
 def delete_employee(delete_id):
-    delete_employee = mongo.db.employees.find_one({"_id":ObjectId(delete_id)})
-    return render_template("/main_extras/delete.html", session=session, employee = delete_employee)
-  
+    delete_employee = mongo.db.employees.find_one({"_id": ObjectId(delete_id)})
+    return render_template("/main_extras/delete.html", session=session, employee=delete_employee)
+
+
 @app.route('/remove_employee/<delete_id>', methods=['POST', 'GET'])
 def remove_employee(delete_id):
-    delete_project = mongo.db.employees.remove({"_id":ObjectId(delete_id)})
+    delete_project = mongo.db.employees.remove({"_id": ObjectId(delete_id)})
     return redirect(url_for('employees'))
 
 
-
-
-
-
-    
-
 @app.route('/base', methods=['POST', 'GET'])
 def messages():
-    print ("working at messages")
+    print("working at messages")
     return render_template("base.html")
+
+@app.route('/main', methods=['POST', 'GET'])
+def main():
+    print("going to main")
+    print(session)
+    return render_template("main.html", session=session)    
 
 @app.route('/error_existing')
 def error_existing():
     return render_template("/errors/error_existing.html")
 
 
-
-
 # If username has been used twice before and this is the third time
 @app.route('/username_wrong')
 def username_wrong():
     print("too many users, not enough names")
-    return render_template("error_existing.html")    
+    return render_template("error_existing.html")
 
 
 if __name__ == '__main__':

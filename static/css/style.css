@@ -30,9 +30,6 @@ nav>div a.nav-item.nav-link.active {
 .tab-content {
     background: #fdfdfd;
     line-height: 25px;
-    border: 1px solid #ddd;
-    border-top: 5px solid #e74c3c;
-    border-bottom: 5px solid #e74c3c;
     padding: 30px 25px;
 }
 
@@ -59,7 +56,6 @@ nav>div a.nav-item.nav-link:focus {
 .jumbo_image {
     background-image: url(/static/imagines/jumbo.jpg);
     background-position: top;
-    position: sticky !important;
     height: 15%;
     color: white;
     text-shadow: 1px 1px grey;
@@ -68,18 +64,21 @@ nav>div a.nav-item.nav-link:focus {
     top: 0;
 }
 
-.testing {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .title_jumbo {
     font-size: 5vh;
 }
 
 .text_jumbo {
     font-size: 3vh;
+}
+
+
+/* New username in sign up pages */
+
+.new_username {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -152,6 +151,12 @@ div.content {
     }
 }
 
+@media screen and (min-width: 767px) {
+    .jumbo_image {
+        position: sticky;
+    }
+}
+
 
 /* project pages */
 
@@ -213,6 +218,10 @@ div.content {
     vertical-align: top;
 }
 
+.vertical_down {
+    align-self: flex-end;
+}
+
 .padding {
     padding: 3px;
 }
@@ -235,7 +244,7 @@ div.content {
 
 .testCOL {
     height: 100%;
-    width: 100%;
+    width: 80vw;
     display: inline-block;
     margin: 10px;
     background-color: #f1f1f1;
