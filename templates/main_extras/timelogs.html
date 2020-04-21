@@ -9,7 +9,7 @@
     <form action="" method="POST">
         <div class="row">
             <button class="btn btn-primary col" type="submit" name="lastweek"><i class="fa fa-angle-double-left "></i> Last Week</button>
-            <button class="btn btn-success col" type="submit" name="month"> See Month </button>
+            <a class="btn btn-success col" href="{{url_for('month')}}" name="month"> See Month </a>
             <button class="btn btn-primary col right" type="submit" name="nextweek">Next week
             <i class="fa fa-angle-double-right "></i></button>
         </div>
@@ -20,10 +20,10 @@
 
 <div class="container-fluid">
     <div class="row check">
-        {% for dat, day_names, dates_org in testing %} {% if time == dat %}
-        <div class="box highlight" value={{ dat }}>
+        {% for dates, day_names, dates_org in testing %} {% if now == dates %}
+        <div class="box highlight" value={{ dates }}>
             {% else %}
-            <div class="box" value={{ dat }}>
+            <div class="box" value={{ dates }}>
 
                 {% endif %}
                 <div class="row title_view">
@@ -31,16 +31,16 @@
                 </div>
 
                 <div class="row title_view ">
-                    {% if time == dat %}
+                    {% if now == dates_org %}
                     <p>Today</p>
                     {% else %}
                     <p>{{ day_names }}</p>
                     {% endif %}
                 </div>
 
-                {% for test in qqq %} {% if dat == test.date %}
-                <a class="row sum_view" href="{{url_for('show_work', worked_id=test._id)}}">{{ test.project_number }} :
-                    <div class="hours">{{ test.hours }}</div>hrs</a>
+                {% for day in employee %} {% if dates == day.date %}
+                <a class="row sum_view" href="{{url_for('show_work', worked_id=day._id)}}">{{ day.project_number }} : 
+                    <div class="hours">{{ day.hours }}</div>hrs</a>
                 </a> {% endif %} {% endfor %}
 
             </div>

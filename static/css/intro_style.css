@@ -40,7 +40,7 @@
 }
 
 .clean_background {
-    background-color: rgb(0, 123, 255, 0.7);
+    background-color: rgb(0, 123, 255, 0.6);
     border: black solid 1px;
     border-radius: 3px;
     padding: 10px;
@@ -52,7 +52,6 @@
 }
 
  ::placeholder {
-    color: rgb(255, 255, 255, 0.8) !important;
     font-size: 1em;
 }
 
@@ -63,12 +62,13 @@
 
 input[type=text]:focus,
 input[type=password]:focus {
-    color: white;
+    color: black;
     font-size: 1.5em;
 }
 
 input[type="text"],
 input[type=password] {
+    color: black;
     font-size: 1.5em !important;
 }
 
@@ -78,4 +78,35 @@ input[type=password] {
 
 .no_margin {
     margin: 0;
+}
+
+
+/* Buttons */
+
+.btn_custom {
+    width: 100%;
+    border-radius: 5px;
+    height: 100%;
+    text-align: center;
+    padding: 10px;
+}
+
+.btn_enter {
+    width: 100%;
+    border-radius: 5px;
+    border: black 1px solid;
+    height: 5vh;
+    min-height: 50px;
+    text-align: center;
+    padding: 10px;
+    color: white;
+    background-color: rgb(32, 92, 161);
+}
+
+
+/* Form size */
+
+.center_over_pic {
+    width: 80%;
+    max-width: 400px;
 }

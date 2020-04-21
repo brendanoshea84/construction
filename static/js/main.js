@@ -42,6 +42,14 @@ $('.box').click(function() {
     use_date = $(this).attr('value')
     $(this).addClass('highlight')
     $("#date_timelog").val(use_date)
+    $("#notes").val('project_number')
+    $("#project_number").val('')
+    $("#hours").val('')
+    $("#notes").val('')
+
+
+
+
     console.log("clicked")
 
 })

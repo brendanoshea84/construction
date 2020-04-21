@@ -310,7 +310,7 @@ def time_log_enter():
 
 @app.route('/get_date', methods=['POST', 'GET'])
 def get_date():
-    print("going to time_log")
+    # Get todays date/ week number / day name
     global date_now
     date_now = datetime.datetime.now()
     global weekdays
@@ -318,20 +318,16 @@ def get_date():
     global day
     day = date_now.strftime("%A")
 
+    # functions to change week
     week_day = date_now.isocalendar()[2]
-
     week_change = session.get('week_change', 0)
 
     if 'lastweek' in request.form:
         week_change += 1
         session['week_change'] = week_change
-        print("last week changed")
-        print(week_change)
     elif 'nextweek' in request.form:
         week_change -= 1
-        session['week_change'] = week_change
-        print("next week changed")
-        print(week_change)
+        session['week_change'] = week_change 
     else:
         print("not working")
 
@@ -353,19 +349,17 @@ def get_date():
 
     date_now = date_now.strftime('%Y-%m-%d')
     d = "2020-W" + weekdays
-    global r
-    r = datetime.datetime.strptime(d + '-1', "%Y-W%W-%w").strftime('%d-%m-%Y')
-    global testingABC
-    testingABC = list(mongo.db.time_logs.find({"employee_id": session['_id']}))
-    global qqq
-    qqq = list(mongo.db.time_logs.find({"employee_id": session['_id']}))
-
-    print(session['_id'])
+    # Monday as start of the week
+    global monday
+    monday = datetime.datetime.strptime(d + '-1', "%Y-W%W-%w").strftime('%d-%m-%Y')
+    global employee
+    employee = list(mongo.db.time_logs.find({"employee_id": session['_id']}))
+   
     global projects
     projects = list(mongo.db.projects.find())
-    return render_template("/main_extras/get_date.html", session=session, projects=projects, time=date_now, weekdays=weekdays,
-                           day=day, dates=dates, r=r, day_names=day_names, testingABC=testingABC,
-                           testing=itertools.zip_longest(dates, day_names, dates_org), qqq=qqq)
+    return render_template("/main_extras/get_date.html", session=session, projects=projects, now=date_now, weekdays=weekdays,
+                           day=day, dates=dates, monday = monday, day_names=day_names, employee=employee,
+                           testing=itertools.zip_longest(dates, day_names, dates_org))
 
 
 @app.route('/show_work/<worked_id>', methods=['POST', 'GET'])
@@ -385,9 +379,32 @@ def show_work(worked_id):
                                                          }}, upsert=True)
         return redirect(url_for('get_date'))
 
-    return render_template("/main_extras/show_work.html", session=session, worked=show_work, projects=projects, time=date_now,
-                           weekdays=weekdays, day=day, dates=dates, r=r, day_names=day_names, testingABC=testingABC,
-                           testing=itertools.zip_longest(dates, day_names, dates_org), qqq=qqq)
+    return render_template("/main_extras/show_work.html", session=session, worked=show_work, projects=projects, now=date_now, weekdays=weekdays,
+                           day=day, dates=dates, monday = monday, day_names=day_names, employee=employee,
+                           testing=itertools.zip_longest(dates, day_names, dates_org))
+
+
+@app.route('/month', methods=['POST', 'GET'])
+def month():
+    global date_now
+    date_now = datetime.datetime.now()
+    month = list(date_now.strftime("%m"))
+
+    days = calendar.monthcalendar(2020, 4)
+
+
+
+    
+
+
+
+    print("working at messages")
+    return render_template("/main_extras/month.html", month = month, days = days)
+
+
+
+
+
 
 
 @app.route('/delete_employee/<delete_id>', methods=['POST', 'GET'])
