@@ -72,7 +72,7 @@
     <h3>Closed Projects</h3>
 
     <div class="row scroll">
-        {% for close in closes %} {% if close.active!= 'on' %}
+        {% for project in projects %} {% if project.active!= 'on' %}
         <div class="custom_col">
             <div class="row">
                 <br>
@@ -80,7 +80,7 @@
                     <h5>Job Number: </h5>
                 </div>
                 <div class="col">
-                    <h5> {{close.project_number}} </h5>
+                    <h5> {{project.project_number}} </h5>
                 </div>
             </div>
             <hr>
@@ -89,7 +89,7 @@
                     <h5>Clients Name: </h5>
                 </div>
                 <div class="col">
-                    <h5> {{close.name}} </h5>
+                    <h5> {{project.name}} </h5>
                 </div>
             </div>
             <div class="row ">
@@ -97,7 +97,7 @@
                     <h5>Address </h5>
                 </div>
                 <div class="col">
-                    <h5> {{close.address}} </h5>
+                    <h5> {{project.address}} </h5>
                 </div>
             </div>
             <div class="row ">
@@ -105,7 +105,7 @@
                     <h5>Brief Discription: </h5>
                 </div>
                 <div class="col">
-                    <h5> {{close.brief}} </h5>
+                    <h5> {{project.brief}} </h5>
                 </div>
             </div>
             <div class="row ">
@@ -113,20 +113,20 @@
                     <h5>Active: </h5>
                 </div>
                 <div class="col">
-                    <h5> {{close.active}} </h5>
+                    <h5> {{project.active}} </h5>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="col-sm-12 col-md-4">
-                    <a href="{{url_for('get_projects', project_id=close._id)}}" class="btn btn-primary btn_custom">More Info</a> {% if session.admin == true %}
+                    <a href="{{url_for('get_projects', project_id=project._id)}}" class="btn btn-primary btn_custom">More Info</a> {% if session.admin == true %}
                 </div>
                 <div class="col-sm-12 col-md-4">
-                    <a href="{{url_for('edit_projects', project_id=close._id)}}" class="btn btn-secondary btn_custom">Edit</a>
+                    <a href="{{url_for('edit_projects', project_id=project._id)}}" class="btn btn-secondary btn_custom">Edit</a>
                 </div>
 
                 <div class="col-sm-12 col-md-4">
-                    <a href="{{url_for('delete_projects', project_id=close._id)}}" class="btn btn-warning btn_custom">Delete </a>{% endif %}
+                    <a href="{{url_for('delete_projects', project_id=project._id)}}" class="btn btn-warning btn_custom">Delete </a>{% endif %}
                 </div>
             </div>
 

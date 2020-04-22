@@ -1,5 +1,5 @@
 {% extends 'main.html' %}{% block main %}
-<h3 class="col-12">Edit Projects</h3>
+<h3 class="col-12">{{ 'Edit' if edit_projects._id else 'New'}} Project</h3>
 <br>
 <form method="POST">
     <div class="form-group row ">

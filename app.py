@@ -34,7 +34,7 @@ def sign_in():
 
     if request.method == 'POST':
         # Login using your own password
-        login_user = mongo.db.employees.find_one(
+        login_user = employees.find_one(
             {'username': request.form.get('login')})
 
         if login_user:
@@ -48,7 +48,7 @@ def sign_in():
                 print("error at login 40")
         else:
             print("no user 42")
-    return render_template('intro.html')
+    return render_template('intro.html', sign_in = sign_in)
 
 
 @app.route('/sign_up', methods=['POST', 'GET'])
@@ -71,7 +71,7 @@ def sign_up():
             # Fix here
             # flash("testing")
             print("welcome password wrong line 64")
-    return render_template('intro.html')
+    return render_template('intro.html', login = login)
 
 
 @app.route('/new_member_info', methods=['POST', 'GET'])
@@ -103,8 +103,8 @@ def add_personal_info():
         ) + '.' + request.form['last_name'].lower()
 
         # Check to see if username has been used
-
         temp_user = employees.find_one({'username': temp_username})
+        print("check 107")
 
         if temp_user:
             # Create another username if username is been used before using dob
@@ -176,13 +176,9 @@ def emergcy():
     return render_template("/employeeinfo/emergcy.html", new_doc_id=new_doc_id, username=username, new_first_name=new_first_name)
 
 
-@app.route('/personal_info', methods=['POST', 'GET'])
-def personal_info():
-    return render_template("")
-
 @app.route('/add_projects', methods=['POST', 'GET'])
 def add_project():
-    projects = mongo.db.projects
+    
     if request.method == 'POST':
         post_data = request.form.to_dict()
         # Insure the price is an int not a string
@@ -202,12 +198,13 @@ def add_project():
         projects.insert_one(post_data)
         return redirect(url_for('projects'))
 
-    return render_template("/main_extras/projects_new.html", session=session, projects=projects)
+    return render_template("/main_extras/edit_projects.html", edit_projects={}, session=session)
 
 
 @app.route('/projects', methods=['POST', 'GET'])
 def projects():
-    return render_template("/main_extras/projects.html", session=session, projects=mongo.db.projects.find(), closes=mongo.db.projects.find())
+    projects=list(mongo.db.projects.find())
+    return render_template("/main_extras/projects.html", session=session, projects=projects)
 
 
 @app.route('/edit_projects/<project_id>', methods=['POST', 'GET'])
@@ -386,17 +383,14 @@ def show_work(worked_id):
 
 @app.route('/month', methods=['POST', 'GET'])
 def month():
+
+
+    # GET RID OFF
     global date_now
     date_now = datetime.datetime.now()
     month = list(date_now.strftime("%m"))
 
     days = calendar.monthcalendar(2020, 4)
-
-
-
-    
-
-
 
     print("working at messages")
     return render_template("/main_extras/month.html", month = month, days = days)
@@ -429,17 +423,6 @@ def main():
     print("going to main")
     print(session)
     return render_template("main.html", session=session)    
-
-@app.route('/error_existing')
-def error_existing():
-    return render_template("/errors/error_existing.html")
-
-
-# If username has been used twice before and this is the third time
-@app.route('/username_wrong')
-def username_wrong():
-    print("too many users, not enough names")
-    return render_template("error_existing.html")
 
 
 if __name__ == '__main__':

@@ -12,6 +12,9 @@ The company has grown from a tiny, to a medium company and as such wanted to bec
 ## UX ##
 Develop This wanted a website with two sides, the employees and the owner/administrator.
 
+### Overall ###
+
+
 ### Employees ###
 Employees should have access to general information about the projects and limited information about their follow workers.
 Also their privite information should only be accessed by the owner/administrator.
