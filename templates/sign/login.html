@@ -3,7 +3,8 @@
         <div class="row justify-content-center">
             <button type="button" class="btn btn-primary btn_custom col-6" id="btn_login"><h4 class="no_margin">Login</h4></button>
         </div>
-        <form method="POST" action="{{ url_for('sign_in') }}" id="login_form" name="login_form" class="hide clean_background">
+
+        <form method="POST" action="{{ url_for('login') }}" id="login_form" name="login_form" class="hide clean_background">
             <div class="form-group ">
                 <label for="login" class="text_colour_white">Enter your username</label>
                 <input type="text" class="form-control" name="login" id="login" placeholder="first name.last name" required>
@@ -13,8 +14,16 @@
                 <label for="password_user" class="text_colour_white"><h3>Password</h3></label>
                 <input type="password" class="form-control" name="password_user" id="password_user" placeholder="Password" required>
             </div>
+
             <br>
             <button type="submit" name="login_btn" class="btn btn_enter col-4">Submit</button>
         </form>
+        <br> {% for message in get_flashed_messages(category_filter=["login"]) %}
+        <div class="row justify-content-center">
+            <div class="alert alert-warning col-6">
+                <button type="button" class="close" data-dismiss="alert">&times;</button> {{ message }}
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>

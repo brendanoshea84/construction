@@ -51,7 +51,7 @@
     <div class="row row_full">
         {% if session.admin == true or session._id == employee._id %}
         <div class="col-xs-10 col-md three_btn">
-            <a href="{{url_for('get_employee', employee_id=employee._id)}}" class=" btn btn-primary btn_employees float-left">More</a></div>
+            <a href="{{url_for('employee_info', employee_id=employee._id)}}" class=" btn btn-primary btn_employees float-left">More</a></div>
 
         <div class="col-xs-10 col-md three_btn">
             <a href="{{url_for('edit_employee', employee_id=employee._id)}}" class=" btn btn-secondary btn_employees float-left">Edit</a></div>

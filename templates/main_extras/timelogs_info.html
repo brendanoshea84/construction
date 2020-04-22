@@ -1,6 +1,6 @@
 {% extends '/main_extras/timelogs.html' %}{% block time_log %}
 
-<form id="personal_form" method="POST" action="{{ url_for('time_log_enter') }}">
+<form id="personal_form" method="POST" action="{{ url_for('time_log_new') }}">
     <div class="form-group row">
         <label for="project_number" class="col-sm-2 inline_form">Project Number</label>
         <select class="form-control col-sm-2" name="project_number" id="project_number">

@@ -1,14 +1,14 @@
 {% extends 'main.html' %}{% block main %}
-<h3 class="col-12">{{ 'Edit' if edit_projects._id else 'New'}} Project</h3>
+<h3 class="col-12">{{ 'Edit' if edit_project._id else 'New'}} Project</h3>
 <br>
 <form method="POST">
     <div class="form-group row ">
         <label for="project_number" class="col-sm-2 inline_form">Project Number</label>
-        <label for="project_number" class="col-sm-2 inline_form">{{edit_projects.project_number}}</label>
+        <label for="project_number" class="col-sm-2 inline_form">{{edit_project.project_number}}</label>
 
         <div class="form-group">
             <div class="custom-control custom-checkbox">
-                {% if edit_projects.active %}
+                {% if edit_project.active %}
                 <input type="checkbox" class="custom-control-input" id="active" name="active" checked=""> {% else %}
                 <input type="checkbox" class="custom-control-input" id="active" name="active"> {% endif %}
                 <label class="custom-control-label" for="active" name="active">Active Project</label>
@@ -18,31 +18,31 @@
     <br>
     <div class="form-group row">
         <label for="name" class="col-sm-2 inline_form">Clients Name</label>
-        <textarea type="text" class="form-control col-sm-10" id="name" name="name" aria-describedby="first_name">{{edit_projects.name}}</textarea>
+        <textarea type="text" class="form-control col-sm-9" id="name" name="name" aria-describedby="first_name">{{edit_project.name}}</textarea>
     </div>
     <br>
     <div class="form-group row">
         <label for="phone" class="col-sm-2 inline_form">Contact Details</label>
-        <textarea type="tel" class="form-control col-sm-10" id="phone" name="phone">{{edit_projects.phone}}</textarea>
+        <textarea type="tel" class="form-control col-sm-9" id="phone" name="phone">{{edit_project.phone}}</textarea>
     </div>
     <br>
     <div class="form-group row">
         <label for="address" class="col-sm-2 inline_form">Address of Project</label>
-        <textarea type="text" class="form-control col-sm-10" id="address" name="address">{{edit_projects.address}}</textarea>
+        <textarea type="text" class="form-control col-sm-9" id="address" name="address">{{edit_project.address}}</textarea>
     </div>
     <hr>
     <div class="form-group row">
         <label for="brief" class="col-sm-2 inline_form">Brief Discription</label>
-        <textarea type="text" class="form-control col-sm-10" id="brief" name="brief" maxlength="100">{{edit_projects.brief}}</textarea>
+        <textarea type="text" class="form-control col-sm-9" id="brief" name="brief" maxlength="100">{{edit_project.brief}}</textarea>
     </div>
     <br>
     <div class="form-group row">
         <label for="discription" class="col-sm-2 inline_form">Clear Discription</label>
-        <textarea type="text" class="form-control col-sm-10" id="discription" name="discription" rows="4">{{edit_projects.discription}}</textarea>
+        <textarea type="text" class="form-control col-sm-9" id="discription" name="discription" rows="4">{{edit_project.discription}}</textarea>
     </div>
     <hr>
     <label class="col-sm-2 inline_form" for="exampleSelect1">Price Type</label>
-    <select class="col-sm-3 inline_form" id="price_type" name="price_type" placeholder={{ edit_projects.price_type }}>
+    <select class="col-sm-3 inline_form" id="price_type" name="price_type" placeholder={{ edit_project.price_type }}>
         <option value="Project per hour">Project per hour</option>
         <option value="Fixed Price">Fixed Price</option>
         </select>
@@ -50,13 +50,13 @@
     <br>
     <div class="form-group row">
         <label class="col-sm-2 inline_form"></label>
-        <textarea type="number" class="form-control col-sm-10" id="price" name="price">{{ edit_projects.price }}</textarea>
+        <input type="number" class="form-control col-sm-9" id="price" name="price" value={{ edit_project.price }}></input>
     </div>
     <br>
-    <div class="row justify-content-center">
-        <button type="submit" name="action" class="btn btn-primary btn_custom col-4">Save Project</button>
-        <div class="col-4">
-            <a href="{{url_for('projects')}}" class="btn btn-secondary btn_custom">Escape</a>
+    <div class="row justify-content-center ">
+        <button type="submit " name="action " class="btn btn-primary btn_custom col-4 ">Save Project</button>
+        <div class="col-4 ">
+            <a href="{{url_for( 'projects')}} " class="btn btn-secondary btn_custom ">Escape</a>
         </div>
     </div>
     <br>

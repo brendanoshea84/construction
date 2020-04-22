@@ -3,7 +3,7 @@ import bcrypt
 import calendar
 import datetime
 import itertools
-from flask import Flask, render_template, redirect, request, url_for, session
+from flask import Flask, render_template, redirect, request, url_for, session, flash
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
@@ -17,10 +17,6 @@ app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 
 mongo = PyMongo(app)
 
-# Welcome Page
-# Sign in for new members with a pre password
-# Login using your own password
-
 
 @app.route('/intro', methods=['POST', 'GET'])
 def intro():
@@ -28,27 +24,27 @@ def intro():
 
 
 @app.route('/', methods=['POST', 'GET'])
-@app.route('/sign_in', methods=['POST', 'GET'])
-def sign_in():
+@app.route('/login', methods=['POST', 'GET'])
+def login():
     employees = mongo.db.employees
-
+  
     if request.method == 'POST':
         # Login using your own password
         login_user = employees.find_one(
             {'username': request.form.get('login')})
-
+            
+        # Check login passwords from input and collection
         if login_user:
             if bcrypt.hashpw(request.form.get('password_user').encode('utf-8'), login_user['password']) == login_user['password']:
                 global session
                 session = login_user
                 return redirect(url_for('main'))
             else:
-                # Fix here
-                # Add error msg
-                print("error at login 40")
+                flash('Wrong Password', 'login')
+
         else:
-            print("no user 42")
-    return render_template('intro.html', sign_in = sign_in)
+            flash('Username is incorrect', 'login')
+    return render_template('intro.html')
 
 
 @app.route('/sign_up', methods=['POST', 'GET'])
@@ -65,13 +61,10 @@ def sign_up():
                 wel_pass = val
         if wel_pass == try_pass:
             # If sussecful- Page to input new member info
-            print("success with password at sign_up: line 59")
             return redirect(url_for('add_personal_info'))
         else:
-            # Fix here
-            # flash("testing")
-            print("welcome password wrong line 64")
-    return render_template('intro.html', login = login)
+            flash('Wrong Password! Please contact Admin', 'sign_in')
+    return render_template('intro.html', login=login)
 
 
 @app.route('/new_member_info', methods=['POST', 'GET'])
@@ -104,7 +97,6 @@ def add_personal_info():
 
         # Check to see if username has been used
         temp_user = employees.find_one({'username': temp_username})
-        print("check 107")
 
         if temp_user:
             # Create another username if username is been used before using dob
@@ -154,6 +146,7 @@ def bank_details():
 
 @app.route('/emergcy/', methods=['POST', 'GET'])
 def emergcy():
+    # Update to made _id
     global username
     employees = mongo.db.employees
     username = employees.find_one({'_id': new_doc_id})
@@ -176,41 +169,36 @@ def emergcy():
     return render_template("/employeeinfo/emergcy.html", new_doc_id=new_doc_id, username=username, new_first_name=new_first_name)
 
 
-@app.route('/add_projects', methods=['POST', 'GET'])
+@app.route('/add_project', methods=['POST', 'GET'])
 def add_project():
-    
+    projects = mongo.db.projects
+
     if request.method == 'POST':
         post_data = request.form.to_dict()
         # Insure the price is an int not a string
         post_data['price'] = int(request.form['price'])
         # Set extra info for the project
         post_data['active'] = 'on'
-
         new_project_number = projects.distinct('project_number')
         project_no = max(new_project_number)
         project_number = int(project_no) + 1
         post_data['project_number'] = project_number
-
-        print("testing 189")
-
-        print(project_number)
-
-        projects.insert_one(post_data)
+        projects.insert(post_data)
         return redirect(url_for('projects'))
 
-    return render_template("/main_extras/edit_projects.html", edit_projects={}, session=session)
+    return render_template("/main_extras/edit_project.html", edit_project={}, session=session, projects=projects)
 
 
 @app.route('/projects', methods=['POST', 'GET'])
 def projects():
-    projects=list(mongo.db.projects.find())
+    projects = list(mongo.db.projects.find())
     return render_template("/main_extras/projects.html", session=session, projects=projects)
 
 
-@app.route('/edit_projects/<project_id>', methods=['POST', 'GET'])
-def edit_projects(project_id):
+@app.route('/edit_project/<project_id>', methods=['POST', 'GET'])
+def edit_project(project_id):
     print("edit 209")
-    edit_projects = mongo.db.projects.find_one({"_id": ObjectId(project_id)})
+    edit_project = mongo.db.projects.find_one({"_id": ObjectId(project_id)})
 
     if request.method == "POST":
         print("post happened")
@@ -229,17 +217,17 @@ def edit_projects(project_id):
                                                       }}, upsert=True)
         print("try after")
         return redirect(url_for('projects'))
-    return render_template("/main_extras/edit_projects.html", session=session, edit_projects=edit_projects, project=mongo.db.projects.find())
+    return render_template("/main_extras/edit_project.html", session=session, edit_project=edit_project, project=mongo.db.projects.find())
 
 
-@app.route('/get_projects/<project_id>', methods=['POST', 'GET'])
-def get_projects(project_id):
-    get_project = mongo.db.projects.find_one({"_id": ObjectId(project_id)})
-    return render_template("/main_extras/get_projects.html", session=session, project=get_project)
+@app.route('/project_info/<project_id>', methods=['POST', 'GET'])
+def project_info(project_id):
+    project_info = mongo.db.projects.find_one({"_id": ObjectId(project_id)})
+    return render_template("/main_extras/project_info.html", session=session, project=project_info)
 
 
-@app.route('/delete_projects/<project_id>', methods=['POST', 'GET'])
-def delete_projects(project_id):
+@app.route('/delete_project/<project_id>', methods=['POST', 'GET'])
+def delete_project(project_id):
     delete_project = mongo.db.projects.remove({"_id": ObjectId(project_id)})
     return redirect(url_for('projects'))
 
@@ -250,11 +238,11 @@ def employees():
     return render_template("/main_extras/employees.html", session=session, employees=mongo.db.employees.find())
 
 
-@app.route('/get_employee/<employee_id>', methods=['POST', 'GET'])
-def get_employee(employee_id):
+@app.route('/employee_info/<employee_id>', methods=['POST', 'GET'])
+def employee_info(employee_id):
     print("going to employees")
-    get_employee = mongo.db.employees.find_one({"_id": ObjectId(employee_id)})
-    return render_template("/main_extras/get_employee.html", session=session, employee=get_employee)
+    employee_info = mongo.db.employees.find_one({"_id": ObjectId(employee_id)})
+    return render_template("/main_extras/employee_info.html", session=session, employee=employee_info)
 
 
 @app.route('/edit_employee/<employee_id>', methods=['POST', 'GET'])
@@ -290,8 +278,8 @@ def time_log():
     return render_template("/main_extras/timelogs.html")
 
 
-@app.route('/time_log_enter', methods=['POST', 'GET'])
-def time_log_enter():
+@app.route('/time_log_new', methods=['POST', 'GET'])
+def time_log_new():
     post_data = request.form.to_dict()
     post_data['project_number'] = int(request.form['project_number'])
     post_data['date'] = request.form['date']
@@ -301,12 +289,12 @@ def time_log_enter():
 
     print("line 342")
     mongo.db.time_logs.insert_one(post_data)
-    return redirect(url_for('get_date'))
+    return redirect(url_for('timelogs_info'))
     return render_template("/main_extras/timelogs.html", session=session)
 
 
-@app.route('/get_date', methods=['POST', 'GET'])
-def get_date():
+@app.route('/timelogs_info', methods=['POST', 'GET'])
+def timelogs_info():
     # Get todays date/ week number / day name
     global date_now
     date_now = datetime.datetime.now()
@@ -324,7 +312,7 @@ def get_date():
         session['week_change'] = week_change
     elif 'nextweek' in request.form:
         week_change -= 1
-        session['week_change'] = week_change 
+        session['week_change'] = week_change
     else:
         print("not working")
 
@@ -348,14 +336,16 @@ def get_date():
     d = "2020-W" + weekdays
     # Monday as start of the week
     global monday
-    monday = datetime.datetime.strptime(d + '-1', "%Y-W%W-%w").strftime('%d-%m-%Y')
+    monday = datetime.datetime.strptime(
+        d + '-1', "%Y-W%W-%w").strftime('%d-%m-%Y')
     global employee
     employee = list(mongo.db.time_logs.find({"employee_id": session['_id']}))
-   
+
     global projects
     projects = list(mongo.db.projects.find())
-    return render_template("/main_extras/get_date.html", session=session, projects=projects, now=date_now, weekdays=weekdays,
-                           day=day, dates=dates, monday = monday, day_names=day_names, employee=employee,
+    
+    return render_template("/main_extras/timelogs_info.html", session=session, worked={},projects=projects, now=date_now, weekdays=weekdays,
+                           day=day, dates=dates, monday=monday, day_names=day_names, employee=employee,
                            testing=itertools.zip_longest(dates, day_names, dates_org))
 
 
@@ -376,29 +366,9 @@ def show_work(worked_id):
                                                          }}, upsert=True)
         return redirect(url_for('get_date'))
 
-    return render_template("/main_extras/show_work.html", session=session, worked=show_work, projects=projects, now=date_now, weekdays=weekdays,
-                           day=day, dates=dates, monday = monday, day_names=day_names, employee=employee,
+    return render_template("/main_extras/timelogs.html", session=session, worked=show_work, projects=projects, now=date_now, weekdays=weekdays,
+                           day=day, dates=dates, monday=monday, day_names=day_names, employee=employee,
                            testing=itertools.zip_longest(dates, day_names, dates_org))
-
-
-@app.route('/month', methods=['POST', 'GET'])
-def month():
-
-
-    # GET RID OFF
-    global date_now
-    date_now = datetime.datetime.now()
-    month = list(date_now.strftime("%m"))
-
-    days = calendar.monthcalendar(2020, 4)
-
-    print("working at messages")
-    return render_template("/main_extras/month.html", month = month, days = days)
-
-
-
-
-
 
 
 @app.route('/delete_employee/<delete_id>', methods=['POST', 'GET'])
@@ -418,11 +388,12 @@ def messages():
     print("working at messages")
     return render_template("base.html")
 
+
 @app.route('/main', methods=['POST', 'GET'])
 def main():
     print("going to main")
     print(session)
-    return render_template("main.html", session=session)    
+    return render_template("main.html", session=session)
 
 
 if __name__ == '__main__':

@@ -237,3 +237,13 @@ div.content {
         position: sticky;
     }
 }
+
+textarea[type="text"]:disabled {
+    outline: none;
+    background-color: transparent;
+    border: none;
+}
+
+textarea[type="text"] {
+    padding-top: 0;
+}
