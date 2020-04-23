@@ -27,12 +27,12 @@ def intro():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     employees = mongo.db.employees
-  
+
     if request.method == 'POST':
         # Login using your own password
         login_user = employees.find_one(
             {'username': request.form.get('login')})
-            
+
         # Check login passwords from input and collection
         if login_user:
             if bcrypt.hashpw(request.form.get('password_user').encode('utf-8'), login_user['password']) == login_user['password']:
@@ -343,8 +343,8 @@ def timelogs_info():
 
     global projects
     projects = list(mongo.db.projects.find())
-    
-    return render_template("/main_extras/timelogs_info.html", session=session, worked={},projects=projects, now=date_now, weekdays=weekdays,
+
+    return render_template("/main_extras/timelogs_info.html", session=session, worked={}, projects=projects, now=date_now, weekdays=weekdays,
                            day=day, dates=dates, monday=monday, day_names=day_names, employee=employee,
                            testing=itertools.zip_longest(dates, day_names, dates_org))
 
