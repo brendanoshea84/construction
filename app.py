@@ -124,8 +124,7 @@ def add_personal_info():
             add_to_database()
 
         return redirect(url_for('emergcy'))
-    return render_template("/employeeinfo/personal_info.html",
-                           new_first_name=new_first_name)
+    return render_template("/employeeinfo/personal_info.html", new_first_name=new_first_name)
 
 
 @app.route('/bank_details', methods=['POST', 'GET'])
