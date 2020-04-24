@@ -1,10 +1,7 @@
 {% extends 'main.html' %}{% block main %}
-
-
 <h3>Time log</h3>
 <h4 id="hours_worked">Hours worked this Week : </h4>
 <br>
-
 <div class="container">
     <form action="" method="POST">
         <div class="row">
@@ -15,21 +12,17 @@
         </div>
     </form>
 </div>
-
 <br>
-
 <div class="container-fluid">
     <div class="row check">
         {% for dates, day_names, dates_org in testing %} {% if now == dates %}
         <div class="box highlight" value={{ dates }}>
             {% else %}
             <div class="box" value={{ dates }}>
-
                 {% endif %}
                 <div class="row title_view">
                     <div class="">{{ dates_org }}</div>
                 </div>
-
                 <div class="row title_view ">
                     {% if now == dates %}
                     <p>Today</p>
@@ -37,12 +30,10 @@
                     <p>{{ day_names }}</p>
                     {% endif %}
                 </div>
-
                 {% for day in employee %} {% if dates == day.date %}
                 <a class="row sum_view" href="{{url_for('show_work', worked_id=day._id)}}">Project: {{ day.project_number }}  -  
                     <div class="hours_day"> {{ day.hours }}</div>hrs</a>
                 </a> {% endif %} {% endfor %}
-
             </div>
             {% endfor %}
         </div>

@@ -132,8 +132,30 @@ A new employee first name and last name creates a username. If there is already 
 1. Manual clicking of all buttons to insure url end points are correct.
 ### Interesting ###
 1. I had some issues with time log week calendar. To change the week, I had to add a variable to session. As the form would re-load, it would only show next or previous week. By adding the plus or negative to a session variable, I was allowed to go through all the week even though the form was reloaded. With more time, I believe I could find a better solution. As this works as intended, I left it in this project.
-  
+
 ### Validation ###
+1. HTML
+    * Use [validator.w3](https://validator.w3.org/): For every 'a href' I got an error of...
+    Error: Bad value {{ url_for( 'example') }} for attribute href on element a: Illegal character in path segment: { is not allowed.
+    After going back to Code Institute course work and looking at 'Task Manager' I notice the same issue.
+
+1. CSS
+    * Use [validator.w3](https://jigsaw.w3.org/css-validator/)
+    * intro_style.css: W3C CSS Validator results for TextArea (CSS level 3 + SVG) No errors
+    * style.css: W3C CSS Validator results for TextArea (CSS level 3 + SVG) No errors
+
+1. Javascript
+    * Use [jshint.com](jshint.com)
+    * intro_page.js: Passed
+    * main.js: Using JQuery, $ undefined variable.
+
+1. Python
+    * I used a vs pep8 extension to insure my python code was up to standard.
+    * ctrl + shift + p to check python
+    * Use [pep8online](http://pep8online.com/)
+        * Many errors with line too long. 
+
+
 
 
 
