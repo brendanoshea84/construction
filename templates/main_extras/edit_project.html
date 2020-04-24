@@ -2,6 +2,7 @@
 <h3 class="col-12">{{ 'Edit' if edit_project._id else 'New'}} Project</h3>
 <br>
 <form method="POST">
+    {% if edit_project._id %}
     <div class="form-group row ">
         <label for="project_number" class="col-sm-2 inline_form">Project Number</label>
         <label for="project_number" class="col-sm-2 inline_form">{{edit_project.project_number}}</label>
@@ -15,6 +16,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     <br>
     <div class="form-group row">
         <label for="name" class="col-sm-2 inline_form">Clients Name</label>

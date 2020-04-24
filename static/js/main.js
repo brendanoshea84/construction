@@ -31,6 +31,33 @@ window.onload = (function() {
     }
 });
 
+
+
+// Change tabs in employees data
+var personal_tab = document.getElementById("personal_tab");
+var emergcy_tab = document.getElementById("emergcy_tab");
+var bank_tab = document.getElementById("bank_tab");
+
+
+window.onload = (function() {
+    if (window.location.href.indexOf("personal_info") > -1) {
+        personal_tab.classList.add('active');
+        emergcy_tab.classList.remove('active');
+        bank_tab.classList.remove('active');
+
+    } else if (window.location.href.indexOf("emergcy") > -1) {
+        personal_tab.classList.remove('active');
+        emergcy_tab.classList.add('active');
+        bank_tab.classList.remove('active');
+
+    } else if (window.location.href.indexOf("bank_details") > -1) {
+        personal_tab.classList.remove('active');
+        emergcy_tab.classList.remove('active');
+        bank_tab.classList.add('active');
+
+    }
+});
+
 //Change date from button click
 var use_date;
 
@@ -46,8 +73,8 @@ $('.box').click(function() {
 });
 
 // Add hours for week
-let hours = 0;
-$(".hours").each(function() {
-    hours += parseFloat($(this).text());
+var hours = 0;
+$(".hours_day").each(function() {
+    hours += parseFloat($(this).html());
 });
 $('#hours_worked').append(hours);

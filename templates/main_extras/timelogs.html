@@ -39,8 +39,8 @@
                 </div>
 
                 {% for day in employee %} {% if dates == day.date %}
-                <a class="row sum_view" href="{{url_for('show_work', worked_id=day._id)}}">Project: {{ day.project_number }}  
-                    <div class="hours"> - {{ day.hours }}</div>hrs</a>
+                <a class="row sum_view" href="{{url_for('show_work', worked_id=day._id)}}">Project: {{ day.project_number }}  -  
+                    <div class="hours_day"> {{ day.hours }}</div>hrs</a>
                 </a> {% endif %} {% endfor %}
 
             </div>

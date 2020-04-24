@@ -7,6 +7,7 @@ from flask import Flask, render_template, redirect, request, url_for, session, f
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
+
 if os.path.exists("env.py"):
     import env
 
@@ -285,7 +286,7 @@ def time_log_new():
     post_data['date'] = request.form['date']
     post_data['hours'] = int(request.form['hours'])
     post_data['notes'] = request.form['notes']
-    post_data['employee_id'] = session['_id']
+    post_data['employee_id'] = session['username']
 
     print("line 342")
     mongo.db.time_logs.insert_one(post_data)
@@ -339,7 +340,8 @@ def timelogs_info():
     monday = datetime.datetime.strptime(
         d + '-1', "%Y-W%W-%w").strftime('%d-%m-%Y')
     global employee
-    employee = list(mongo.db.time_logs.find({"employee_id": session['_id']}))
+    employee = list(mongo.db.time_logs.find(
+        {"employee_id": session['username']}))
 
     global projects
     projects = list(mongo.db.projects.find())
@@ -366,7 +368,7 @@ def show_work(worked_id):
                                                          }}, upsert=True)
         return redirect(url_for('get_date'))
 
-    return render_template("/main_extras/timelogs.html", session=session, worked=show_work, projects=projects, now=date_now, weekdays=weekdays,
+    return render_template("/main_extras/timelogs_info.html", session=session, worked=show_work, projects=projects, now=date_now, weekdays=weekdays,
                            day=day, dates=dates, monday=monday, day_names=day_names, employee=employee,
                            testing=itertools.zip_longest(dates, day_names, dates_org))
 

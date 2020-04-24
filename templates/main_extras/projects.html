@@ -1,15 +1,16 @@
 {% extends 'main.html' %}{% block main %}
-<div class="heading">
-    <div class="row justify-content-center">
-        <h3 class="col-12">Current Projects</h3>
-        <br> {% if session['admin'] %}
-        <div class="col-sm-12 col-md-4">
-            <a class="btn btn-primary btn_custom" href="{{url_for('add_project')}}">New Project</a>
-        </div>{% endif %}
-    </div>
-</div>
-
 <div class="container-fluid">
+    <div class="heading">
+        <div class="row justify-content-center">
+            <h3 class="col-12">Current Projects</h3>
+            <br> {% if session['admin'] %}
+            <div class="col-sm-2 col-md-2">
+                <a class="btn btn-primary btn_custom" href="{{url_for('add_project')}}">New Project</a>
+            </div>{% endif %}
+        </div>
+    </div>
+
+
     <div class="row scroll">
         {% for project in projects %} {% if project.active== 'on' %}
         <div class="custom_col">
@@ -69,7 +70,9 @@
     </div>
 
     {% if session.admin == true %}
-    <h3>Closed Projects</h3>
+    <div class="heading">
+        <h3>Closed Projects</h3>
+    </div>
 
     <div class="row scroll">
         {% for project in projects %} {% if project.active!= 'on' %}

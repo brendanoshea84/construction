@@ -13,7 +13,7 @@
     <br>
     <div class="form-group row">
         <label for="dob" class="col-sm-2 inline_form">Date of Birth</label>
-        <textarea type="date" class="form-control col-sm-10" id="dob" name="dob">{{edit_employee.dob}}</textarea>
+        <input type="date" class="form-control col-sm-10" id="dob" name="dob">
     </div>
     <br>
     <div class="form-group row">
@@ -58,4 +58,18 @@
     <button type="submit" name="action" class="btn btn-primary col-sm-4 float-right ">Save and Next</button>
     <br>
 </form>
-<br> {% endblock %}
+<br>
+
+
+
+<script>
+    let date_input = '{{edit_employee.dob}}';
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById("dob").value = date_input;
+
+
+    }, false);
+</script>
+
+{% endblock %}

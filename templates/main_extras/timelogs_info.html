@@ -3,7 +3,7 @@
 <form id="personal_form" method="POST" action="{{ url_for('time_log_new') }}">
     <div class="form-group row">
         <label for="project_number" class="col-sm-2 inline_form">Project Number</label>
-        <select class="form-control col-sm-2" name="project_number" id="project_number">
+        <select class="form-control col-sm-2" name="project_number" id="project_number" required>
             
             <option>{{worked.project_number}}</option>
             {% for pro in projects %}{% if pro.active == "on" %}
