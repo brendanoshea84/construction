@@ -140,7 +140,8 @@ def bank_details():
         return redirect(url_for('projects'))
     return render_template("/employeeinfo/bank_details.html",
                            new_doc_id=new_doc_id,
-                           username=username, new_first_name=new_first_name)
+                           username=username, new_first_name=new_first_name,
+                           session = session)
 
 
 @app.route('/emergcy', methods=['POST', 'GET'])
@@ -164,7 +165,8 @@ def emergcy():
                              }}, upsert=True)
         return redirect(url_for('bank_details'))
     return render_template("/employeeinfo/emergcy.html", new_doc_id=new_doc_id,
-                           username=username, new_first_name=new_first_name)
+                           username=username, new_first_name=new_first_name,
+                           session = session)
 
 
 @app.route('/add_project', methods=['POST', 'GET'])
