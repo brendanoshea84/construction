@@ -4,12 +4,21 @@
     <div class="row">
         <h2 class="col-9"><b>News</b></h2>
         {% if session['admin'] %}
-        <button class="btn btn-primary btn_custom float-right col-xs-3 col-md-2" id="more_news">Add</button> {% endif %}
+        <button class="btn btn-primary btn_custom col-xs-3 col-md-2" id="more_news">Add</button> {% endif %}
     </div>
-    <form id="client_form" method="POST" class="hidden">
+    <form id="new_form" method="POST" class="hidden">
         <div class="form-group row">
-            <label for="clients_name" class="col-sm-10 inline_form">Input News</label>
-            <input type="text" class="form-control col-sm-10" id="name" name="name" aria-describedby="first_name">
+            <label for="title" class="col-sm-10 inline_form">Title</label>
+            <textarea type="text" class="form-control col-sm-12" id="title" name="title" aria-describedby="title" rows="1"></textarea>
+        </div>
+        <br>
+        <div class="form-group row">
+            <label for="news" class="col-sm-10 inline_form">Input News</label>
+            <textarea type="text" class="form-control col-sm-12" id="news" name="news" aria-describedby="news" rows="3"></textarea>
+        </div>
+        <br>
+        <div class="row">
+            <button type="submit" name="action" class="btn btn-secondary btn_custom col-xs-3 col-md-2 ">Update</button>
         </div>
     </form>
     <hr>
@@ -17,7 +26,7 @@
     <div class="row">
         <h2 class="col-9"><b>{{new.heading}}</b></h2>
         <br> {% if session['admin'] %}
-        <a href="" class="btn btn-warning btn_custom float-right col-xs-3 col-md-2">Delete</a>
+        <a href="{{url_for('delete_new', new_id=new._id)}}" class="btn btn-warning btn_custom col-xs-3 col-md-2">Delete</a>
     </div>
     <br> {% endif %}
     <br>

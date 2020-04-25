@@ -78,3 +78,12 @@ $(".hours_day").each(function() {
     hours += parseFloat($(this).html());
 });
 $('#hours_worked').append(hours);
+
+
+// Home page news
+
+var news_form = document.getElementById("new_form");
+
+$("#more_news").click(function() {
+    $("#new_form").removeClass('hidden')
+});

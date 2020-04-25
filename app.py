@@ -40,7 +40,7 @@ def login():
                              login_user['password']) == login_user['password']:
                 global session
                 session = login_user
-                return redirect(url_for('main'))
+                return redirect(url_for('home'))
             else:
                 flash('Wrong Password', 'login')
 
@@ -395,10 +395,22 @@ def remove_employee(delete_id):
     return redirect(url_for('employees'))
 
 
-@app.route('/home')
+@app.route('/home', methods=['POST', 'GET'])
 def home():
     news = mongo.db.news.find()
-    return render_template("/main_extras/home.html", news = news, session=session)
+    if request.method == "POST":
+        post_data = request.form.to_dict()
+        post_data['heading'] = request.form['title']
+        post_data['news'] = request.form['news']
+        mongo.db.news.insert_one(post_data)
+        return redirect(url_for('home'))
+    return render_template("/main_extras/home.html", news=news, session=session)
+
+
+@app.route('/delete_new/<new_id>', methods=['POST', 'GET'])
+def delete_new(new_id):
+    delete_new = mongo.db.news.remove({"_id": ObjectId(new_id)})
+    return redirect(url_for('home'))
 
 
 @app.route('/base', methods=['POST', 'GET'])
