@@ -71,7 +71,7 @@ def sign_up():
 
 @app.route('/new_member_info', methods=['POST', 'GET'])
 def new_member_info():
-    return render_template("/employeeinfo/personal_info.html")
+    return render_template("/test/personal_info.html")
 
 
 @app.route('/add_personal_info', methods=['POST', 'GET'])
@@ -124,7 +124,7 @@ def add_personal_info():
             add_to_database()
 
         return redirect(url_for('emergcy'))
-    return render_template("/employeeinfo/personal_info.html", new_first_name=new_first_name)
+    return render_template("/test/personal_info.html", new_first_name=new_first_name)
 
 
 @app.route('/bank_details', methods=['POST', 'GET'])
