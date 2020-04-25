@@ -1,0 +1,26 @@
+{% extends 'main.html' %}{% block main %}
+<h2>develop / dɪˈvel.əp / verb: to bring out the capabilities or possibilities of; bring to a more advanced or effective state.</h3>
+    <br>
+    <div class="row">
+        <h2 class="col-9"><b>News</b></h2>
+        {% if session['admin'] %}
+        <button class="btn btn-primary btn_custom float-right col-xs-3 col-md-2" id="more_news">Add</button> {% endif %}
+    </div>
+    <form id="client_form" method="POST" class="hidden">
+        <div class="form-group row">
+            <label for="clients_name" class="col-sm-10 inline_form">Input News</label>
+            <input type="text" class="form-control col-sm-10" id="name" name="name" aria-describedby="first_name">
+        </div>
+    </form>
+    <hr>
+    <br> {% for new in news %}
+    <div class="row">
+        <h2 class="col-9"><b>{{new.heading}}</b></h2>
+        <br> {% if session['admin'] %}
+        <a href="" class="btn btn-warning btn_custom float-right col-xs-3 col-md-2">Delete</a>
+    </div>
+    <br> {% endif %}
+    <br>
+    <h3>{{new.news}}</h3>
+
+    <hr>{% endfor %} {% endblock %}

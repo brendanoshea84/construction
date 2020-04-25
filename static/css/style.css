@@ -4,6 +4,10 @@ body {
     background-color: rgb(237, 252, 250, 0.4);
 }
 
+.row {
+    margin: 0;
+}
+
 
 /* Jumbotron */
 
@@ -208,8 +212,8 @@ div.content {
     padding: 0;
 }
 
-.adjust {
-    padding-left: 5vw;
+.hidden {
+    display: none;
 }
 
 
@@ -245,14 +249,18 @@ div.content {
 @media screen and (min-width: 767px) and (orientation: landscape) {
     .sidebar {
         width: 100%;
-        height: 100%;
+        height: 100vh;
         position: relative;
     }
 }
 
 @media screen and (max-width: 425px) {
     .sidebar {
-        height: 12vh;
+        height: 8vh;
         display: flex;
+        padding: 0;
+    }
+    .adjust {
+        margin: 0;
     }
 }

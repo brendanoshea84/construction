@@ -38,6 +38,9 @@ As such employees Administration should be to do everything an employee can do p
     - Get their private information like:
         - Bank details
         - Address
+    - Update information of the employee.
+    - Delete employee. 
+
 1. Create, edit and remove Projects.
     - Create a project with information like:
         - Name of client
@@ -47,6 +50,8 @@ As such employees Administration should be to do everything an employee can do p
         - Type of payment (by the hour or total)
         - Add payment  
         - If active or finished site
+        - Delete a project after it's been de-active.
+
 1.  Time logs...
     - Create and update their work log using a weekly calendar. 
 
@@ -66,6 +71,7 @@ As such employees Administration should be to do everything an employee can do p
 1. Projects
     1. Administration 
         * Add a new project
+        * A new project gets their own unique project number. This is created by finding the last highest number, then add 1. 
         * Edit existing projects
         * De-active projects if the project is complete.
             * Remove project if completed
@@ -151,7 +157,7 @@ A new employee first name and last name creates a username. If there is already 
 
 1. Python
     * I used a vs pep8 extension to insure my python code was up to standard.
-    * ctrl + shift + p to check python
+    * ctrl + shift + p to check python code
     * Use [pep8online](http://pep8online.com/)
         * Many errors with line too long. 
 

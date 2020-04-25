@@ -124,7 +124,8 @@ def add_personal_info():
             add_to_database()
 
         return redirect(url_for('emergcy'))
-    return render_template("/employee_info/personal_info.html", new_first_name=new_first_name)
+    return render_template("/employee_info/personal_info.html",
+                           new_first_name=new_first_name)
 
 
 @app.route('/bank_details', methods=['POST', 'GET'])
@@ -137,11 +138,11 @@ def bank_details():
                                  'bank_name': request.form.get('bank_name'),
                                  'bank_number': request.form.get('bank_number')
                              }}, upsert=True)
-        return redirect(url_for('projects'))
+        return redirect(url_for('home'))
     return render_template("/employee_info/bank_details.html",
                            new_doc_id=new_doc_id,
                            username=username, new_first_name=new_first_name,
-                           session = session)
+                           session=session)
 
 
 @app.route('/emergcy', methods=['POST', 'GET'])
@@ -164,9 +165,9 @@ def emergcy():
                                  'next_of_kin_mob': request.form.get('next_of_kin_mob')
                              }}, upsert=True)
         return redirect(url_for('bank_details'))
-    return render_template("/employee_info/emergcy.html", new_doc_id=new_doc_id,
-                           username=username, new_first_name=new_first_name,
-                           session = session)
+    return render_template("/employee_info/emergcy.html",
+                           new_doc_id=new_doc_id, username=username,
+                           new_first_name=new_first_name, session=session)
 
 
 @app.route('/add_project', methods=['POST', 'GET'])
@@ -206,7 +207,6 @@ def edit_project(project_id):
         print("post happened")
         update_project = mongo.db.projects.update_one({"_id": ObjectId(project_id)},
                                                       {'$set': {
-
                                                           'name': request.form.get('name'),
                                                           'phone': request.form.get('phone'),
                                                           'address': request.form.get('address'),
@@ -215,12 +215,12 @@ def edit_project(project_id):
                                                           'price': request.form.get('price'),
                                                           'price_type': request.form.get('price_type'),
                                                           'active': request.form.get('active')
-
                                                       }}, upsert=True)
         print("try after")
         return redirect(url_for('projects'))
     return render_template("/main_extras/edit_project.html", session=session,
-                           edit_project=edit_project, project=mongo.db.projects.find())
+                           edit_project=edit_project,
+                           project=mongo.db.projects.find())
 
 
 @app.route('/project_info/<project_id>', methods=['POST', 'GET'])
@@ -248,7 +248,8 @@ def employees():
 def employee_info(employee_id):
     print("going to employees")
     employee_info = mongo.db.employees.find_one({"_id": ObjectId(employee_id)})
-    return render_template("/main_extras/employee_info.html", session=session, employee=employee_info)
+    return render_template("/main_extras/employee_info.html",
+                           session=session, employee=employee_info)
 
 
 @app.route('/edit_employee/<employee_id>', methods=['POST', 'GET'])
@@ -260,7 +261,6 @@ def edit_employee(employee_id):
         print("post happened")
         update_employee = mongo.db.employees.update_one({"_id": ObjectId(employee_id)},
                                                         {'$set': {
-
                                                             'first_name': request.form.get('first_name'),
                                                             'last_name': request.form.get('last_name'),
                                                             'address': request.form.get('address'),
@@ -271,8 +271,6 @@ def edit_employee(employee_id):
                                                             'next_of_kin_mob': request.form.get('next_of_kin_mob'),
                                                             'bank_name': request.form.get('bank_name'),
                                                             'bank_number': request.form.get('bank_number')
-
-
                                                         }}, upsert=True)
         return redirect(url_for('employees'))
 
@@ -325,7 +323,7 @@ def timelogs_info():
 
     change_date = (week_change * 7)
 
-    # Calculates Starting date (Monday) for this case by subtracting current date with time delta of the day of the week
+    # Calculates Starting date (Monday)
     start_date = date_now - datetime.timedelta(days=week_day)
 
     # Prints the list of dates in a current week
@@ -355,10 +353,11 @@ def timelogs_info():
     global testing
     testing = itertools.zip_longest(dates, day_names, dates_org)
 
-    return render_template("/main_extras/timelogs_info.html", session=session, worked={},
-                           projects=projects, now=date_now, weekdays=weekdays, day=day,
-                           dates=dates, monday=monday, day_names=day_names, employee=employee,
-                           testing=testing)
+    return render_template("/main_extras/timelogs_info.html", session=session,
+                           worked={}, projects=projects, now=date_now,
+                           weekdays=weekdays, day=day, dates=dates,
+                           monday=monday, day_names=day_names,
+                           employee=employee, testing=testing)
 
 
 @app.route('/show_work/<worked_id>', methods=['POST', 'GET'])
@@ -396,16 +395,19 @@ def remove_employee(delete_id):
     return redirect(url_for('employees'))
 
 
+@app.route('/home')
+def home():
+    news = mongo.db.news.find()
+    return render_template("/main_extras/home.html", news = news, session=session)
+
+
 @app.route('/base', methods=['POST', 'GET'])
 def messages():
-    print("working at messages")
     return render_template("base.html")
 
 
 @app.route('/main', methods=['POST', 'GET'])
 def main():
-    print("going to main")
-    print(session)
     return render_template("main.html", session=session)
 
 

@@ -2,9 +2,9 @@
 <div class="container-fluid">
     <div class="heading">
         <div class="row justify-content-center">
-            <h3 class="col-12">Current Projects</h3>
+            <h3 class="col">Current Projects</h3>
             <br> {% if session['admin'] %}
-            <div class="col-sm-2 col-md-2">
+            <div class="col-sm-2 col-md-4">
                 <a class="btn btn-primary btn_custom" href="{{url_for('add_project')}}">New Project</a>
             </div>{% endif %}
         </div>
