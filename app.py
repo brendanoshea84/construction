@@ -143,7 +143,7 @@ def bank_details():
                            username=username, new_first_name=new_first_name)
 
 
-@app.route('/emergcy/', methods=['POST', 'GET'])
+@app.route('/emergcy', methods=['POST', 'GET'])
 def emergcy():
     # Update to made _id
     global username
