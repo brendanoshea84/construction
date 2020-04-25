@@ -124,7 +124,7 @@ def add_personal_info():
             add_to_database()
 
         return redirect(url_for('emergcy'))
-    return render_template("/test/personal_info.html", new_first_name=new_first_name)
+    return render_template("/employee_info/personal_info.html", new_first_name=new_first_name)
 
 
 @app.route('/bank_details', methods=['POST', 'GET'])
@@ -138,7 +138,7 @@ def bank_details():
                                  'bank_number': request.form.get('bank_number')
                              }}, upsert=True)
         return redirect(url_for('projects'))
-    return render_template("/test/bank_details.html",
+    return render_template("/employee_info/bank_details.html",
                            new_doc_id=new_doc_id,
                            username=username, new_first_name=new_first_name,
                            session = session)
@@ -164,7 +164,7 @@ def emergcy():
                                  'next_of_kin_mob': request.form.get('next_of_kin_mob')
                              }}, upsert=True)
         return redirect(url_for('bank_details'))
-    return render_template("/test/emergcy.html", new_doc_id=new_doc_id,
+    return render_template("/employee_info/emergcy.html", new_doc_id=new_doc_id,
                            username=username, new_first_name=new_first_name,
                            session = session)
 
