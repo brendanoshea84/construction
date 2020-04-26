@@ -12,7 +12,6 @@ if os.path.exists("env.py"):
     import env
 
 app = Flask(__name__, template_folder='templates')
-app.secret_key = '1234'
 app.config["MONGO_DBNAME"] = "milestone3"
 app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 

@@ -9,12 +9,12 @@
         <form method="POST" action="{{ url_for('sign_up') }}" id="new_member_form" class="hide clean_background">
             <div class="form-group ">
                 <label for="new_member_first" class="text_colour_white">Whats Your first Name?</label>
-                <input type="text" class="form-control text_colour_white" name="new_member_first" id="new_member_first" placeholder="First Name" required>
+                <input type="text" class="form-control text_colour_white" name="new_member_first" id="new_member_first" maxlength="30" placeholder="First Name" required>
             </div>
             <br>
             <div class="form-group">
                 <label for="new_password" class="text_colour_white">Welcome Password?</label>
-                <input type="password" class="form-control text_colour_white" name="new_password" id="new_password" placeholder="Password" required>
+                <input type="password" class="form-control text_colour_white" name="new_password" id="new_password" maxlength="30" placeholder="Password" required>
             </div>
             <br>
             <button type="submit" name="new_member_btn" class="btn btn_enter col-4">Submit</button>

@@ -136,6 +136,7 @@ A new employee first name and last name creates a username. If there is already 
 
 ### Overall ###
 1. Manual clicking of all buttons to insure url end points are correct.
+1. After showing my project, a friend said to protect your mongodb from cyber attacks, all forms have been limited to max 300 characters. This would stop someone overloading the backend database. 
 ### Interesting ###
 1. I had some issues with time log week calendar. To change the week, I had to add a variable to session. As the form would re-load, it would only show next or previous week. By adding the plus or negative to a session variable, I was allowed to go through all the week even though the form was reloaded. With more time, I believe I could find a better solution. As this works as intended, I left it in this project.
 
@@ -159,7 +160,62 @@ A new employee first name and last name creates a username. If there is already 
     * I used a vs pep8 extension to insure my python code was up to standard.
     * ctrl + shift + p to check python code
     * Use [pep8online](http://pep8online.com/)
-        * Many errors with line too long. 
+        * Many errors with line too long.
+
+
+
+## Deployment ## 
+### Github ###
+* To deploy your project from [GitHub Deployment Help site](https://www.codecademy.com/articles/f1-u3-github-pages)
+    1. log into your Github page
+    1. Click your project that you wish to deploy.
+    1. Click settings.
+    1. Scroll to GitHub Pages (about half way).
+    1. Under Source click the drop-down menu labelled None and select Master Branch.
+    1. Refresh and your page address should be here and ready!
+     
+* To clone your project from [Github Cloning Help Site](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository)
+    1. Follow the first 2 steps from deployment (As above).
+    1. Under the repository name, click Clone or download.
+    1. Copy the SSH key and copy the address.
+    1. Go to your favourite code creator (example: Visual Studio).
+    1. Open Git Bash and go to the directory where you wish to clone this site.
+    1. Type `git clone https://github.com/brendanoshea84/construction´ and enter!    
+
+### Heroku ###
+* To set your project and deploy your app. [Heroku Dev Center](https://devcenter.heroku.com/articles/getting-started-with-python)
+    - Log into heroku.
+    - Click the button for new and create new app.
+    - Choose your own unique name and region closest for yourself. Click create app.
+    - By using your own local terminalal, login by 
+```
+$ heroku login  
+```
+
+    - Deploy your application. First insure your have created your won requirements.txt and Procfile, as these are needed to run your app from heroku.
+
+```         
+$ git add .
+$ git commit -am "make it better"
+$ git push heroku master
+```
+    - Next go to settings and add config vars such as your own secret key, set port to 5000, set your own mongo_uri and also set debug to false. 
+    - From here, open app, and enjoy your project. 
+
+
+## Credits ##     
+### Content ###
+- Develop this is a real construction company in Sweden, their moto was copied from facebook.
+### Media ###
+- Photos were found via google search. 
+[login photo](https://www.michaelpage.ca/advice/management-advice/top-6-construction-project-challenges)
+[Signup photo](https://rismedia.com/2018/11/12/what-you-need-be-biggest-thinker/)
+
+### Acknowledgements ###
+- I currently work as a carpentry for Develop This and I have worked at many places where time sheet are filled in by paper on fridays. 
+I wanted to see the process on creating a website to help companies become lean and more efficient. After finishing this course work, I will be coming back to this project and finish all future developments and hopfully present this website to them. 
+
+
 
 
 
