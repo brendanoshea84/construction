@@ -14,7 +14,7 @@ if os.path.exists("env.py"):
 app = Flask(__name__, template_folder='templates')
 app.config["MONGO_DBNAME"] = "milestone3"
 app.config["MONGO_URI"] = os.getenv('MONGO_URI')
-
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 mongo = PyMongo(app)
 
 
@@ -184,7 +184,7 @@ def add_project():
         project_number = int(project_no) + 1
         post_data['project_number'] = project_number
         projects.insert(post_data)
-        # Back to projects page
+        # Back to projects
         return redirect(url_for('projects'))
 
     return render_template("/main_extras/edit_project.html", edit_project={},
