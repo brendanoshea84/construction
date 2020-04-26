@@ -3,56 +3,60 @@
 This project was made for Code Institue Data Centric Development Assignment
 The aim was to 'build a full-stack site that allows your users to manage a common dataset about a particular domain.'
 
-I have choosen to build a website for a construction company. This company before was using other sites like dropbox, emails and even paper. This site was to help the company to become 'lean'. Meaning instead of use a multitude of different sources, making one site for ease of access.
-The company has grown from a tiny, to a medium company and as such wanted to become more professional to help the employees and owner in their day to day operations.
+I have choosen to build a website for a construction company, "Develop This". This company was previously using other sites like dropbox, emails and even paper. This site was to help the company to become 'lean'. Meaning, instead of using a multitude of different sources, making one site incorporating all the company's need for ease of access.
+The company has grown from a tiny to a medium company and as such the company wanted to become more professional and help the employees and owner in their day to day operations.
+
+As such there are two sides for this website:
+    - Create your own employee profile (welcome password: 'aaa')
+    - Login as admin (password: 'admin') 
 
 
 ## UX ##
-Develop This while small, has two distict groups, management and employees. As much, while management has full access to all content, employees has limited to information (Example: Other employees bank details). This website should provide a 'Lean' approach to their work.
+"Develop This" while small, has two distict groups, management and employees. As much, while management has full access to all content, employees has limited access to information (Example: Other employees bank details). This website should provide a 'Lean' approach to their work.
 
 Overall experience should feel clean, easy to use and simple. This is used as a work tool with styling for ease and practicality. The colors are choosen to show different areas of the page while the buttons stand out for ease. 
 
 ### Employees ###
-Employees should have full access and edit their own information. Employees should have access to common information about projects and other employees.
+Employees should have full access to be able to edit their own information. Employees should have access to common information about projects and other employees.
 As such employees experience should be:
-1. As a new employee, with a given sign up password, the employee should be able to...
-    - Give personal information such as name, address, date of birth.
+1. As a new employee, with a given sign up password, the employee should be able to:
+    - Give personal information such as name, address and date of birth.
     - Give bank details.
     - Give emergcy details.
     - Set a personal password.
-1. Be able to get contact details about other co-workers... 
+1. Be able to get contact details about other co-workers:
     - Also able to update their own information.
-1. Get information about project...
+1. Get information about projects:
     - Contact details 
     - Address 
     - Discriptions
     - Project number.
-1. Time logs...
+1. Time logs:
     - Create and update their work log using a weekly calendar.
 
 ### Administration ###
-Mangement should have full access to all aviable information on this site. They should also be able to create/edit projects and get employees information.
+Mangement should have full access to all available information on this site. They should also be able to create/edit projects and get employees information.
 As such employees Administration should be to do everything an employee can do plus:
 1. Get employees information.
     - See their personal information.
-    - Get their private information like:
+    - See their private information such as:
         - Bank details
         - Address
     - Update information of the employee.
     - Delete employee. 
 
 1. Create, edit and remove Projects.
-    - Create a project with information like:
+    - Create a project with information such as:
         - Name of client
         - Contact details
         - Address of site
-        - Discription of work
+        - Description of work
         - Type of payment (by the hour or total)
         - Add payment  
-        - If active or finished site
-        - Delete a project after it's been de-active.
+        - If a site is active or concluded
+        - Delete a project after it's been de-activated
 
-1.  Time logs...
+1.  Time logs
     - Create and update their work log using a weekly calendar. 
 
 
@@ -60,10 +64,10 @@ As such employees Administration should be to do everything an employee can do p
 ### Existing Features ###
 1. Login in or sign up
     1. A new member can sign up and become a new employee with a 'Welcome Password'
-        * The new employee can add their own personal information such as name, address, contact details....
-    1. A employee can login back into the site with their own personal password.
+        * The new employee can add their own personal information such as name, address, contact details etc. 
+    1. An employee can login into the site with their own personal password.
 1. Time Logs
-    1. As employees should create/edit time log of their work.
+    1. All employees should create/edit time log of their work.
         * A custom made weekly time line for quick access of dates and to show when they have worked.
         * Add project number. Only active projects can be selected.
         * Add hours worked.
@@ -117,8 +121,8 @@ As such employees Administration should be to do everything an employee can do p
     * Form is required as such the new employee must enter a name.  
 #### Personal Information #### 
 1. To create a new user a first name, last name and their date of birth must be entered. From these three inputs, a new employee can be created.
-A new employee first name and last name creates a username. If there is already an employee with the same first name and last name, the year from date of birth is also entered to create a username. If there is a username with the same first name, last name and date of birth, an error to contact administration will be alerted. 
-1. Password is encrypted and can not be accessed by anyone inculding administration.
+A new employees first name and last name creates a username. If there is already an employee with the same first name and last name, the year from date of birth is also entered to create a username. If there is a username with the same first name, last name and date of birth, an error to contact administration will be alerted. 
+1. Password is encrypted and cannot be accessed by anyone including administration.
 ### Login ###
 1. If incorrect user or blank, alert to address that a user is not found.
 1. If incorrect password or blank, alert to contact admin for password.
@@ -128,7 +132,7 @@ A new employee first name and last name creates a username. If there is already 
 1. The calendar is automatically updated, thus showing connections to mongodb is correct. On clicking on the timelog, I can see the right information has been passed.
 ### Projects ###
 1. Only Administration can create, edit or delete projects. 
-1. Project number is automaticly created from the last highest number last created. 
+1. Project number is automaticaly created from the last highest number last created. 
 1. Project form is meant to be able to be updated, so even if there is limited information, the form will pass.
 1. The project is automatically updated, thus showing connections to mongodb is correct.
 ### Employees ###
@@ -136,7 +140,7 @@ A new employee first name and last name creates a username. If there is already 
 
 ### Overall ###
 1. Manual clicking of all buttons to insure url end points are correct.
-1. After showing my project, a friend said to protect your mongodb from cyber attacks, all forms have been limited to max 300 characters. This would stop someone overloading the backend database. 
+1. To protect the mongodb from cyber attacks, all forms have been limited to max 300 characters. This would stop someone overloading the backend database. 
 ### Interesting ###
 1. I had some issues with time log week calendar. To change the week, I had to add a variable to session. As the form would re-load, it would only show next or previous week. By adding the plus or negative to a session variable, I was allowed to go through all the week even though the form was reloaded. With more time, I believe I could find a better solution. As this works as intended, I left it in this project.
 
@@ -205,15 +209,15 @@ $ git push heroku master
 
 ## Credits ##     
 ### Content ###
-- Develop this is a real construction company in Sweden, their moto was copied from facebook.
+- "Develop This" is a real construction company in Sweden, their moto was copied from facebook.
 ### Media ###
 - Photos were found via google search. 
 [login photo](https://www.michaelpage.ca/advice/management-advice/top-6-construction-project-challenges)
 [Signup photo](https://rismedia.com/2018/11/12/what-you-need-be-biggest-thinker/)
 
 ### Acknowledgements ###
-- I currently work as a carpentry for Develop This and I have worked at many places where time sheet are filled in by paper on fridays. 
-I wanted to see the process on creating a website to help companies become lean and more efficient. After finishing this course work, I will be coming back to this project and finish all future developments and hopfully present this website to them. 
+- I currently work as a carpenter for "Develop This" and I have worked at many places where time sheets are filled in by paper on fridays. 
+I wanted to see the process of creating a website to help companies become lean and more efficient. After finishing this course work, I will be coming back to this project and finish all future developments and hopefully present this website to them. 
 
 
 

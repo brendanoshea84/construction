@@ -41,6 +41,7 @@ def login():
                 session = login_user
                 return redirect(url_for('home'))
             else:
+                # Error flash
                 flash('Wrong Password', 'login')
 
         else:
@@ -155,8 +156,7 @@ def emergcy():
     for key, val in username.items():
         if 'username' in key:
             username = val
-    print(username)
-    print('username: line 150')
+
     if request.method == 'POST':
         employees.update_one({'_id': new_doc_id},
                              {'$set': {
@@ -184,6 +184,7 @@ def add_project():
         project_number = int(project_no) + 1
         post_data['project_number'] = project_number
         projects.insert(post_data)
+        # Back to projects page
         return redirect(url_for('projects'))
 
     return render_template("/main_extras/edit_project.html", edit_project={},
