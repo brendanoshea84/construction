@@ -249,6 +249,19 @@ div.content {
         position: relative;
         padding-top: 5vh;
     }
+    .long {
+        position: fixed;
+        z-index: 20;
+    }
+    .jumbo_image {
+        height: 100px;
+    }
+    .btn_employees {
+        height: 50px;
+    }
+    .btn-padding {
+        padding: 5px;
+    }
 }
 
 @media screen and (max-width: 425px) {

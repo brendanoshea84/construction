@@ -15,7 +15,7 @@
 <br>
 <div class="container-fluid">
     <div class="row check">
-        {% for dates, day_names, dates_org in testing %} {% if now == dates %}
+        {% for dates, day_names, dates_org in show_week %} {% if now == dates %}
         <div class="box highlight" value={{ dates }}>
             {% else %}
             <div class="box" value={{ dates }}>

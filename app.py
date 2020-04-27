@@ -350,14 +350,14 @@ def timelogs_info():
     global projects
     projects = list(mongo.db.projects.find())
 
-    global testing
-    testing = itertools.zip_longest(dates, day_names, dates_org)
+    global show_week
+    show_week = itertools.zip_longest(dates, day_names, dates_org)
 
     return render_template("/main_extras/timelogs_info.html", session=session,
                            worked={}, projects=projects, now=date_now,
                            weekdays=weekdays, day=day, dates=dates,
                            monday=monday, day_names=day_names,
-                           employee=employee, testing=testing)
+                           employee=employee, show_week=show_week)
 
 
 @app.route('/show_work/<worked_id>', methods=['POST', 'GET'])
@@ -379,7 +379,7 @@ def show_work(worked_id):
                            worked=show_work, projects=projects, now=date_now,
                            weekdays=weekdays, day=day, dates=dates,
                            monday=monday, day_names=day_names,
-                           employee=employee, testing=testing)
+                           employee=employee, show_week=show_week)
 
 
 @app.route('/delete_employee/<delete_id>', methods=['POST', 'GET'])
