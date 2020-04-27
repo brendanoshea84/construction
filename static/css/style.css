@@ -257,6 +257,10 @@ div.content {
         display: flex;
         padding: 0;
     }
+    .long {
+        position: fixed;
+        z-index: 20;
+    }
     .adjust {
         margin: 0;
     }
