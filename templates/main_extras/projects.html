@@ -1,8 +1,8 @@
 {% extends 'main.html' %}{% block main %}
 <div class="container-fluid">
     <div class="heading">
-        <div class="row justify-content-center">
-            <h3 class="col">Current Projects</h3>
+        <div class="row ">
+            <h3 class="col-6">Current Projects</h3>
             <br> {% if session['admin'] %}
             <div class="col-sm-2 col-md-4">
                 <a class="btn btn-primary btn_custom" href="{{url_for('add_project')}}">New Project</a>
