@@ -122,6 +122,7 @@ As such employees Administration should be to do everything an employee can do p
 #### Personal Information #### 
 1. To create a new user a first name, last name and their date of birth must be entered. From these three inputs, a new employee can be created.
 A new employees first name and last name creates a username. If there is already an employee with the same first name and last name, the year from date of birth is also entered to create a username. If there is a username with the same first name, last name and date of birth, an error to contact administration will be alerted. 
+1. I had the tabs open to switch between different forms. This caused an issue as the username and datebase is created by the information. If the form was not filled in, an error due to username was not created. By removing the href, this stops the user from skipping the forms and yet the tabs show what is happening next. 
 1. Password is encrypted and cannot be accessed by anyone including administration.
 ### Login ###
 1. If incorrect user or blank, alert to address that a user is not found.
@@ -165,8 +166,6 @@ A new employees first name and last name creates a username. If there is already
     * ctrl + shift + p to check python code
     * Use [pep8online](http://pep8online.com/)
         * Many errors with line too long.
-
-
 
 ## Deployment ## 
 ### Github ###

@@ -412,16 +412,18 @@ def delete_new(new_id):
     delete_new = mongo.db.news.remove({"_id": ObjectId(new_id)})
     return redirect(url_for('home'))
 
-
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+    
 @app.route('/base', methods=['POST', 'GET'])
-def messages():
+def base():
     return render_template("base.html")
-
 
 @app.route('/main', methods=['POST', 'GET'])
 def main():
     return render_template("main.html", session=session)
-
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
