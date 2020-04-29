@@ -7,11 +7,11 @@
 <br>
 <div class="container">
     <div class="row">
-        <div class="col-6">
-            <a href="{{url_for('employees')}}" class="btn btn-primary btn-sm btn_employees">Back to Employees</a>
+        <div class="col-6 btn-padding">
+            <a href="{{url_for('employees')}}" class="btn btn-primary btn_custom btn_employees btn-lg btn-block">Back</a>
         </div>
         <div class="col-6">
-            <a href="{{url_for('remove_employee', delete_id=employee._id)}}" class="btn btn-warning btn-sm btn_employees ">Remove Employee</a>
+            <a href="{{url_for('remove_employee', delete_id=employee._id)}}" class="btn btn-warning btn_custom btn_employees btn-lg btn-block">Remove</a>
         </div>
     </div>
 </div>

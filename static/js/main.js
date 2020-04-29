@@ -33,6 +33,39 @@ window.onload = (function() {
     }
 });
 
+// Change tabs for new_member_info.html
+var personal_tab = document.getElementById("personal_tab");
+var emergcy_tab = document.getElementById("emergcy_tab");
+var bank_tab = document.getElementById("bank_tab");
+
+window.onload = (function() {
+    if (window.location.href.indexOf("personal_info") > -1) {
+        console.log("peronsal")
+        personal_tab.classList.add('active');
+        emergcy_tab.classList.remove('active');
+        bank_tab.classList.remove('active');
+
+
+
+    } else if (window.location.href.indexOf("bank_details") > -1) {
+        console.log("bank")
+        personal_tab.classList.remove('active');
+        bank_tab.classList.add('active');
+        emergcy_tab.classList.remove('active');
+
+
+    } else if (window.location.href.indexOf("emergcy") > -1) {
+        console.log("emergcy")
+        personal_tab.classList.remove('active');
+        bank_tab.classList.remove('active');
+        emergcy_tab.classList.add('active');
+    }
+});
+
+
+
+
+
 
 
 //Change date from button click

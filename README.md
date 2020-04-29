@@ -93,7 +93,10 @@ As such employees Administration should be to do everything an employee can do p
 ### Future Implement ###
 1. A weekly schudule so that the employees can find out about which future projects that they will work on.
 1. A monthly report of their work.
-1. Reset Passwords.
+1. Reset Passwords for employees by Admin.
+1. Change the welcome password by Admin.
+1. Creating a unique username, if there are already users with that username.
+1. Update employee to 'admin' status or remove 'admin'
 
 ## Technologies Used ##
 1. [Visual Studio Code](https://code.visualstudio.com/) to write the project.
@@ -108,6 +111,7 @@ As such employees Administration should be to do everything an employee can do p
 ### Add on libararies Used ###
 1. bcrypt: To incrypt passwords for security on site
 1. Calendar, datetime and itertools for use of calendars in the site.
+1. Flash: To show errors with login and signup passwords are incorrect.
 1. Flask: For handling python control of url, pass mongodb data onto site and use of variables.
 1. pep8: To insure python code is in a correct format.
 
@@ -138,12 +142,17 @@ A new employees first name and last name creates a username. If there is already
 1. The project is automatically updated, thus showing connections to mongodb is correct.
 ### Employees ###
 1. Administration can only see all information of an employee. They can also update or delete employees. To delete an employee, the page is re-directed to another page as a safe guard.
-
+1. Administration can not be removed.
 ### Overall ###
 1. Manual clicking of all buttons to insure url end points are correct.
 1. To protect the mongodb from cyber attacks, all forms have been limited to max 300 characters. This would stop someone overloading the backend database. 
 ### Interesting ###
 1. I had some issues with time log week calendar. To change the week, I had to add a variable to session. As the form would re-load, it would only show next or previous week. By adding the plus or negative to a session variable, I was allowed to go through all the week even though the form was reloaded. With more time, I believe I could find a better solution. As this works as intended, I left it in this project.
+1. I changed some of the buttons, for example on the employees page (More and Edit) to a href tags. After showing the difference to people I work with, espically the older generation. The over all feeling was that the href tags were to small on mobil view and hard to find. While on desktop the href look better, the majorite of the users would be using their phones. Therefore for practicality, colourful buttons were used for ease and visibility.
+1. Double coding for 'show work' and 'timelogs_info'. First I tried to use global variables, so that I could call the variables into 'show work'. This did not happen, therefore 'show work' did not show the weekly calendar as I wanted. With more time I believe I could find a solution to show the calendar with less code. 
+1. Jumping through the website. At the beginning of the site, you are required to sign up or log in, this creates a session user. But if the user manually enters the html of for example 'projects', the user can buypass the required login. I had set up a manual catch to make sure the user is logged in for security and as the pages use the session id to create and update data. I believe with time, I could find a libaray addon to python.  
+1. Many users with the same name. For a user to create their 'username', the form takes their first name and last name. If there are two users with the same username, the second user's year of birth and used to create their username. At the moment, I did not come up with a way to create a third user with the same first name, last name and year of birth. At the moment, I have 'contact admin'. As the user could change some of the spelling of their name or use their initials to create a new username. 
+1. At one stage while testing deleting employees, I accidently removed all the 'admin' personals. While this as the programmer was a quick fix, I removed the delete button if employee 'admin' == 'on', so that this would not happen again. 
 
 ### Validation ###
 1. HTML
@@ -208,7 +217,7 @@ $ git push heroku master
 
 ## Credits ##     
 ### Content ###
-- "Develop This" is a real construction company in Sweden, their moto was copied from facebook.
+- "Develop This" is a real construction company in Sweden, their moto was copied from facebook. Styling and ideas were shared by my current colleagues. 
 ### Media ###
 - Photos were found via google search. 
 [login photo](https://www.michaelpage.ca/advice/management-advice/top-6-construction-project-challenges)

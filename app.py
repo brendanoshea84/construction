@@ -39,6 +39,7 @@ def login():
                              login_user['password']) == login_user['password']:
                 global session
                 session = login_user
+                print(session)
                 return redirect(url_for('home'))
             else:
                 # Error flash
@@ -111,7 +112,7 @@ def add_personal_info():
 
             if double_test:
                 # If two usernames are the same, go to a page with suggestions
-                return redirect(url_for('username_wrong'))
+                return redirect(url_for('username_used'))
             else:
                 # If double test name is free, make this the session
                 post_data['username'] = double_used_username
@@ -130,6 +131,10 @@ def add_personal_info():
 
 @app.route('/bank_details', methods=['POST', 'GET'])
 def bank_details():
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
+
     if request.method == 'POST':
         # Update to made _id
         employees = mongo.db.employees
@@ -171,6 +176,10 @@ def emergcy():
 
 @app.route('/add_project', methods=['POST', 'GET'])
 def add_project():
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
+        
     projects = mongo.db.projects
 
     if request.method == 'POST':
@@ -193,6 +202,9 @@ def add_project():
 
 @app.route('/projects', methods=['POST', 'GET'])
 def projects():
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
     projects = list(mongo.db.projects.find())
     return render_template("/main_extras/projects.html",
                            session=session, projects=projects)
@@ -200,7 +212,10 @@ def projects():
 
 @app.route('/edit_project/<project_id>', methods=['POST', 'GET'])
 def edit_project(project_id):
-    print("edit 209")
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
+    
     edit_project = mongo.db.projects.find_one({"_id": ObjectId(project_id)})
 
     if request.method == "POST":
@@ -225,6 +240,9 @@ def edit_project(project_id):
 
 @app.route('/project_info/<project_id>', methods=['POST', 'GET'])
 def project_info(project_id):
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
     project_info = mongo.db.projects.find_one({"_id": ObjectId(project_id)})
     return render_template("/main_extras/project_info.html",
                            session=session, project=project_info)
@@ -232,12 +250,18 @@ def project_info(project_id):
 
 @app.route('/delete_project/<project_id>', methods=['POST', 'GET'])
 def delete_project(project_id):
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
     delete_project = mongo.db.projects.remove({"_id": ObjectId(project_id)})
     return redirect(url_for('projects'))
 
 
 @app.route('/employees', methods=['POST', 'GET'])
 def employees():
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
     employees = mongo.db.employees.find()
 
     return render_template("/main_extras/employees.html",
@@ -246,7 +270,10 @@ def employees():
 
 @app.route('/employee_info/<employee_id>', methods=['POST', 'GET'])
 def employee_info(employee_id):
-    print("going to employees")
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
+    
     employee_info = mongo.db.employees.find_one({"_id": ObjectId(employee_id)})
     return render_template("/main_extras/employee_info.html",
                            session=session, employee=employee_info)
@@ -254,9 +281,12 @@ def employee_info(employee_id):
 
 @app.route('/edit_employee/<employee_id>', methods=['POST', 'GET'])
 def edit_employee(employee_id):
-    edit_employee = mongo.db.employees.find_one({"_id": ObjectId(employee_id)})
-    print("going to employees")
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
 
+    edit_employee = mongo.db.employees.find_one({"_id": ObjectId(employee_id)})
+    
     if request.method == "POST":
         print("post happened")
         update_employee = mongo.db.employees.update_one({"_id": ObjectId(employee_id)},
@@ -280,11 +310,18 @@ def edit_employee(employee_id):
 
 @app.route('/time_log', methods=['POST', 'GET'])
 def time_log():
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
     return render_template("/main_extras/timelogs.html")
 
 
 @app.route('/time_log_new', methods=['POST', 'GET'])
 def time_log_new():
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
+
     post_data = request.form.to_dict()
     post_data['project_number'] = int(request.form['project_number'])
     post_data['date'] = request.form['date']
@@ -296,9 +333,12 @@ def time_log_new():
     return render_template("/main_extras/timelogs.html", session=session)
 
 
-
 @app.route('/timelogs_info', methods=['POST', 'GET'])
 def timelogs_info():
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
+
     # Get todays date/ week number / day name
     date_now = datetime.datetime.now()
     weekdays = date_now.strftime("%W")
@@ -325,8 +365,10 @@ def timelogs_info():
     # Prints the list of dates in a current week
     dates = list([str((start_date + datetime.timedelta(days=i+1 -
                                                        change_date)).date().strftime('%Y-%m-%d')) for i in range(7)])
+
     dates_org = list([str((start_date + datetime.timedelta(days=i +
                                                            1-change_date)).date().strftime('%d-%m')) for i in range(7)])
+
     day_names = list([str((start_date + datetime.timedelta(days=i +
                                                            1-change_date)).date().strftime('%a')) for i in range(7)])
 
@@ -337,6 +379,7 @@ def timelogs_info():
         d + '-1', "%Y-W%W-%w").strftime('%d-%m-%Y')
     employee = list(mongo.db.time_logs.find(
         {"employee_id": session['username']}))
+
     projects = list(mongo.db.projects.find())
     show_week = itertools.zip_longest(dates, day_names, dates_org)
 
@@ -349,9 +392,13 @@ def timelogs_info():
 
 @app.route('/show_work/<worked_id>', methods=['POST', 'GET'])
 def show_work(worked_id):
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
+
     show_work = mongo.db.time_logs.find_one({"_id": ObjectId(worked_id)})
 
-        # Get todays date/ week number / day name
+    # Get todays date/ week number / day name
     date_now = datetime.datetime.now()
     weekdays = date_now.strftime("%W")
     day = date_now.strftime("%A")
@@ -377,8 +424,10 @@ def show_work(worked_id):
     # Prints the list of dates in a current week
     dates = list([str((start_date + datetime.timedelta(days=i+1 -
                                                        change_date)).date().strftime('%Y-%m-%d')) for i in range(7)])
+
     dates_org = list([str((start_date + datetime.timedelta(days=i +
                                                            1-change_date)).date().strftime('%d-%m')) for i in range(7)])
+
     day_names = list([str((start_date + datetime.timedelta(days=i +
                                                            1-change_date)).date().strftime('%a')) for i in range(7)])
 
@@ -389,6 +438,7 @@ def show_work(worked_id):
         d + '-1', "%Y-W%W-%w").strftime('%d-%m-%Y')
     employee = list(mongo.db.time_logs.find(
         {"employee_id": session['username']}))
+
     projects = list(mongo.db.projects.find())
     show_week = itertools.zip_longest(dates, day_names, dates_org)
 
@@ -412,6 +462,10 @@ def show_work(worked_id):
 
 @app.route('/delete_employee/<delete_id>', methods=['POST', 'GET'])
 def delete_employee(delete_id):
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
+
     delete_employee = mongo.db.employees.find_one({"_id": ObjectId(delete_id)})
     return render_template("/main_extras/delete.html",
                            session=session, employee=delete_employee)
@@ -419,12 +473,20 @@ def delete_employee(delete_id):
 
 @app.route('/remove_employee/<delete_id>', methods=['POST', 'GET'])
 def remove_employee(delete_id):
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
+
     delete_project = mongo.db.employees.remove({"_id": ObjectId(delete_id)})
     return redirect(url_for('employees'))
 
 
 @app.route('/home', methods=['POST', 'GET'])
 def home():
+    # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
+
     news = mongo.db.news.find()
     if request.method == "POST":
         post_data = request.form.to_dict()
@@ -437,21 +499,43 @@ def home():
 
 @app.route('/delete_new/<new_id>', methods=['POST', 'GET'])
 def delete_new(new_id):
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
+
     delete_new = mongo.db.news.remove({"_id": ObjectId(new_id)})
     return redirect(url_for('home'))
+
 
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('login'))
-    
+
+
+@app.route('/not_logged_in')
+def not_logged_in():
+    return render_template("/errors/not_logged_in.html")
+
+@app.route('/username_used')
+def username_used():
+    return render_template("/errors/username_used.html")    
+
 @app.route('/base', methods=['POST', 'GET'])
 def base():
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
     return render_template("base.html")
+
 
 @app.route('/main', methods=['POST', 'GET'])
 def main():
+        # Check if user is logged in
+    if session.get('username') == None:
+        return redirect(url_for('not_logged_in'))
     return render_template("main.html", session=session)
+
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
