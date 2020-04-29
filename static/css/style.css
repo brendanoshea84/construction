@@ -108,11 +108,8 @@ div.content {
 }
 
 .btn_custom {
-    width: 100%;
     border-radius: 5px;
-    height: 5vh;
     min-height: 50px;
-    text-align: center;
     padding: 10px;
 }
 
@@ -142,14 +139,11 @@ div.content {
 }
 
 
-/* Heading */
+/* Main */
 
 .heading {
     width: 100%;
 }
-
-
-/* NEED TO FIX */
 
 .box {
     margin: 10px;
@@ -161,10 +155,7 @@ div.content {
     display: flex;
 }
 
-.row_for_col {
-    text-align: center;
-}
-
+.row_for_col,
 .right {
     text-align: center;
 }
@@ -181,6 +172,7 @@ div.content {
     width: 200px;
     float: none;
     vertical-align: top;
+    overflow-y: scroll;
 }
 
 .vertical_down {
@@ -279,5 +271,8 @@ div.content {
     }
     .heading {
         padding-top: 20px;
+    }
+    .btn_custom {
+        margin: 5px;
     }
 }

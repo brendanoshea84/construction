@@ -11,7 +11,8 @@ window.onload = (function() {
         projects_tab.classList.remove('active');
         employees_tab.classList.remove('active');
 
-    } else if (window.location.href.indexOf("time_log") > -1) {
+
+    } else if (window.location.href.indexOf("timelogs_info") > -1) {
         home_tab.classList.remove('active');
         time_tab.classList.add('active');
         projects_tab.classList.remove('active');
@@ -23,6 +24,7 @@ window.onload = (function() {
         projects_tab.classList.add('active');
         employees_tab.classList.remove('active');
 
+
     } else if (window.location.href.indexOf("employees") > -1) {
         home_tab.classList.remove('active');
         time_tab.classList.remove('active');
@@ -32,31 +34,6 @@ window.onload = (function() {
 });
 
 
-
-// Change tabs in employees data
-var personal_tab = document.getElementById("personal_tab");
-var emergcy_tab = document.getElementById("emergcy_tab");
-var bank_tab = document.getElementById("bank_tab");
-
-
-window.onload = (function() {
-    if (window.location.href.indexOf("personal_info") > -1) {
-        personal_tab.classList.add('active');
-        emergcy_tab.classList.remove('active');
-        bank_tab.classList.remove('active');
-
-    } else if (window.location.href.indexOf("emergcy") > -1) {
-        personal_tab.classList.remove('active');
-        emergcy_tab.classList.add('active');
-        bank_tab.classList.remove('active');
-
-    } else if (window.location.href.indexOf("bank_details") > -1) {
-        personal_tab.classList.remove('active');
-        emergcy_tab.classList.remove('active');
-        bank_tab.classList.add('active');
-
-    }
-});
 
 //Change date from button click
 var use_date;

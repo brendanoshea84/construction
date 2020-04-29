@@ -40,10 +40,9 @@
 }
 
 .clean_background {
-    background-color: rgb(0, 123, 255, 0.6);
-    border: black solid 1px;
-    border-radius: 3px;
+    background-color: rgb(0, 123, 255, 0.4);
     padding: 10px;
+    box-shadow: 0px 0px 3px #205ca1;
 }
 
 .text_colour_white {
@@ -53,6 +52,11 @@
 
  ::placeholder {
     font-size: 1em;
+}
+
+.btn_login,
+.btn_new_member {
+    height: 8vh !important
 }
 
 .btn_login,
@@ -94,7 +98,6 @@ input[type=password] {
 .btn_enter {
     width: 100%;
     border-radius: 5px;
-    border: black 1px solid;
     height: 5vh;
     min-height: 50px;
     text-align: center;

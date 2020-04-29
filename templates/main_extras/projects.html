@@ -4,8 +4,8 @@
         <div class="row ">
             <h3 class="col-6">Current Projects</h3>
             <br> {% if session['admin'] %}
-            <div class="col-sm-2 col-md-4">
-                <a class="btn btn-primary btn_custom" href="{{url_for('add_project')}}">New Project</a>
+            <div class="col-sm-2 col-md-6">
+                <button class="btn btn-primary btn_custom btn-lg " href="{{url_for('add_project')}}">New Project</button>
             </div>{% endif %}
         </div>
     </div>
@@ -17,10 +17,10 @@
             <div class="row">
                 <br>
                 <div class="col">
-                    <h5>Job Number: </h5>
+                    <h5>Job Number:</h5>
                 </div>
                 <div class="col">
-                    <h5> {{project.project_number}} </h5>
+                    {{project.project_number}}
                 </div>
             </div>
             <hr>
@@ -29,7 +29,7 @@
                     <h5>Clients Name: </h5>
                 </div>
                 <div class="col">
-                    <h5> {{project.name}} </h5>
+                    {{project.name}}
                 </div>
             </div>
             <div class="row">
@@ -37,7 +37,7 @@
                     <h5>Address: </h5>
                 </div>
                 <div class="col">
-                    <h5> {{project.address}} </h5>
+                    {{project.address}}
                 </div>
             </div>
             <div class="row">
@@ -45,7 +45,7 @@
                     <h5>Discription: </h5>
                 </div>
                 <div class="col">
-                    <h5> {{project.brief}} </h5>
+                    {{project.brief}}
                 </div>
             </div>
             <div class="row">
@@ -53,29 +53,30 @@
                     <h5>Active: </h5>
                 </div>
                 <div class="col">
-                    <h5> {{project.active}} </h5>
+                    {{project.active}}
                 </div>
             </div>
             <br>
             <div class="row justify-content-center">
                 <div class="col-sm-12 col-md-4 btn-padding">
-                    <a href="{{url_for('project_info', project_id=project._id)}}" class="btn btn-primary btn_custom">More Info</a> {% if session['admin'] %}
+                    <button href="{{url_for('project_info', project_id=project._id)}}" class="btn btn-primary btn_custom btn-lg btn-block">Info</button> {% if session['admin'] %}
                 </div>
                 <div class="col-sm-12 col-md-4 btn-padding">
-                    <a href="{{url_for('edit_project', project_id=project._id)}}" class="btn btn-secondary btn_custom">Edit Project</a> {% endif %}
+                    <button href="{{url_for('edit_project', project_id=project._id)}}" class="btn btn-secondary btn_custom btn-lg btn-block ">Edit</button> {% endif %}
                 </div>
             </div>
         </div>
         <hr> {% endif %} {% endfor %}
     </div>
 
-    {% if session.admin == true %}
+    {% if session.admin == 'True' %}
     <div class="heading">
         <h3>Closed Projects</h3>
     </div>
 
+
     <div class="row scroll">
-        {% for project in projects %} {% if project.active!= 'on' %}
+        {% for project in projects %} {% if project.active != 'on' %}
         <div class="custom_col">
             <div class="row">
                 <br>
@@ -122,14 +123,14 @@
             <hr>
             <div class="row">
                 <div class="col-sm-12 col-md-4 btn-padding">
-                    <a href="{{url_for('project_info', project_id=project._id)}}" class="btn btn-primary btn_custom">More Info</a> {% if session.admin == true %}
+                    <button href="{{url_for('project_info', project_id=project._id)}}" class="btn btn-primary btn_custom btn-lg btn-block">Info</button> {% if session.admin == 'True' %}
                 </div>
                 <div class="col-sm-12 col-md-4 btn-padding">
-                    <a href="{{url_for('edit_project', project_id=project._id)}}" class="btn btn-secondary btn_custom">Edit</a>
+                    <button href="{{url_for('edit_project', project_id=project._id)}}" class="btn btn-secondary btn_custom btn-lg btn-block">Edit</button>
                 </div>
 
                 <div class="col-sm-12 col-md-4 btn-padding">
-                    <a href="{{url_for('delete_project', project_id=project._id)}}" class="btn btn-warning btn_custom">Delete </a>{% endif %}
+                    <button href="{{url_for('delete_project', project_id=project._id)}}" class="btn btn-warning btn_custom btn-lg btn-block">Delete </button>{% endif %}
                 </div>
             </div>
 

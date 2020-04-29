@@ -20,7 +20,7 @@
     <br>
     <div class="form-group row">
         <label for="hours" class="col-sm-2 inline_form">Hours Worked</label>
-        <textarea type="number" class="form-control col-sm-8" id="hours" name="hours" rows="1" required max="24">{{worked.hours}}</textarea>
+        <input type="number" class="form-control col-sm-8" id="hours" name="hours" rows="1" required max="24" min="1" value={{worked.hours}}>
     </div>
     <br>
     <div class="form-group row">

@@ -291,21 +291,17 @@ def time_log_new():
     post_data['hours'] = int(request.form['hours'])
     post_data['notes'] = request.form['notes']
     post_data['employee_id'] = session['username']
-
-    print("line 342")
     mongo.db.time_logs.insert_one(post_data)
     return redirect(url_for('timelogs_info'))
     return render_template("/main_extras/timelogs.html", session=session)
 
 
+
 @app.route('/timelogs_info', methods=['POST', 'GET'])
 def timelogs_info():
     # Get todays date/ week number / day name
-    global date_now
     date_now = datetime.datetime.now()
-    global weekdays
     weekdays = date_now.strftime("%W")
-    global day
     day = date_now.strftime("%A")
 
     # functions to change week
@@ -327,30 +323,21 @@ def timelogs_info():
     start_date = date_now - datetime.timedelta(days=week_day)
 
     # Prints the list of dates in a current week
-    global dates
     dates = list([str((start_date + datetime.timedelta(days=i+1 -
                                                        change_date)).date().strftime('%Y-%m-%d')) for i in range(7)])
-    global dates_org
     dates_org = list([str((start_date + datetime.timedelta(days=i +
                                                            1-change_date)).date().strftime('%d-%m')) for i in range(7)])
-    global day_names
     day_names = list([str((start_date + datetime.timedelta(days=i +
                                                            1-change_date)).date().strftime('%a')) for i in range(7)])
 
     date_now = date_now.strftime('%Y-%m-%d')
     d = "2020-W" + weekdays
     # Monday as start of the week
-    global monday
     monday = datetime.datetime.strptime(
         d + '-1', "%Y-W%W-%w").strftime('%d-%m-%Y')
-    global employee
     employee = list(mongo.db.time_logs.find(
         {"employee_id": session['username']}))
-
-    global projects
     projects = list(mongo.db.projects.find())
-
-    global show_week
     show_week = itertools.zip_longest(dates, day_names, dates_org)
 
     return render_template("/main_extras/timelogs_info.html", session=session,
@@ -363,6 +350,47 @@ def timelogs_info():
 @app.route('/show_work/<worked_id>', methods=['POST', 'GET'])
 def show_work(worked_id):
     show_work = mongo.db.time_logs.find_one({"_id": ObjectId(worked_id)})
+
+        # Get todays date/ week number / day name
+    date_now = datetime.datetime.now()
+    weekdays = date_now.strftime("%W")
+    day = date_now.strftime("%A")
+
+    # functions to change week
+    week_day = date_now.isocalendar()[2]
+    week_change = session.get('week_change', 0)
+
+    if 'lastweek' in request.form:
+        week_change += 1
+        session['week_change'] = week_change
+    elif 'nextweek' in request.form:
+        week_change -= 1
+        session['week_change'] = week_change
+    else:
+        print("not working")
+
+    change_date = (week_change * 7)
+
+    # Calculates Starting date (Monday)
+    start_date = date_now - datetime.timedelta(days=week_day)
+
+    # Prints the list of dates in a current week
+    dates = list([str((start_date + datetime.timedelta(days=i+1 -
+                                                       change_date)).date().strftime('%Y-%m-%d')) for i in range(7)])
+    dates_org = list([str((start_date + datetime.timedelta(days=i +
+                                                           1-change_date)).date().strftime('%d-%m')) for i in range(7)])
+    day_names = list([str((start_date + datetime.timedelta(days=i +
+                                                           1-change_date)).date().strftime('%a')) for i in range(7)])
+
+    date_now = date_now.strftime('%Y-%m-%d')
+    d = "2020-W" + weekdays
+    # Monday as start of the week
+    monday = datetime.datetime.strptime(
+        d + '-1', "%Y-W%W-%w").strftime('%d-%m-%Y')
+    employee = list(mongo.db.time_logs.find(
+        {"employee_id": session['username']}))
+    projects = list(mongo.db.projects.find())
+    show_week = itertools.zip_longest(dates, day_names, dates_org)
 
     if request.method == "POST":
         print("post happened")
