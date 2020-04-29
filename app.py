@@ -18,11 +18,13 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 mongo = PyMongo(app)
 
 
+# Login and sign up are rendered though intro
 @app.route('/intro', methods=['POST', 'GET'])
 def intro():
     return render_template('intro.html')
 
 
+# First Page: Sign up or login
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -65,11 +67,7 @@ def sign_up():
     return render_template('intro.html', login=login)
 
 
-@app.route('/new_member_info', methods=['POST', 'GET'])
-def new_member_info():
-    return render_template("/test/personal_info.html")
-
-
+# Sign up pages: Get new users info
 @app.route('/add_personal_info', methods=['POST', 'GET'])
 def add_personal_info():
     employees = mongo.db.employees
@@ -169,6 +167,7 @@ def emergcy():
                            new_first_name=new_first_name, session=session)
 
 
+# Add project: Admin View Only
 @app.route('/add_project', methods=['POST', 'GET'])
 def add_project():
     # Check if user is logged in
@@ -200,11 +199,18 @@ def projects():
     # Check if user is logged in
     if session.get('username') is None:
         return redirect(url_for('not_logged_in'))
+
+        """
+        Show all projects to Admin
+        Employees are limited to only aviable projects
+        """
+
     projects = list(mongo.db.projects.find())
     return render_template("/main_extras/projects.html",
                            session=session, projects=projects)
 
 
+# Edit project: Admin View Only
 @app.route('/edit_project/<project_id>', methods=['POST', 'GET'])
 def edit_project(project_id):
     # Check if user is logged in
@@ -214,7 +220,6 @@ def edit_project(project_id):
     edit_project = mongo.db.projects.find_one({"_id": ObjectId(project_id)})
 
     if request.method == "POST":
-        print("post happened")
         update_project = mongo.db.projects.update_one({"_id": ObjectId(project_id)},
                                                       {'$set': {
                                                           'name': request.form.get('name'),
@@ -226,7 +231,6 @@ def edit_project(project_id):
                                                           'price_type': request.form.get('price_type'),
                                                           'active': request.form.get('active')
                                                       }}, upsert=True)
-        print("try after")
         return redirect(url_for('projects'))
     return render_template("/main_extras/edit_project.html", session=session,
                            edit_project=edit_project,
@@ -238,11 +242,15 @@ def project_info(project_id):
     # Check if user is logged in
     if session.get('username') is None:
         return redirect(url_for('not_logged_in'))
+
+    # Shows more details of the different projects using flask
     project_info = mongo.db.projects.find_one({"_id": ObjectId(project_id)})
+
     return render_template("/main_extras/project_info.html",
                            session=session, project=project_info)
 
 
+# Delete project Admin Only
 @app.route('/delete_project/<project_id>', methods=['POST', 'GET'])
 def delete_project(project_id):
     # Check if user is logged in
@@ -257,6 +265,8 @@ def employees():
     # Check if user is logged in
     if session.get('username') is None:
         return redirect(url_for('not_logged_in'))
+
+    # Show all employees
     employees = mongo.db.employees.find()
 
     return render_template("/main_extras/employees.html",
@@ -269,6 +279,7 @@ def employee_info(employee_id):
     if session.get('username') is None:
         return redirect(url_for('not_logged_in'))
 
+    # Get information about one employee: show more details
     employee_info = mongo.db.employees.find_one({"_id": ObjectId(employee_id)})
     return render_template("/main_extras/employee_info.html",
                            session=session, employee=employee_info)
@@ -283,7 +294,6 @@ def edit_employee(employee_id):
     edit_employee = mongo.db.employees.find_one({"_id": ObjectId(employee_id)})
 
     if request.method == "POST":
-        print("post happened")
         update_employee = mongo.db.employees.update_one({"_id": ObjectId(employee_id)},
                                                         {'$set': {
                                                             'first_name': request.form.get('first_name'),
@@ -349,8 +359,9 @@ def timelogs_info():
     elif 'nextweek' in request.form:
         week_change -= 1
         session['week_change'] = week_change
-    else:
-        print("not working")
+    else: 
+        print("error at calendar")    
+    
 
     change_date = (week_change * 7)
 
@@ -408,8 +419,8 @@ def show_work(worked_id):
     elif 'nextweek' in request.form:
         week_change -= 1
         session['week_change'] = week_change
-    else:
-        print("not working")
+    else: 
+        print("error at calendar")
 
     change_date = (week_change * 7)
 
@@ -438,7 +449,6 @@ def show_work(worked_id):
     show_week = itertools.zip_longest(dates, day_names, dates_org)
 
     if request.method == "POST":
-        print("post happened")
         update_show_work = mongo.db.show_work.update_one({"_id": ObjectId(worked_id)},
                                                          {'$set': {
                                                              'project_number': request.form.get('project_number'),
@@ -455,6 +465,7 @@ def show_work(worked_id):
                            employee=employee, show_week=show_week)
 
 
+# Used as a safe guard if clicked wrong button: Takes you to another page before removing
 @app.route('/delete_employee/<delete_id>', methods=['POST', 'GET'])
 def delete_employee(delete_id):
     # Check if user is logged in
@@ -466,6 +477,7 @@ def delete_employee(delete_id):
                            session=session, employee=delete_employee)
 
 
+# To remove the employee
 @app.route('/remove_employee/<delete_id>', methods=['POST', 'GET'])
 def remove_employee(delete_id):
     # Check if user is logged in
@@ -476,6 +488,7 @@ def remove_employee(delete_id):
     return redirect(url_for('employees'))
 
 
+# Home main page with news from Admin
 @app.route('/home', methods=['POST', 'GET'])
 def home():
     # Check if user is logged in
@@ -484,7 +497,7 @@ def home():
 
     news = mongo.db.news.find()
     if request.method == "POST":
-        
+
         post_data['heading'] = request.form['title']
         post_data['news'] = request.form['news']
         mongo.db.news.insert_one(post_data)
@@ -493,6 +506,7 @@ def home():
                            news=news, session=session)
 
 
+# Remove news
 @app.route('/delete_new/<new_id>', methods=['POST', 'GET'])
 def delete_new(new_id):
     # Check if user is logged in
@@ -503,37 +517,42 @@ def delete_new(new_id):
     return redirect(url_for('home'))
 
 
+# Change the welcome password
 @app.route('/welcome_password', methods=['POST', 'GET'])
 def welcome_password():
-
+    # Check if user is logged in
+    if session.get('username') is None:
+        return redirect(url_for('not_logged_in'))
     if request.method == "POST":
-        
         new_password = bcrypt.hashpw(
-                request.form['welcome_password'].encode('utf-8'), bcrypt.gensalt())
-
+            request.form['welcome_password'].encode('utf-8'), bcrypt.gensalt())
         mongo.db.welcome_password.update_one({"_id": ObjectId("5e73560c1c9d440000ea42da")},
-        {'$set': {'welcome_password': new_password}}, upsert=False)       
+                                             {'$set': {'welcome_password': new_password}}, upsert=False)
         return redirect(url_for('home'))
 
     return render_template("/main_extras/welcome_password.html", session=session)
 
+
+# Logout
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('login'))
 
-
+# If someone has not logged in
+# Safe guard to stop unwanted users to bypass security
 @app.route('/not_logged_in')
 def not_logged_in():
     return render_template("/errors/not_logged_in.html")
 
 
+# If the username has been used twice, Safe guard for third time
 @app.route('/username_used')
 def username_used():
     return render_template("/errors/username_used.html")
 
 
-@app.route('/base', methods = ['POST', 'GET'])
+@app.route('/base', methods=['POST', 'GET'])
 def base():
     # Check if user is logged in
     if session.get('username') is None:
@@ -541,15 +560,15 @@ def base():
     return render_template("base.html")
 
 
-@app.route('/main', methods = ['POST', 'GET'])
+@app.route('/main', methods=['POST', 'GET'])
 def main():
     # Check if user is logged in
     if session.get('username') is None:
         return redirect(url_for('not_logged_in'))
-    return render_template("main.html", session = session)
+    return render_template("main.html", session=session)
 
 
 if __name__ == '__main__':
-    app.run(host = os.environ.get('IP'),
-            port = os.environ.get('PORT'),
-            debug = True)
+    app.run(host=os.environ.get('IP'),
+            port=os.environ.get('PORT'),
+            debug=True)

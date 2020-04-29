@@ -4,6 +4,13 @@ var time_tab = document.getElementById("time_tab");
 var projects_tab = document.getElementById("projects_tab");
 var employees_tab = document.getElementById("employees_tab");
 
+
+// Change tabs for new_member_info.html
+var personal_tab = document.getElementById("personal_tab");
+var emergcy_tab = document.getElementById("emergcy_tab");
+var bank_tab = document.getElementById("bank_tab");
+
+
 window.onload = (function() {
     if (window.location.href.indexOf("home") > -1) {
         home_tab.classList.add('active');
@@ -11,12 +18,12 @@ window.onload = (function() {
         projects_tab.classList.remove('active');
         employees_tab.classList.remove('active');
 
-
     } else if (window.location.href.indexOf("timelogs_info") > -1) {
         home_tab.classList.remove('active');
         time_tab.classList.add('active');
         projects_tab.classList.remove('active');
         employees_tab.classList.remove('active');
+
 
     } else if (window.location.href.indexOf("projects") > -1) {
         home_tab.classList.remove('active');
@@ -30,21 +37,11 @@ window.onload = (function() {
         time_tab.classList.remove('active');
         projects_tab.classList.remove('active');
         employees_tab.classList.add('active');
-    }
-});
-
-// Change tabs for new_member_info.html
-var personal_tab = document.getElementById("personal_tab");
-var emergcy_tab = document.getElementById("emergcy_tab");
-var bank_tab = document.getElementById("bank_tab");
-
-window.onload = (function() {
-    if (window.location.href.indexOf("personal_info") > -1) {
+    } else if (window.location.href.indexOf("personal_info") > -1) {
         personal_tab.classList.add('active');
         emergcy_tab.classList.remove('active');
         bank_tab.classList.remove('active');
-
-
+        console.log("person")
 
     } else if (window.location.href.indexOf("bank_details") > -1) {
         personal_tab.classList.remove('active');
@@ -56,7 +53,7 @@ window.onload = (function() {
         personal_tab.classList.remove('active');
         bank_tab.classList.remove('active');
         emergcy_tab.classList.add('active');
-    }
+    } else {}
 });
 
 

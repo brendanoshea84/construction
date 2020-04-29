@@ -6,8 +6,10 @@
 </div>
 {% endblock %}{% block personal_info %}
 
+<!--First Form to get information about new user-->
 <form id="personal_form" method="POST">
     <br>
+    <!--These 3 rows helps create the username-->
     <div class="form-group row">
         <label for="first_name" class="col-sm-2 inline_form">First Name</label>
         <input type="text" class="form-control col-sm-10" id="first_name" name="first_name" aria-describedby="first_name" maxlength="30" placeholder={{ new_first_name }} value={{ new_first_name }}>
@@ -39,6 +41,7 @@
         <input type="text" class="form-control col-sm-10" id="address" name="address" maxlength="150" placeholder="Your postal address..." required>
     </div>
     <br>
+    <!-- Password is encrypted by python -->
     <div class="form-group row">
         <label for="password" class="col-sm-2 inline_form">Password</label>
         <input type="password" class="form-control col-sm-10" id="password" name="password" maxlength="30" placeholder="Enter your own password...">

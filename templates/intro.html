@@ -1,3 +1,4 @@
+<!--Intro pages that combin two form into one page-->
 {% extends 'base.html' %} {% block content %}
 <link rel="stylesheet" href="{{url_for('static', filename='css/intro_style.css')}}" type="text/css" />
 <br>
@@ -7,12 +8,14 @@
 <div class="row">
     <div class="container intro_message">
         <h5>develop / dɪˈvel.əp / verb: to bring out the capabilities or possibilities of; bring to a more advanced or effective state.</h5>
+        <!--Error pages show here-->
         {% block errors %} {% endblock %}
     </div>
 </div>
 <br>
 
 <div class="row">
+    <!--Forms -->
     {% include '/sign/sign_up.html' %} {% include '/sign/login.html' %}
 </div>
 <br>

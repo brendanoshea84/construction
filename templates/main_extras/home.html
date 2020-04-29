@@ -1,9 +1,17 @@
+<!--Main opening page with news from admin-->
 {% extends 'main.html' %}{% block main %}
 <h2>develop / dɪˈvel.əp / verb: to bring out the capabilities or possibilities of; bring to a more advanced or effective state.</h3>
-    <br>
+    <br> {% if session['admin'] %}
+    <div class="row">
+        <h2 class="col-9"><b>Change Welcome Password</b></h2>
+        <a href="{{url_for('welcome_password')}}" class="btn btn-success btn_custom col-xs-3 col-md-2">Welcome Password</a>
+    </div>
+    <hr> {% endif %}
     <div class="row">
         <h2 class="col-9"><b>News</b></h2>
         {% if session['admin'] %}
+
+        <!--Admin for new news-->
         <button class="btn btn-primary btn_custom col-xs-3 col-md-2" id="more_news">Add</button> {% endif %}
     </div>
     <form id="new_form" method="POST" class="hidden">
@@ -26,6 +34,7 @@
     <div class="row">
         <h2 class="col-9"><b>{{new.heading}}</b></h2>
         <br> {% if session['admin'] %}
+        <!--Admin to delete news-->
         <a href="{{url_for('delete_new', new_id=new._id)}}" class="btn btn-warning btn_custom col-xs-3 col-md-2">Delete</a>{% endif %}
     </div>
     <br>

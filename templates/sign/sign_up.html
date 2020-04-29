@@ -1,3 +1,4 @@
+<!--New member page-->
 <div class="container col-md-6 col-xs-12 new_member" id="new_member">
     <div class="center_over_pic container">
         <div class="row justify-content-center">
@@ -19,6 +20,7 @@
             <br>
             <button type="submit" name="new_member_btn" class="btn btn_enter col-4">Submit</button>
         </form>
+        <!--Show password wrong msg here-->
         <br> {% for message in get_flashed_messages(category_filter=["sign_in"]) %}
         <div class="row justify-content-center">
             <div class="alert alert-warning col-6">

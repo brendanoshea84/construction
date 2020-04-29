@@ -1,10 +1,13 @@
+<!--Time log with week calendar-->
 {% extends 'main.html' %}{% block main %}
 <h3>Time log</h3>
+<!--Javascript to get all worked hours and entered into id="hours_worked"-->
 <h4 id="hours_worked">Hours worked this Week : </h4>
 <br>
 <div class="container">
     <form action="" method="POST">
         <div class="row">
+            <!--These forms with python to create session variable to change weeks-->
             <button class="btn btn-primary btn_custom btn-lg" type="submit" name="lastweek"><i class="fa fa-angle-double-left "></i> Last Week</button>
             <div class="col"></div>
             <button class="btn btn-primary btn_custom btn-lg" type="submit" name="nextweek">Next week
@@ -16,6 +19,7 @@
 <div class="container-fluid">
     <div class="row check">
         {% for dates, day_names, dates_org in show_week %} {% if now == dates %}
+        <!--Change border on todays date-->
         <div class="box highlight" value={{ dates }}>
             {% else %}
             <div class="box" value={{ dates }}>
@@ -24,12 +28,14 @@
                     <div class="">{{ dates_org }}</div>
                 </div>
                 <div class="row title_view ">
+                    <!--Change day name to today-->
                     {% if now == dates %}
                     <p>Today</p>
                     {% else %}
                     <p>{{ day_names }}</p>
                     {% endif %}
                 </div>
+                <!--Show project and hours on previous entered days-->
                 {% for day in employee %} {% if dates == day.date %}
                 <a class="row sum_view" href="{{url_for('show_work', worked_id=day._id)}}">Project: {{ day.project_number }}  -  
                     <div class="hours_day"> {{ day.hours }}</div>hrs</a>

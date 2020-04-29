@@ -1,3 +1,4 @@
+<!--Time log: Enter a day with data-->
 {% extends '/main_extras/timelogs.html' %}{% block time_log %}
 
 <form id="personal_form" method="POST" action="{{ url_for('time_log_new') }}">
@@ -6,6 +7,7 @@
         <select class="form-control col-sm-8" name="project_number" id="project_number" required>
             
             <option>{{worked.project_number}}</option>
+            <!--Only active jobs can be filled in by timelog-->
             {% for pro in projects %}{% if pro.active == "on" %}
             <option>{{pro.project_number}}</option>
             {% endif %}{% endfor %}  
@@ -34,6 +36,7 @@
     <br>
 </form>
 
+<!--Use javascript to input date into form=date-->
 <script>
     let date_input = '{{worked.date}}';
 

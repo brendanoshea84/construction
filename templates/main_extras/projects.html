@@ -1,8 +1,10 @@
+<!--See all the projects: also a page for admin to edit and add new projects-->
 {% extends 'main.html' %}{% block main %}
 <div class="container-fluid">
     <div class="heading">
         <div class="row ">
             <h3 class="col-6">Current Projects</h3>
+            <!--Admin use only for new projects-->
             <br> {% if session['admin'] %}
             <div class="col-sm-2 col-md-6">
                 <a class="btn btn-primary btn_custom btn-lg " href="{{url_for('add_project')}}">New Project</a>
@@ -10,8 +12,8 @@
         </div>
     </div>
 
-
     <div class="row scroll">
+        <!--Show case all active projects-->
         {% for project in projects %} {% if project.active== 'on' %}
         <div class="custom_col">
             <div class="row">
@@ -56,7 +58,7 @@
                     {{project.active}}
                 </div>
             </div>
-            <br>
+            <hr>
             <div class="row justify-content-center">
                 <div class="col-sm-12 col-md-4 btn-padding">
                     <a href="{{url_for('project_info', project_id=project._id)}}" class="btn btn-primary btn_custom btn-lg btn-block">Info</a> {% if session['admin'] %}
@@ -66,14 +68,14 @@
                 </div>
             </div>
         </div>
-        <hr> {% endif %} {% endfor %}
+        {% endif %} {% endfor %}
     </div>
 
+    <!--Admin use only: See old projects or to delete them-->
     {% if session.admin == 'True' %}
     <div class="heading">
         <h3>Closed Projects</h3>
     </div>
-
 
     <div class="row scroll">
         {% for project in projects %} {% if project.active != 'on' %}
@@ -128,7 +130,6 @@
                 <div class="col-sm-12 col-md-4 btn-padding">
                     <a href="{{url_for('edit_project', project_id=project._id)}}" class="btn btn-secondary btn_custom btn-lg btn-block">Edit</a>
                 </div>
-
                 <div class="col-sm-12 col-md-4 btn-padding">
                     <a href="{{url_for('delete_project', project_id=project._id)}}" class="btn btn-warning btn_custom btn-lg btn-block">Delete </a>{% endif %}
                 </div>

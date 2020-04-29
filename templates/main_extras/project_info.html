@@ -1,6 +1,7 @@
+<!--Show more details about the different clients or projects-->
 {% extends 'main.html' %}{% block main %}
 
-<div class="testCOL">
+<div>
     <div class="row ">
         <br>
         <div class="col-4  vertical_down float-right">
@@ -37,7 +38,7 @@
             <h5> {{project.discription}} </h5>
         </div>
     </div>
-
+    <!--Extra information for admin only-->
     {% if session.admin == true %}
     <hr>
     <div class="row">
@@ -62,8 +63,5 @@
         </div>
     </div>
     <br>
-
-
-
 </div>
 {% endblock %}
