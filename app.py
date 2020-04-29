@@ -507,12 +507,12 @@ def delete_new(new_id):
 def welcome_password():
 
     if request.method == "POST":
-        post_data = request.form.to_dict()
-        post_data['welcome_password'] = bcrypt.hashpw(
+        
+        new_password = bcrypt.hashpw(
                 request.form['welcome_password'].encode('utf-8'), bcrypt.gensalt())
 
         mongo.db.welcome_password.update_one({"_id": ObjectId("5e73560c1c9d440000ea42da")},
-        {'$set': {'welcome_password': post_data}}, upsert=True)       
+        {'$set': {'welcome_password': new_password}}, upsert=False)       
         return redirect(url_for('home'))
 
     return render_template("/main_extras/welcome_password.html", session=session)

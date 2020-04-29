@@ -14,7 +14,8 @@
             <a class="active " href="{{url_for('home')}}" id="home_tab" href="#home">Home</a>
             <a class="" href="{{url_for('timelogs_info')}}" id="time_tab">Time Logs</a>
             <a class="" href="{{url_for('projects')}}" id="projects_tab">Projects</a>
-            <a class="" href="{{url_for('employees')}}" id="employees_tab">Employees</a>
+            <a class="" href="{{url_for('employees')}}" id="employees_tab">Employees</a> {% if session['admin'] %}
+            <a class="" href="{{url_for('welcome_password')}}" id="welcome_password_tab">Welcome Password</a> {% endif %}
             <a class="" href="{{url_for('logout')}}" id="employees_tab">Logout</a>
         </div>
     </div>
