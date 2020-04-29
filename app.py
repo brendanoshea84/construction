@@ -54,14 +54,10 @@ def sign_up():
     if request.method == 'POST':
         # Sign in for new members with a pre password
         global new_first_name
-        new_first_name = request.form.get('new_member_first')
-        try_pass = request.form.get('new_password')
         w_password = mongo.db.welcome_password.find_one()
+        new_first_name = request.form.get('new_member_first')
 
-        for key, val in w_password.items():
-            if 'welcome_password' in key:
-                wel_pass = val
-        if wel_pass == try_pass:
+        if bcrypt.hashpw(request.form.get('new_password').encode('utf-8'),  w_password['welcome_password']) == w_password['welcome_password']:
             # If sussecful- Page to input new member info
             return redirect(url_for('add_personal_info'))
         else:
@@ -506,6 +502,20 @@ def delete_new(new_id):
     delete_new = mongo.db.news.remove({"_id": ObjectId(new_id)})
     return redirect(url_for('home'))
 
+
+@app.route('/welcome_password', methods=['POST', 'GET'])
+def welcome_password():
+
+    if request.method == "POST":
+        post_data = request.form.to_dict()
+        post_data['welcome_password'] = bcrypt.hashpw(
+                request.form['welcome_password'].encode('utf-8'), bcrypt.gensalt())
+
+        mongo.db.welcome_password.update_one({"_id": ObjectId("5e73560c1c9d440000ea42da")},
+        {'$set': {'welcome_password': post_data}}, upsert=True)       
+        return redirect(url_for('home'))
+
+    return render_template("/main_extras/welcome_password.html", session=session)
 
 @app.route('/logout')
 def logout():
