@@ -90,6 +90,8 @@ As such employees Administration should be to do everything an employee can do p
         * Get general contact information
         * Edit their own information    
 
+### [Link to mockups](https://github.com/brendanoshea84/construction/blob/master/static/mockups/MILESTONE3.png) ###
+
 ### Future Implement ###
 1. A weekly schudule so that the employees can find out about which future projects that they will work on.
 1. A monthly report of their work.
