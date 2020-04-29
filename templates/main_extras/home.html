@@ -26,10 +26,8 @@
     <div class="row">
         <h2 class="col-9"><b>{{new.heading}}</b></h2>
         <br> {% if session['admin'] %}
-        <a href="{{url_for('delete_new', new_id=new._id)}}" class="btn btn-warning btn_custom col-xs-3 col-md-2">Delete</a>
+        <a href="{{url_for('delete_new', new_id=new._id)}}" class="btn btn-warning btn_custom col-xs-3 col-md-2">Delete</a>{% endif %}
     </div>
-    <br> {% endif %}
-    <br>
     <h3>{{new.news}}</h3>
 
-    <hr>{% endfor %} {% endblock %}
+    <hr> {% endfor %} {% endblock %}
