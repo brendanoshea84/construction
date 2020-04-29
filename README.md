@@ -3,7 +3,7 @@
 This project was made for Code Institue Data Centric Development Assignment
 The aim was to 'build a full-stack site that allows your users to manage a common dataset about a particular domain.'
 
-I have choosen to build a website for a construction company, "Develop This". This company was previously using other sites like dropbox, emails and even paper. This site was to help the company to become 'lean'. Meaning, instead of using a multitude of different sources, making one site incorporating all the company's need for ease of access.
+I have choosen to build a website for a construction company, "Develop. This". This company was previously using other sites like dropbox, emails and even paper. This site was to help the company to become 'lean'. Meaning, instead of using a multitude of different sources, making one site incorporating all the company's need for ease of access.
 The company has grown from a tiny to a medium company and as such the company wanted to become more professional and help the employees and owner in their day to day operations.
 
 As such there are two sides for this website:
@@ -13,7 +13,7 @@ Welcome code can be changed by admin. If welcome code does not work, please logi
 
 
 ## UX ##
-"Develop This" while small, has two distict groups, management and employees. As much, while management has full access to all content, employees has limited access to information (Example: Other employees bank details). This website should provide a 'Lean' approach to their work.
+"Develop. This" while small, has two distict groups, management and employees. As much, while management has full access to all content, employees has limited access to information (Example: Other employees bank details). This website should provide a 'Lean' approach to their work.
 
 Overall experience should feel clean, easy to use and simple. This is used as a work tool with styling for ease and practicality. The colors are choosen to show different areas of the page while the buttons stand out for ease. 
 
@@ -216,14 +216,14 @@ $ git push heroku master
 
 ## Credits ##     
 ### Content ###
-- "Develop This" is a real construction company in Sweden, their moto was copied from facebook. Styling and ideas were shared by my current colleagues. 
+- "Develop. This" is a real construction company in Sweden, their moto was copied from facebook. Styling and ideas were shared by my current colleagues. 
 ### Media ###
 - Photos were found via google search. 
 [login photo](https://www.michaelpage.ca/advice/management-advice/top-6-construction-project-challenges)
 [Signup photo](https://rismedia.com/2018/11/12/what-you-need-be-biggest-thinker/)
 
 ### Acknowledgements ###
-- I currently work as a carpenter for "Develop This" and I have worked at many places where time sheets are filled in by paper on fridays. 
+- I currently work as a carpenter for "Develop. This" and I have worked at many places where time sheets are filled in by paper on fridays. 
 I wanted to see the process of creating a website to help companies become lean and more efficient. After finishing this course work, I will be coming back to this project and finish all future developments and hopefully present this website to them. 
 
 
