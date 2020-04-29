@@ -7,8 +7,9 @@ I have choosen to build a website for a construction company, "Develop This". Th
 The company has grown from a tiny to a medium company and as such the company wanted to become more professional and help the employees and owner in their day to day operations.
 
 As such there are two sides for this website:
-    - Create your own employee profile (welcome password: 'aaa')
+    - Create your own employee profile (welcome password: 'code')
     - Login as admin (password: 'admin') 
+Welcome code can be changed by admin. If welcome code does not work, please login as admin and there you can change the code for a new employee. 
 
 
 ## UX ##
@@ -96,7 +97,6 @@ As such employees Administration should be to do everything an employee can do p
 1. A weekly schudule so that the employees can find out about which future projects that they will work on.
 1. A monthly report of their work.
 1. Reset Passwords for employees by Admin.
-1. Change the welcome password by Admin.
 1. Creating a unique username, if there are already users with that username.
 1. Update employee to 'admin' status or remove 'admin'
 
@@ -108,15 +108,12 @@ As such employees Administration should be to do everything an employee can do p
 1. [Bootstrap](https://getbootstrap.com/) and [Bootwatch]("https://bootswatch.com/4/cosmo/bootstrap.min.css"): To structure and style the site.
 1. [Python](https://www.python.org/) Was the main language to write the site and access the backend data. 
 
-
-
 ### Add on libararies Used ###
 1. bcrypt: To incrypt passwords for security on site
 1. Calendar, datetime and itertools for use of calendars in the site.
 1. Flash: To show errors with login and signup passwords are incorrect.
 1. Flask: For handling python control of url, pass mongodb data onto site and use of variables.
 1. pep8: To insure python code is in a correct format.
-
 
 ## Testing ##
 ### Sign Up ###

@@ -359,9 +359,11 @@ def timelogs_info():
     elif 'nextweek' in request.form:
         week_change -= 1
         session['week_change'] = week_change
-    else: 
-        print("error at calendar")    
-    
+    elif 'thisweek' in request.form:
+        week_change = 0
+        session['week_change'] = week_change    
+    else:
+        print("error at calendar")
 
     change_date = (week_change * 7)
 
@@ -416,10 +418,14 @@ def show_work(worked_id):
     if 'lastweek' in request.form:
         week_change += 1
         session['week_change'] = week_change
+
     elif 'nextweek' in request.form:
         week_change -= 1
         session['week_change'] = week_change
-    else: 
+    elif 'thisweek' in request.form:
+        week_change = 0
+        session['week_change'] = week_change      
+    else:
         print("error at calendar")
 
     change_date = (week_change * 7)
@@ -448,7 +454,7 @@ def show_work(worked_id):
     projects = list(mongo.db.projects.find())
     show_week = itertools.zip_longest(dates, day_names, dates_org)
 
-    if request.method == "POST":
+    if 'save_day' in request.form:
         update_show_work = mongo.db.show_work.update_one({"_id": ObjectId(worked_id)},
                                                          {'$set': {
                                                              'project_number': request.form.get('project_number'),
