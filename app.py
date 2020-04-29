@@ -39,7 +39,6 @@ def login():
                              login_user['password']) == login_user['password']:
                 global session
                 session = login_user
-                print(session)
                 return redirect(url_for('home'))
             else:
                 # Error flash
@@ -489,7 +488,7 @@ def home():
 
     news = mongo.db.news.find()
     if request.method == "POST":
-        post_data = request.form.to_dict()
+        
         post_data['heading'] = request.form['title']
         post_data['news'] = request.form['news']
         mongo.db.news.insert_one(post_data)
@@ -524,7 +523,7 @@ def username_used():
     return render_template("/errors/username_used.html")
 
 
-@app.route('/base', methods=['POST', 'GET'])
+@app.route('/base', methods = ['POST', 'GET'])
 def base():
     # Check if user is logged in
     if session.get('username') is None:
@@ -532,15 +531,15 @@ def base():
     return render_template("base.html")
 
 
-@app.route('/main', methods=['POST', 'GET'])
+@app.route('/main', methods = ['POST', 'GET'])
 def main():
     # Check if user is logged in
     if session.get('username') is None:
         return redirect(url_for('not_logged_in'))
-    return render_template("main.html", session=session)
+    return render_template("main.html", session = session)
 
 
 if __name__ == '__main__':
-    app.run(host=os.environ.get('IP'),
-            port=os.environ.get('PORT'),
-            debug=True)
+    app.run(host = os.environ.get('IP'),
+            port = os.environ.get('PORT'),
+            debug = True)

@@ -28,6 +28,7 @@
         <br> {% if session['admin'] %}
         <a href="{{url_for('delete_new', new_id=new._id)}}" class="btn btn-warning btn_custom col-xs-3 col-md-2">Delete</a>{% endif %}
     </div>
+    <br>
     <h3>{{new.news}}</h3>
-
+    <br>
     <hr> {% endfor %} {% endblock %}
