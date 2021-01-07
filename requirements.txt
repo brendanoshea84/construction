@@ -15,7 +15,7 @@ gevent-websocket==0.10.1
 greenlet==0.4.15
 itsdangerous==1.1.0
 Jinja2==2.11.1
-lxml==4.5.0
+lxml==4.6.2
 MarkupSafe==1.1.1
 mongo==0.2.0
 pycparser==2.20
